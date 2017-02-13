@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.rudar.enumerated.TipoPessoa;
 
 
 @Entity
@@ -45,8 +49,9 @@ public class Pessoa implements Serializable{
 	private Character inativo;
 	
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "TIPO", length = 1)
-	private Character tipo;
+	private TipoPessoa tipo;
 	
 	
 	@Column(name = "UTILIZAR_FANTASIA", length = 1)
@@ -64,11 +69,10 @@ public class Pessoa implements Serializable{
 	@Column(name = "HPAG" , length = 100)
 	private String site;
 	
+	
 	@Column(name = "CONTATO" , length = 50)
 	private String contato;
-	
-	
-	
+
 	
 	
 	//--------------------------------	GETs and SETs------------------------------//
@@ -109,11 +113,11 @@ public class Pessoa implements Serializable{
 	}
 	
 		
-	public Character getTipo() {
+	public TipoPessoa getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(Character tipo) {
+	public void setTipo(TipoPessoa tipo) {
 		this.tipo = tipo;
 	}
 	
@@ -122,8 +126,33 @@ public class Pessoa implements Serializable{
 		return documento;
 	}
 
+	
+	public String getDocumentoFormatado(){
+		switch (this.tipo) {
+		case C:
+			
+			break;
+		case J:
+			this.documento = documento.replace(".", "").replace("-", "").replace("/", "");
+			break;
+		case F:
+			
+			break;
+		case V:
+			
+			break;
+		case E:
+			
+			break;
+		}	
+		return null;
+	}
+	
 	public void setDocumento(String documento) {
-		this.documento = documento;
+		if(documento != null){
+			this.documento = documento.replace(".", "")
+					.replace("-", "").replace("/", "");			
+		}
 	}
 
 	

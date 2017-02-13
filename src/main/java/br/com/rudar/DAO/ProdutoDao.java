@@ -30,7 +30,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 	}
 	
 	@Override
-	public Produto findAllAttributesEntity() {
+	public Produto findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

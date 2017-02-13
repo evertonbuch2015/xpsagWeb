@@ -26,7 +26,7 @@ public class OperacaoSaidaDao extends GenericDao<OperacaoSaida> {
 
 	
 	@Override
-	public OperacaoSaida findAllAttributesEntity() {
+	public OperacaoSaida findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

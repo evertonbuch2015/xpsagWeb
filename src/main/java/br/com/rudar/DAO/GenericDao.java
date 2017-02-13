@@ -37,7 +37,7 @@ public abstract class GenericDao<T extends Serializable> {
      * Implementar este metodo nas classes especificas para trazer todos
      * os atributos da Entity.
      */
-    public abstract T findAllAttributesEntity();
+    public abstract T findAllAttributesEntity(Integer id);
     
     public abstract boolean gravar(T entity);
     

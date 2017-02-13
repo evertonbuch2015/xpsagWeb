@@ -26,7 +26,7 @@ public class CondicaoPagamentoDao extends GenericDao<CondicaoPagamento> {
 	
 	
 	@Override
-	public CondicaoPagamento findAllAttributesEntity() {
+	public CondicaoPagamento findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

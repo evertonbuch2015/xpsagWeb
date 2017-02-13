@@ -63,7 +63,7 @@ public class RomaneioDao extends GenericDao<Romaneio> {
 	
 	
 	@Override
-	public Romaneio findAllAttributesEntity() {
+	public Romaneio findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -2,6 +2,8 @@ package br.com.rudar.DAO;
 
 import java.util.List;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -68,14 +70,24 @@ public class ColaboradorDao extends GenericDao<Colaborador> {
         return entities;
 	}
 
-
-	
 	
 	@Override
-	public Colaborador findAllAttributesEntity() {
-		// TODO Auto-generated method stub
-		return null;
+	public Colaborador findAllAttributesEntity(Integer id) {
+		String jpql =
+			"Select c From Colaborador c lefth Join fetch c.pessoa where c.id = ?1";
+		return findOne(jpql, id);
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Colaborador> findByPaged(int maxResults) {  
+		
+    	Query query = getEntityManager().createQuery("From Colaborador",Colaborador.class)
+    			.setHint("org.hibernate.readOnly", true);
+        query.setMaxResults(maxResults);
+        query.setFirstResult(0);
 
+        return query.getResultList();
+    }
 }

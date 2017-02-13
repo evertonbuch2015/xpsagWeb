@@ -26,7 +26,7 @@ public class UnidadeDao extends GenericDao<Unidade> {
 	
 	
 	@Override
-	public Unidade findAllAttributesEntity() {
+	public Unidade findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,0 +1,255 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template.xhtml"
+	xmlns:app="http://java.sun.com/jsf/composite/componentes" >
+
+	<ui:define name="tituloPagina">#{label.nome_programa_colaborador}</ui:define>
+	<ui:define name="nomePrograma"> #{label.nome_programa_colaborador}</ui:define>
+
+	<ui:define name="head">
+		<style type="text/css">
+			.label {width: 20%;	padding: 2px;}
+			
+			.value {width: 80%;	padding: 2px;}
+			
+			.grid {	width: 70%;}
+			
+			.editarBotao {            
+    			background: url('../resources/img/edit16x16.png') no-repeat !important;
+    			background-color: #004080 !important; 
+   				height: 22px;
+    			width: 25px;
+				margin-left: 18%;
+			}
+
+			.excluirBotao { 
+			    background: url('../resources/img/delete16x16.png') no-repeat !important; 
+			    background-color: #d9534f  !important; 
+			    height: 22px;
+			    width: 25px;
+				margin-left: 18%;
+			}
+		</style>
+	</ui:define>
+
+
+	<ui:define name="content">
+			
+			<p:growl id="msgs" autoUpdate="true" showDetail="True" life="4000"/>
+			<p:messages autoUpdate="true" closable="true">
+				<p:effect type="puff" event="load" delay="9000" />
+			</p:messages>
+			
+			
+			<!-- ################### BOTÕES ############################## -->
+			
+			<app:barraBotoes bean="#{colaboradorBean}"/>
+						
+						
+			<!-- ################## CONPONENTES EDIÇÃO ########################## -->				
+			
+			<p:panel id="panel" header="#{label.pnl_manut_colaborador}" rendered="#{!colaboradorBean.buscando}">
+			
+			  	<p:tabView id="tab" styleClass="ddd" style="border:none ;font-size: 13px !important;">
+			
+					<!--  Inicio da Tab Dados Gerais-->
+				   	<p:tab title="#{label.dados_gerais}" id="tabDadosGerais">
+						
+						
+					<div class="ui-g">
+					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.codigo}" for="id" />
+								<p:inputText value="#{colaboradorBean.entidade.codigo}" id="id"
+									readonly="#{colaboradorBean.visualizando}" style="width: 50%"
+									required="true" requiredMessage="Informe o Código do Colaborador!"/>
+							</h:panelGrid>
+						</div>						
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="Data do Cadastro:" for="dataCadastro" />
+								<p:inputMask id="dataCadastro"  mask="99/99/9999" readonly="true"
+									value="#{colaboradorBean.entidade.pessoa.dataCadastro}"/>
+							</h:panelGrid>
+						</div>						
+					</div>
+						
+						
+					<div class="ui-g">
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<h:outputLabel value="#{label.lbl_tipo_pessoa}" for="tipoPessoa"/>
+								<p:selectOneMenu value="#{colaboradorBean.entidade.pessoa.tipo}"
+									id="tipoPessoa" style="width: 53%">
+									
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{colaboradorBean.tipoPessoas}" var="a"
+										itemValue="#{a}" itemLabel="#{a.label}"/>
+									<p:ajax listener="#{colaboradorBean.trocarMascara()}" event="change" update="documento" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</div>
+						
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.documento}" for="documento" />
+								<p:inputMask mask="#{colaboradorBean.mascaraDocumento}" id="documento"
+									value="#{colaboradorBean.entidade.pessoa.documento}" style="width: 60%"
+									readonly="#{colaboradorBean.visualizando}"
+									required="true" requiredMessage="Informe o Documento!"/>
+							</h:panelGrid>
+						</div>
+    					
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.lbl_contato}" for="contato" />
+								<p:inputText value="#{colaboradorBean.entidade.pessoa.contato}" id="contato" 
+									readonly="#{colaboradorBean.visualizando}" style="width: 60%"/>
+							</h:panelGrid>
+						</div>
+					</div>
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Nome Razão" for="nome_razao" />
+								<p:inputText value="#{colaboradorBean.entidade.pessoa.nome}" id="nome_razao"
+									readonly="#{colaboradorBean.visualizando}" style="width: 80%"
+									required="true" requiredMessage="Informe o Nome Razão!"/>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-1">
+							<h:panelGrid columns="2">
+								<p:selectBooleanCheckbox id="ativo" title="Cadastro Ativo"
+									value="#{colaboradorBean.entidade.pessoa.inativo}" 
+									disabled="#{colaboradorBean.visualizando}"/>
+								<p:outputLabel value="#{label.ativo}" for="ativo" />
+							</h:panelGrid>
+						</div>
+					</div>
+						
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Nome Fantasia" for="nome_fant" />
+								<p:inputText value="#{colaboradorBean.entidade.fantasia}" id="nome_fant"
+									readonly="#{colaboradorBean.visualizando}" style="width: 80%"/>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<h:panelGrid columns="2">
+								
+								<p:selectBooleanCheckbox id="fantazia" title="Cadastro Ativo"
+									value="#{colaboradorBean.entidade.pessoa.inativo}" 
+									disabled="#{colaboradorBean.visualizando}"/>
+								<p:outputLabel value="#{label.lbl_utiliza_fantasia}" for="fantazia" />
+							</h:panelGrid>
+						</div>
+					</div>
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="E-mail" for="email" />
+								<p:inputText value="#{colaboradorBean.entidade.pessoa.email}" id="email"
+									readonly="#{colaboradorBean.visualizando}" style="width: 80%">
+								</p:inputText>
+							</h:panelGrid>
+						</div>
+					</div>
+					
+					
+					<div class="ui-g">    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Site" for="site" />
+								<p:inputText value="#{colaboradorBean.entidade.pessoa.site}" id="site"
+									readonly="#{colaboradorBean.visualizando}" style="width: 80%" />
+							</h:panelGrid>
+						</div>
+					</div>
+										
+				   	</p:tab>	
+			
+			  	</p:tabView>
+			</p:panel>
+				
+			
+			
+			<!-- ################## TABELA ########################## -->			
+						
+			<p:panel id="tabela" header="#{label.pnl_consulta_colaborador}" rendered="#{colaboradorBean.buscando}" 
+				 style="padding: 0" styleClass="menuSemBorda">
+				 
+				 
+				<p:dataTable value="#{colaboradorBean.entidades}" var="colaborador" id="tbl" 
+					selection="#{colaboradorBean.entidade}" selectionMode="single"
+					rowKey="#{colaborador.id}" paginator="true" reflow="true" rows="25"
+					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom" widgetVar="carsTable"
+					paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+					style="margin: -5px -11px;">				
+					
+					<f:facet name="{Exporters}" >											
+						<h:commandLink>
+			                <p:graphicImage library="images" name="excel.png" width="24" style="float:right"/>
+			                <p:dataExporter type="xls" target="tbl" fileName="cars" />
+			            </h:commandLink>
+			 
+			            <h:commandLink>
+			                <p:graphicImage library="images" name="pdf.png" width="24" style="float:right"/>
+			                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+			            </h:commandLink>
+					</f:facet>	
+
+					<p:ajax event="rowDblselect" listener="#{colaboradorBean.onRowDblClckSelect}"
+						global="false" update="@form"/>
+
+					<p:ajax event="rowSelect" listener="#{colaboradorBean.onRowSelect}" />
+
+
+					<p:column headerText="#{label.codigo}" style="width: 7%;font-size:13px;">
+						<h:outputText value="#{colaborador.codigo}" />
+					</p:column>
+
+
+					<p:column headerText="#{label.nome}" style="width: 30%;font-size:13px;">
+						<h:outputText value="#{colaborador.fantasia}" />
+					</p:column>
+
+
+					<p:column headerText="#{label.tipo}" style="width:20%;font-size:13px;">
+						<h:outputText value="#{colaborador.tipoCliente}" />
+					</p:column>
+					
+										
+					<p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;">						
+						<p:commandButton actionListener="#{colaboradorBean.editar(colaborador)}" 
+							styleClass="editarBotao" value="" update="@form"/>
+							
+						<p:commandButton actionListener="#{colaboradorBean.excluir(colaborador)}" 
+							styleClass="excluirBotao" value=""	
+							update="@form">
+							
+							<p:confirm header="#{label.confirmacao}" message="#{label.msg_exclusao_colaborador}" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>					
+
+				</p:dataTable>
+						
+			</p:panel>
+	</ui:define>
+
+</ui:composition>

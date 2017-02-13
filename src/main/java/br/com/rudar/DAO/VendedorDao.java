@@ -26,7 +26,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 		
 	
 	@Override
-	public Vendedor findAllAttributesEntity() {
+	public Vendedor findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

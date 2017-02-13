@@ -43,7 +43,8 @@ public class Colaborador implements Serializable {
 	private String tipoCliente;
 	
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.PERSIST}, 
+				fetch = FetchType.LAZY)
     @JoinColumn(name ="CODIGO_PESSOA")
 	private Pessoa pessoa;
 
@@ -101,6 +102,9 @@ public class Colaborador implements Serializable {
 	
 	
 	public Pessoa getPessoa() {
+		if(this.pessoa == null){
+			this.pessoa = new Pessoa();
+		}
 		return pessoa;
 	}
 

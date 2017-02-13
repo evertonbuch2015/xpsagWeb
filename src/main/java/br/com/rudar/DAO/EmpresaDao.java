@@ -26,7 +26,7 @@ public class EmpresaDao extends GenericDao<Empresa> {
 	
 	
 	@Override
-	public Empresa findAllAttributesEntity() {
+	public Empresa findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

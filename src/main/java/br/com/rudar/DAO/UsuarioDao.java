@@ -36,7 +36,7 @@ public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 	
 	
 	@Override
-	public Usuario findAllAttributesEntity() {
+	public Usuario findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
