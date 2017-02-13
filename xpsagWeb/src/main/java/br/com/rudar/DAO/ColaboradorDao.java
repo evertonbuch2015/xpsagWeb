@@ -1,0 +1,81 @@
+package br.com.rudar.DAO;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import br.com.rudar.entity.Colaborador;
+import br.com.rudar.util.UtilErros;
+import br.com.rudar.util.UtilMensagens;
+
+public class ColaboradorDao extends GenericDao<Colaborador> {
+
+	public ColaboradorDao() {
+		super(Colaborador.class);
+	}
+
+
+	public boolean gravar(Colaborador colaborador) {
+		if (colaborador.getId() == null) {
+			if (save(colaborador)) {
+				UtilMensagens.mensagemInformacao("Cadastro de Colaborador Realizado com Sucesso");
+				return true;
+			}
+		} else {
+			if (update(colaborador)) {
+				UtilMensagens.mensagemInformacao("Cadastro de Colaborador Alterado com Sucesso");
+				return true;
+			}
+		}
+		return false;		
+	}
+		
+	
+	@SuppressWarnings("unchecked")
+	public List<Colaborador> findColaboradorByVendedor(Integer vendedor,String filtro){
+		
+		EntityManager em = getEntityManager();
+    	em.getTransaction().begin();
+        em.clear();
+        
+        String sqlString = "SELECT * FROM CAD_COLABORADOR C"+
+        	" INNER JOIN CAD_COLABORADOR_FATURAMENTO F ON C.COD_CADCOLABORADOR = F.COD_CADCOLABORADOR"+
+        	" WHERE F.COD_CADVENDEDOR = ?"+
+        	" AND C.FANTASIA LIKE ? ";
+        
+        
+        Query query = em.createNativeQuery(sqlString, Colaborador.class);
+        query.setParameter(1, vendedor);
+        query.setParameter(2, "%"+filtro+"%");
+        
+        //Query query = em.createQuery(jpql,Colaborador.class).setHint("org.hibernate.readOnly", true);
+        
+        
+		List<Colaborador> entities = null;
+        
+        try {
+        	entities = query.getResultList();
+            
+            em.getTransaction().commit();
+            em.close();
+            
+		} catch (Exception e) {
+			UtilMensagens.mensagemErro("Erro ao Carregar os dados de Colaborador pelo Vendedor " +
+					" no método findColaboradorByVendedor(Vendedor vendedor) \nErro: " +
+						UtilErros.getMensagemErro(e));
+		}
+        return entities;
+	}
+
+
+	
+	
+	@Override
+	public Colaborador findAllAttributesEntity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

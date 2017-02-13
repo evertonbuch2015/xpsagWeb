@@ -1,0 +1,360 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template.xhtml"
+	xmlns:app="http://java.sun.com/jsf/composite/componentes">
+
+	<ui:define name="tituloPagina">#{label.nome_programa_romaneio}</ui:define>
+	<ui:define name="nomePrograma">#{label.nome_programa_romaneio}</ui:define>
+	<ui:define name="head">
+		<style type="text/css">
+			.label {width: 20%;	padding: 2px;}
+			
+			.value {width: 80%;	padding: 2px;}
+			
+			.grid {	width: 70%;}
+			
+			.editarBotao {            
+    			background: url('../resources/img/edit16x16.png') no-repeat !important;
+    			background-color: #004080 !important; 
+   				height: 22px;
+    			width: 25px;
+				margin-left: 18%;
+			}
+
+			.excluirBotao { 
+			    background: url('../resources/img/delete16x16.png') no-repeat !important; 
+			    background-color: #d9534f  !important; 
+			    height: 22px;
+			    width: 25px;
+				margin-left: 18%;
+			}
+		</style>
+	</ui:define>
+	
+	
+	<ui:define name="content">
+
+
+		<p:growl id="msgs" autoUpdate="true" showDetail="True" life="4000" />
+		<p:messages autoUpdate="true" closable="true">
+			<p:effect type="puff" event="load" delay="9000" />
+		</p:messages>
+
+
+
+
+		<!-- ################### BOTÕES ############################## -->
+
+		<app:barraBotoes bean="#{romaneioBean}" />
+
+
+
+
+
+		<!-- ################## CONPONENTES EDIÇÃO ########################## -->
+
+
+		<p:panel id="panel" header="#{label.pnl_manut_romaneio}"
+			rendered="#{!romaneioBean.buscando}">
+			<p:tabView id="tab" styleClass="ddd"
+				style="border:none ;font-size: 13px !important;">
+
+				<!--  Inicio da Tab Dados Gerais-->
+				<p:tab title="#{label.dados_gerais}" id="tabDadosGerais">
+
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="Código:" for="id" />
+								<p:inputText value="#{romaneioBean.entidade.codigo}" id="id"
+									readonly="#{romaneioBean.visualizando}"/>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="Data Emissão:" for="dataEmissao" />
+								<p:calendar id="dataEmissao" readonly="#{romaneioBean.visualizando}"
+									value="#{romaneioBean.entidade.dataEmissao}"
+									pattern="dd/MM/yyyy" mask="true" required="true"
+									requiredMessage="Informe a Data de Emissão!" />
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="Data Entrega:" for="dataEntrega" />
+								<p:calendar id="dataEntrega" readonly="#{romaneioBean.visualizando}"
+									value="#{romaneioBean.entidade.dataEntrega}"
+									pattern="dd/MM/yyyy" mask="true" required="true"
+									requiredMessage="Informe a Data de Entrega!" />
+							</h:panelGrid>
+						</div>
+					</div>
+					
+					
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="Vendedor" for="vendedor" />
+								<p:inputText value="#{romaneioBean.entidade.vendedor.fantasia}" id="vendedor"
+									readonly="true"/>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="N° O.C. Cliente"  />
+								<p:inputText value="#{romaneioBean.entidade.codigoOcCliente}" 
+									readonly="#{romaneioBean.visualizando}" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="N° Pedido"  />
+								<p:inputText value="#{romaneioBean.entidade.codigoPedido}" 
+									readonly="true"/>
+							</h:panelGrid>
+						</div>
+						
+					</div>
+					
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="Cliente" for="cliente" />
+								<h:panelGrid columns="2">
+	    							<p:inputText value="#{romaneioBean.entidade.colaborador.fantasia}" id="cliente"
+										readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}" 
+										style="width : 350px"/>
+										
+									<p:commandButton value="Buscar" style="width:80px" process="@this" update="@none"
+										styleClass="botaoAzul" action="#{selecaoColaboradorBean.AbrirDialogProduto()}" 
+										disabled="#{romaneioBean.visualizando}">
+										
+										<p:ajax event="dialogReturn" listener="#{romaneioBean.colaboradorSelecionado}" 
+											process="@this" update="cliente" />
+									</p:commandButton>
+								</h:panelGrid>								
+							</h:panelGrid>
+    					</div>    					
+    					
+					</div>
+					
+					
+					
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+							<h:outputLabel value="Entregador" />
+							<p:selectOneMenu value="#{romaneioBean.entidade.entregador}" 
+								required="true" requiredMessage="Informe o Entregador!"
+								disabled="romaneioBean.visualizando" 
+								style="width: 230px !important" autoWidth="false" >
+								
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{romaneioBean.entregadores}" var="entregador"
+									 itemValue="#{entregador}" 	itemLabel="#{entregador.fantasia}"/>
+							</p:selectOneMenu>
+						</h:panelGrid>
+    					</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+							<h:outputLabel value="Transportadora" />
+							<p:selectOneMenu value="#{romaneioBean.entidade.transportadora}"
+								required="true" requiredMessage="Informe a Transportadora!"
+								disabled="romaneioBean.visualizando"
+								style="width: 230px !important" autoWidth="false">
+								
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{romaneioBean.transportadoras}" var="transportadora"
+									 itemValue="#{transportadora}"	itemLabel="#{transportadora.fantasia}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+    					</div>
+    					
+    					
+					</div>
+
+					
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<h:outputLabel value="Condição de Pagamento" />
+								<p:selectOneMenu value="#{romaneioBean.entidade.condicaoPagamento}"
+									required="true"	requiredMessage="Informe a condição de Pagamento!"
+									disabled="romaneioBean.visualizando"
+									style="width: 230px !important" autoWidth="false">
+									
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{romaneioBean.condicaoPagamentos}" var="condPag"
+										 itemValue="#{condPag}" itemLabel="#{condPag.nome}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+    					</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<h:outputLabel value="Tipo de Frete" />
+								<p:selectOneMenu
+									value="#{romaneioBean.entidade.tipoFrete}"									
+									required="true"	requiredMessage="Informe o Tipo de Frete!"
+									disabled="romaneioBean.visualizando"
+									style="width: 230px !important" autoWidth="false">
+									
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{romaneioBean.tiposFrete}" var="tipoFrete"
+										 itemValue="#{tipoFrete}" itemLabel="#{tipoFrete.label}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+    					</div>
+    					
+    					
+					</div>
+					
+				</p:tab>
+
+
+
+
+				<!--  Inicio da Tab Produtos -->
+				<p:tab title="#{label.produtos}" id="tabDadosProdutos">
+
+					<p:commandButton value="#{label.btn_novo}" style="width:80px" process="@this" update="@none"
+							styleClass="botaoAzul" action="#{selecaoRomaneioItemBean.AbrirDialogProduto()}" 
+							disabled="#{romaneioBean.visualizando}">
+						<p:ajax event="dialogReturn" listener="#{romaneioBean.ItemSelecionado}" 
+							process="@this" update="tblProdutos" />
+					</p:commandButton>
+					
+						
+
+					<p:dataTable var="item"
+						value="#{romaneioBean.entidade.romaneioItens}" id="tblProdutos">
+
+						<p:column headerText="Item">
+							<h:outputText value="#{item.item}" />
+						</p:column>
+
+						<p:column headerText="#{label.produto}">
+							<h:outputText value="#{item.produto.nome}" />
+						</p:column>
+
+						<p:column headerText="#{label.quantidade}">
+							<h:outputText value="#{item.quantidade}" />
+						</p:column>
+
+						<p:column headerText="#{label.vlr_unitario}">
+							<h:outputText value="#{item.valorUnitario}" />
+						</p:column>
+
+						<p:column headerText="#{label.qtd_troca}">
+							<h:outputText value="#{item.quantidadeTroca}" />
+						</p:column>
+
+						<p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;">
+
+							<p:commandButton
+								actionListener="#{romaneioBean.excluirItem(item)}"
+								styleClass="excluirBotao" value="" process="@this"
+								onclick="if (!confirm('Deseja excluir este Registro?'))return false"
+								update="tblProdutos" disabled="#{romaneioBean.visualizando}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+
+			</p:tabView>
+		</p:panel>
+
+
+
+		<!-- ############################################ TABELA #################################################### -->
+
+		<p:panel id="tabela" header="#{label.pnl_consulta_romaneio}"
+			rendered="#{romaneioBean.buscando}" style="padding: 0"
+			styleClass="menuSemBorda">
+
+
+			<p:dataTable value="#{romaneioBean.entidades}" var="romaneio"
+				id="tbl" selection="#{romaneioBean.entidade}" selectionMode="single"
+				rowKey="#{romaneio.id}" paginator="true" reflow="true"
+				rowsPerPageTemplate="10,25,50" paginatorPosition="bottom"
+				widgetVar="carsTable"
+				paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+				style="margin: -5px -11px;">
+
+				<f:facet name="{Exporters}">
+					<h:commandLink>
+						<p:graphicImage library="images" name="excel.png" width="24"
+							style="float:right" />
+						<p:dataExporter type="xls" target="tbl" fileName="cars" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage library="images" name="pdf.png" width="24"
+							style="float:right" />
+						<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+					</h:commandLink>
+				</f:facet>
+
+				<p:ajax event="rowDblselect"
+					listener="#{romaneioBean.onRowDblClckSelect}" global="false"
+					update="@form" />
+
+				<p:ajax event="rowSelect" listener="#{romaneioBean.onRowSelect}" />
+
+
+				<p:column headerText="#{label.codigo}" style="width: 7%;">
+					<h:outputText value="#{romaneio.codigo}" />
+				</p:column>
+
+
+				<p:column headerText="#{label.cliente}" style="width: 7%;">
+					<h:outputText value="#{romaneio.colaborador.codigo}" />
+				</p:column>
+
+
+				<p:column headerText="#{label.nome_cliente}" style="width: 30%;">
+					<h:outputText value="#{romaneio.colaborador.fantasia}" />
+				</p:column>
+
+
+				<p:column headerText="#{label.data_emissao}" style="width:20%;">
+					<h:outputText value="#{romaneio.dataEmissaoFormatada}" />
+				</p:column>
+
+				<p:column headerText="#{label.data_entrega}" style="width:20%;">
+					<h:outputText value="#{romaneio.dataEntregaFormatada}" />
+				</p:column>
+
+				<p:column headerText="#{label.numero_pedido}" style="width:20%;">
+					<h:outputText value="#{romaneio.codigoPedido}" />
+				</p:column>
+
+
+				<p:column headerText="#{label.acoes}" style="width:10%;">
+					<p:commandButton actionListener="#{romaneioBean.editar(romaneio)}"
+						styleClass="editarBotao" value="" update="@form" />
+
+					<p:commandButton actionListener="#{romaneioBean.excluir(romaneio)}"
+						styleClass="excluirBotao" value="" update="@form">
+
+						<p:confirm header="#{label.confirmacao}"
+							message="#{label.msg_exclusao_romaneio}" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+		</p:panel>
+ 
+
+	</ui:define>
+
+</ui:composition>

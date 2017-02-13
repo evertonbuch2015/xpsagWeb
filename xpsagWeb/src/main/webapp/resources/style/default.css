@@ -1,0 +1,185 @@
+
+/* standard elements */
+html {min-height: 100%;}
+
+.ui-dialog{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a {color: #048;}
+a:hover {color: #06C;}
+
+body {
+	background: #E7E7E2 url('../img/body.jpg') no-repeat center top;
+	color: #444;
+	
+}
+
+
+p,code,ul {padding-bottom: 1.2em;}
+
+li {list-style: none;}
+
+code {
+	background: #FFF;
+	border: 1px solid #EEE;
+	border-left: 6px solid #CCC;
+	color: #666;
+	display: block;
+	font: normal 1em Tahoma,sans-serif;
+	line-height: 1.6em;
+	margin-bottom: 12px;
+	padding: 8px 10px;
+	white-space: pre;
+}
+
+
+
+/* misc */
+.clearer {clear: both; font-size: 0;}
+.left {float: left;}
+.right {float: right;}
+
+/******************* Tamanho Global dos Componentes ***************/
+.ui-widget, .ui-widget .ui-widget{
+	font-size: 97% !important;
+	
+}
+
+
+/******************* Begin Botões ***************/
+.ui-widget  .botaoAzul{
+	background-color: #286090  !important;
+	color: white ;
+	
+}
+
+.ui-widget  .botaoVermelho{
+	background-color: #d9534f  !important;
+	color: white ;
+	
+}
+
+.ui-widget  .botaoLaranja{
+	background-color: #f0ad4e  !important;
+	color: white ;
+	
+}
+
+.ui-widget  .botaoVerde{
+	background-color: #4CAF50  !important;
+	color: white ;
+	font-size: 13px !important;
+}
+
+
+/******************* Begin Menus ***************/
+.ui-widget-content.menuSemBorda {
+	border-style: none !important;	
+}
+
+
+
+/******************* Begin Mensagens ***************/
+.msgInfo,.ui-message-info, .ui-message-error, .ui-message-warn, .ui-message-fatal {
+	font-size: 12px !important;
+}
+
+.ui-growl-title {
+    font-size: 12px ;
+    text-align: center;
+}
+.ui-growl-message {
+    font-size: 12px;
+    letter-spacing: -1px;
+}
+
+
+/******************* Begin Estrutura ***************/
+.inner-container {
+	border: 2px solid #D7D7D2;
+	background: #FFF;
+	margin: 0 auto;
+	padding: 6px;
+	width: 98%;
+}
+
+.outer-container {
+	background: url('../img/container.jpg') no-repeat center bottom;
+	padding-bottom: 64px;
+}
+
+
+
+/******************* Begin header & title ***************/
+.header {
+	background: #222 url('../img/header.jpg') ;
+	height: 95px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+.header .title {
+	color: #FFF;
+	padding-top: 12px;
+}
+.header .title .sitename a {
+	border-bottom: 1px dashed #657382;
+	color: #FFF;
+	font: normal 1.1em sans-serif;
+	padding-bottom: 2px;
+	text-decoration: none;
+}
+.header .title a:hover {border-color: #F60;}
+.header .title .slogan {
+	font: normal 1.1em Verdana,sans-serif;
+	border-bottom: 1px dashed #657382;
+}
+
+
+
+/******************* Begin Conteudo ***************/
+.main {
+	border-top: 4px solid #FFF;	
+	padding: 8px 0 0 0;
+}
+
+
+
+/******************* Begin Tabela ***************/
+.tabela {
+     border: 1px solid green;
+}
+
+.ui-datatable-header{
+   background: blue;
+}
+
+/******************* Begin footer ***************/
+.footer {
+	background: #949490;
+	color: #F7F7F2;
+	margin-top: 15px;
+	padding: 10px 12px;
+}
+.footer a {
+	color: #F7F7F2;
+	text-decoration: none;
+}
+.footer a:hover {color: #FFC;}
+
+.ui-widget {
+    font-size: 12px !important;
+}
+
+label {
+    font-size: 12px !important;
+}

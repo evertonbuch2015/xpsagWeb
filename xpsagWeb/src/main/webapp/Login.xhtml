@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Sistema de Gestão Avançado - XpSag Web</title>
+</h:head>
+
+<h:body style="background: url(resources/images/login_bg.jpg) no-repeat top center;">
+
+	<h:form id="login">		
+		<div style="width:400px;margin:0px auto;padding:4px;margin-top: 12%; color:#CCCCCC;">
+			<p:outputLabel value="Sistema Avançado de Gestão - XpSag Web" 
+				style="color:#CCCCCC ;font-size:20px;"/>
+			
+			<br/>
+			
+			<h:outputLink value="http://www.rudar.com.br" 					 
+		 			style="color:#CCCCCC ;font-size:12px;">
+    			<span class="ui-button-text" >www.rudar.com.br</span>
+			</h:outputLink>	
+			
+		</div>
+			
+		<div style="width:405px; height:200px; margin:0px auto;padding:48px; color: #fff ;
+					background: url(resources/images/loginbox_bg.png) no-repeat top center;">				
+			
+			<h:panelGrid columns="1">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome de Usuário" for="nomeUsuario" />
+					<p:inputText id="nomeUsuario" value="#{loginBean.usuario.nomeUsuario}" required="true" requiredMessage="Informe o Nome de Usuário!"/>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2" style="margin-top: 15px;">
+					<p:outputLabel value="Senha:" for="senha"/>
+					<h:inputText id="senha" value="#{loginBean.usuario.senha}" required="true" style="margin-left: 81px !important;"
+							styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all">
+						<f:passThroughAttribute name="type" value="password" />
+					</h:inputText>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2" style="margin-top: 15px;">
+					<p:outputLabel value="Empresa"  for="empresa" rendered="#{loginBean.selecionandoEmpresa}"/>
+					<p:selectOneMenu value="#{loginBean.empresa}"  id="empresa"
+						required="true" requiredMessage="Informe a Empresa!"
+						rendered="#{loginBean.selecionandoEmpresa}"  
+						style="margin-left: 66px !important; width: 188px !important" autoWidth="false">
+								
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{loginBean.empresas}" var="empresa"
+							 itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2" >
+					<p:commandButton value="Efetuar Login" actionListener="#{loginBean.efetuaLogin}" 
+						update="@form" style="margin-top: 10px;"
+						rendered="#{!loginBean.selecionandoEmpresa}"/>
+					
+					<p:commandButton value="Prosseguir" action="#{loginBean.prosseguir()}" 
+						update="@form" style="margin-top: 10px;" 
+						rendered="#{loginBean.selecionandoEmpresa}"/>
+				
+				</h:panelGrid>				
+				
+			</h:panelGrid>
+		
+		</div>
+		<p:messages globalOnly="true" style="width:50%;margin:0px auto;" 
+			closable="true" styleClass="msgInfo"/>
+	</h:form>
+</h:body>
+</html>

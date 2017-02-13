@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+</h:head>
+<h:body>
+
+	<h:form>
+    	<h:panelGrid columns="2">
+    	
+    		<p:outputLabel value="#{label.produto}" for="produto" />
+    		<p:autoComplete id="produto" value="#{selecaoRomaneioItemBean.romaneioItem.produto}" size="50"
+    			var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}" minQueryLength="4"
+				forceSelection="true" completeMethod="#{selecaoRomaneioItemBean.completaProduto}" >
+				<p:watermark value="#{label.pesquise_pelo_nome}" for="produto"/>
+				<p:ajax event="itemSelect" listener="#{selecaoRomaneioItemBean.onItemSelect}" update="vlr"/>
+			</p:autoComplete>
+				
+			<p:outputLabel value="#{label.quantidade}" for="qtd" />
+			<p:inputText value="#{selecaoRomaneioItemBean.romaneioItem.quantidade}" id="qtd" size="20"
+				required="true"/>
+					
+			<p:outputLabel value="#{label.vlr_unitario}" for="vlr" />
+			<p:inputText value="#{selecaoRomaneioItemBean.romaneioItem.valorUnitario}" id="vlr" size="20"
+				required="true"/>
+				
+			<p:outputLabel value="#{label.qtd_troca}" for="qtdTroca" />
+			<p:inputText value="#{selecaoRomaneioItemBean.romaneioItem.quantidadeTroca}" id="qtdTroca" size="20"
+				required="true"/>
+				 
+				
+			<p:commandButton icon="ui-icon-check" iconPos="center" 
+				title="#{label.btn_confirmar}" action="#{selecaoRomaneioItemBean.retornoDialog}"/>
+				 		
+    	</h:panelGrid>
+			
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,171 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" locale="#{languageBean.localeCode}">
+
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<h:outputStylesheet library="style" name="default.css"/>
+		<h:outputScript library="js" name="LocaleCalendario.js"/>
+		<title><ui:insert name="tituloPagina" /></title>
+
+		<ui:insert name="head"></ui:insert>
+	</h:head>
+
+	<h:body>
+		<div class="outer-container">
+			<div class="inner-container">
+							
+				<h:form>
+				<div class="header">
+					<p:toolbar styleClass="barraMenu" style="height:35px;">
+						
+						<p:toolbarGroup align="left">
+
+							<p:menubar id="menuEsquerda" styleClass="menuSemBorda">
+
+								<p:submenu label="" icon="ui-icon-home">
+									<p:menuitem value="#{label.menu_inicio}" icon="ui-icon-home" url="/index.xhtml" />
+								</p:submenu>
+
+								<p:submenu label="#{label.menu_cadastro}">																		
+									<p:menuitem value="#{label.menu_colaborador}" url="#"/>
+									<p:menuitem value="#{label.menu_vendedor}" url="#"/>
+									<p:menuitem value="#{label.menu_empresa}" url="/cadastros/empresa.xhtml?faces-redirect=true"/>									
+									<p:separator />
+									<p:menuitem value="#{label.menu_banco}" url="#"/>
+									<p:menuitem value="#{label.menu_centro_custo}" url="#"/>
+									<p:menuitem value="#{label.menu_cond_pagamento}" url="#"/>
+									<p:separator />
+									<p:menuitem value="#{label.menu_produtos}" url="#"/>
+									<p:menuitem value="#{label.menu_nat_operacao}" url="#"/>
+									<p:menuitem value="#{label.menu_local_estoque}" url="#"/>
+									<p:separator/>
+									<p:menuitem value="#{label.menu_usuario}" url="/cadastros/usuario.xhtml?faces-redirect=true"/>
+								</p:submenu>
+
+																
+								<p:submenu label="#{label.menu_caixa}">
+									<p:menuitem value="#{label.menu_mov_caixa_banco}" url="#"/>
+									<p:menuitem value="#{label.menu_pagamentos}" url="#"/>
+									<p:menuitem value="#{label.menu_recebimentos}" url="#"/>						
+									<p:separator />
+								</p:submenu>
+								
+								
+								<p:submenu label="#{label.menu_compras}">
+									<p:separator />
+								</p:submenu>
+								
+								
+								<p:submenu label="#{label.menu_contabilidade}">
+									<p:menuitem value="#{label.menu_demonstrativo}" url="#"/>
+									<p:menuitem value="#{label.menu_lotes}" url="#"/>
+									<p:menuitem value="#{label.menu_plano_contas}" url="#"/>
+									<p:separator />
+								</p:submenu>
+								
+								
+								<p:submenu label="#{label.menu_contas_pagar}">
+									<p:menuitem value="#{label.menu_adiant_fornecedor}" url="#"/>
+									<p:menuitem value="#{label.menu_dup_pagar}" url="#"/>
+									<p:menuitem value="#{label.menu_prev_pagamento}" url="#"/>
+									<p:separator />
+								</p:submenu>
+								
+								
+								<p:submenu label="#{label.menu_contas_receber}">
+									<p:menuitem value="#{label.menu_adiant_clientes}" url="#"/>
+									<p:menuitem value="#{label.menu_dup_receber}" url="#"/>
+									<p:menuitem value="#{label.menu_prev_recebimento}" url="#"/>
+									<p:separator />
+								</p:submenu>
+								
+								<p:submenu label="#{label.menu_vendas}">
+									<p:menuitem value="#{label.menu_romaneio}" url="/vendas/romaneio.xhtml?faces-redirect=true"/>
+									<p:separator />
+								</p:submenu>
+
+							</p:menubar>
+						</p:toolbarGroup>
+						
+						
+						<p:toolbarGroup align="right" rendered="#{usuarioLogado != null}">
+							<p:menubar id="menuDireita" styleClass="menuSemBorda">
+								<p:submenu label="#{usuarioLogado.nomeColaborador}">
+									<p:menuitem value="#{label.menu_linguagem}" url="/language.xhtml?faces-redirect=true"
+			             				ajax="false" icon="ui-icon-wrench" />
+									<p:separator/>
+									<p:menuitem value="#{label.menu_sair}" action="#{loginBean.deslogar()}" 
+										styleClass="menuItem" icon="ui-icon-close"/>
+								</p:submenu>
+							</p:menubar>>							
+						</p:toolbarGroup>
+
+					</p:toolbar>
+					
+					<div class="title">
+						<span class="sitename"><a href="index.xhtml">Sistema Avançado de Gestão </a></span>
+						<span class="sitename"><a href="#"> <ui:insert name="nomePrograma" /></a></span>
+					</div>
+
+				</div>
+				</h:form>
+				
+
+				<div class="main">
+
+					<div class="content">
+						<h:form prependId="false">
+							<ui:insert name="content"/>
+							
+							<p:confirmDialog global="true">
+								<p:commandButton value="#{label.txt_sim}" type="button" icon="ui-icon-check" styleClass="ui-confirmdialog-yes"/>
+								<p:commandButton value="#{label.txt_nao}" type="button" icon="ui-icon-close" styleClass="ui-confirmdialog-no"/>
+							</p:confirmDialog>
+						</h:form>
+					</div>
+
+					<div class="clearer"></div>
+
+				</div>
+
+				<div class="footer">
+					<!--  <span class="left">Powered by <a href="http://primefaces.prime.com.tr">@Everton Buchkorn</a></span>-->
+					<span class="left"><h:outputText value="#{empresa.codigo}" /> <h:outputText value=" - " /> <h:outputText value="#{empresa.nomeFantasia}" /> </span>
+					<span class="right"> 					
+						<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
+							<f:facet name="default">
+        						<h:outputText value="Status: StandBy" />
+    						</f:facet>
+							
+							<f:facet name="start">
+								<h:graphicImage library="img" name="ajax-loader.gif" />
+							</f:facet>
+
+							<f:facet name="complete">
+								<h:outputText value="Status: Completed" />
+							</f:facet>
+						</p:ajaxStatus>
+					</span>
+
+					<div class="clearer"></div>
+
+				</div>
+
+			</div>
+
+		</div>
+		
+		
+		<p:dialog widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false" >
+    		<h:graphicImage library="img" name="ajax-loader.gif" />
+		</p:dialog>
+		
+	</h:body>
+</f:view>
+
+</html>
