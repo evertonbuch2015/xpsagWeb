@@ -19,7 +19,7 @@ public class ColaboradorDao extends GenericDao<Colaborador> {
 
 
 	public boolean gravar(Colaborador colaborador) {
-		if (colaborador.getId() == null) {						
+		if (colaborador.getId() == null) {
 			if (save(colaborador)) {
 				UtilMensagens.mensagemInformacao("Cadastro de Colaborador Realizado com Sucesso");
 				return true;
@@ -74,7 +74,7 @@ public class ColaboradorDao extends GenericDao<Colaborador> {
 	@Override
 	public Colaborador findAllAttributesEntity(Integer id) {
 		String jpql =
-			"Select c From Colaborador c left Join fetch c.pessoa where c.id = ?1";
+			"Select c From Colaborador c lefth Join fetch c.pessoa where c.id = ?1";
 		return findOne(jpql, id);
 	}
 
@@ -90,19 +90,4 @@ public class ColaboradorDao extends GenericDao<Colaborador> {
 
         return query.getResultList();
     }
-	
-	
-	public Integer getMaxCodigo(){
-		
-		EntityManager em = getEntityManager();
-		em.getTransaction().begin();
-		
-		Query query = em.createQuery("Select max(c.codigo) From Colaborador c", Integer.class);
-		
-		Integer retorno = (Integer) query.getSingleResult();
-		
-		em.getTransaction().commit();
-		em.close();
-		return retorno;
-	}
 }

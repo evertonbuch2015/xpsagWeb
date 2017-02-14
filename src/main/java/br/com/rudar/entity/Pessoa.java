@@ -1,7 +1,6 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -105,15 +104,6 @@ public class Pessoa implements Serializable{
 	}
 	
 	
-	
-	public String getDataCadastroFormatada() {
-		if(this.dataCadastro != null){
-			return new SimpleDateFormat("dd/MM/yyyy").format(dataCadastro);
-		}else{
-			return null;
-		}
-	}
-	
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
@@ -122,8 +112,7 @@ public class Pessoa implements Serializable{
 		this.dataCadastro = dataCadastro;
 	}
 	
-	
-	
+		
 	public TipoPessoa getTipo() {
 		return tipo;
 	}
@@ -132,27 +121,29 @@ public class Pessoa implements Serializable{
 		this.tipo = tipo;
 	}
 	
-
 	
 	public String getDocumento() {
-		return this.documento;
+		return documento;
 	}
 
+	
 	public String getDocumentoFormatado(){
 		switch (this.tipo) {
 		case C:
-			return 	documento.substring(0, 9)+ "/" + documento.substring(9);
+			
+			break;
 		case J:
-			return 	documento.substring(0, 2) + "." + documento.substring(2, 5) + "." + documento.substring(5, 8)
-						+ "/" + documento.substring(8,12) +"-"+ documento.substring(12);
+			this.documento = documento.replace(".", "").replace("-", "").replace("/", "");
+			break;
 		case F:
-			return 	documento.substring(0, 3) + "." + documento.substring(3, 6) + "." + documento.substring(6, 9)
-						 +"-"+ documento.substring(9);
+			
+			break;
 		case V:
-			return 	documento.substring(0, 2) + "." + documento.substring(2, 5) + "." + documento.substring(5, 8)
-					+ "/" + documento.substring(8,12) +"-"+ documento.substring(12);
+			
+			break;
 		case E:
-			return this.documento;
+			
+			break;
 		}	
 		return null;
 	}
@@ -164,7 +155,6 @@ public class Pessoa implements Serializable{
 		}
 	}
 
-	
 	
 	public String getEmail() {
 		return email;
@@ -199,7 +189,7 @@ public class Pessoa implements Serializable{
 	public Boolean getInativo() {
 		if(this.inativo == null) return null;
 		
-		return inativo.equals("S") ? true : false;
+		return inativo.equals("S") ? Boolean.TRUE : Boolean.TRUE;
 	}
 
 	public void setInativo(Boolean value) {
@@ -213,7 +203,7 @@ public class Pessoa implements Serializable{
 	public Boolean getUtilizarFantasia() {
 		if(this.utilizarFantasia == null) return null;
 		
-		return utilizarFantasia.equals("S") ? true : false;
+		return utilizarFantasia.equals("S") ? Boolean.TRUE : Boolean.TRUE;
 	}
 
 	public void setUtilizarFantasia(Boolean value) {
