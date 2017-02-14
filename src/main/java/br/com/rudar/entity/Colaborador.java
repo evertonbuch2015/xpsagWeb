@@ -1,6 +1,8 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import br.com.rudar.enumerated.TipoColaborador;
 
 
 @Entity
@@ -98,7 +102,66 @@ public class Colaborador implements Serializable {
 	public void setTipoCliente(String tipoCliente) {
 		this.tipoCliente = tipoCliente;
 	}
-
+	
+	
+	public List<TipoColaborador> getTipoColaborador(){
+		List<TipoColaborador> lista = new ArrayList<>();
+		
+		if(this.tipoCliente == null){
+			this.tipoCliente = "";
+		}
+		
+		if(this.tipoCliente.contains(TipoColaborador.C.name())){
+			lista.add(TipoColaborador.C);
+		}
+		
+		if(this.tipoCliente.contains(TipoColaborador.F.name())){
+			lista.add(TipoColaborador.F);
+		}
+		
+		if(this.tipoCliente.contains(TipoColaborador.T.name())){
+			lista.add(TipoColaborador.T);
+		}
+		
+		if(this.tipoCliente.contains(TipoColaborador.M.name())){
+			lista.add(TipoColaborador.M);
+		}
+		
+		if(this.tipoCliente.contains(TipoColaborador.R.name())){
+			lista.add(TipoColaborador.R);
+		}
+		
+		return lista;
+	}
+	
+	
+	public void setTipoColaborador(List<TipoColaborador> lista){
+		
+		if(this.tipoCliente == null){
+			this.tipoCliente = "";
+		}
+		
+		if(lista.contains(TipoColaborador.C.name())){
+			this.tipoCliente = this.tipoCliente + TipoColaborador.C.name();
+		}
+		
+		if(lista.contains(TipoColaborador.F.name())){
+			this.tipoCliente = this.tipoCliente +TipoColaborador.F.name();
+		}
+		
+		if(lista.contains(TipoColaborador.T.name())){
+			this.tipoCliente = this.tipoCliente + TipoColaborador.T.name();
+		}
+		
+		if(lista.contains(TipoColaborador.M.name())){
+			this.tipoCliente = this.tipoCliente +TipoColaborador.M.name();
+		}
+		
+		if(lista.contains(TipoColaborador.R.name())){
+			this.tipoCliente = this.tipoCliente + TipoColaborador.R.name();
+		}
+		
+	}
 	
 	
 	public Pessoa getPessoa() {
