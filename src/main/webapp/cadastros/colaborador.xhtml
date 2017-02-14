@@ -46,8 +46,7 @@
 			
 			<!-- ################### BOTÕES ############################## -->
 			
-			<app:barraBotoes bean="#{colaboradorBean}"/>
-						
+			<app:barraBotoes bean="#{colaboradorBean}"/>							
 						
 			<!-- ################## CONPONENTES EDIÇÃO ########################## -->				
 			
@@ -215,7 +214,8 @@
 				<p:dataTable value="#{colaboradorBean.entidades}" var="colaborador" id="tbl" 
 					selection="#{colaboradorBean.entidade}" selectionMode="single"
 					rowKey="#{colaborador.id}" paginator="true" reflow="true" rows="20"
-					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom" widgetVar="carsTable"
+					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom"
+					widgetVar="carsTable" emptyMessage="#{label.msg_tabela_vazia}"
 					paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 					style="margin: -5px -11px;">				
 					
@@ -252,7 +252,7 @@
 					</p:column>
 					
 										
-					<p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;">						
+					<p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;" exportable="false">						
 						<p:commandButton actionListener="#{colaboradorBean.editar(colaborador)}" 
 							styleClass="editarBotao" value="" update="@form"/>
 							

@@ -1,10 +1,15 @@
 package br.com.rudar.DAO;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.com.rudar.entity.Romaneio;
 import br.com.rudar.entity.RomaneioItem;
+import br.com.rudar.mbeans.RomaneioBean.TipoFiltro;
 import br.com.rudar.util.UtilErros;
 import br.com.rudar.util.UtilMensagens;
 
@@ -81,5 +86,44 @@ public class RomaneioDao extends GenericDao<Romaneio> {
 		em.getTransaction().commit();
 		em.close();
 		return retorno;
+	}
+
+
+	public List<Romaneio> getByFilterTable(TipoFiltro tipoFiltro , String valorFiltro){
+		List<Romaneio> lista = null;
+		
+		if(tipoFiltro.equals(TipoFiltro.CODIGO)){
+			String jpql = "Select r From Romaneio r where r.codigo in (" + valorFiltro + ")";
+			lista = find(jpql);
+		}
+		else if(tipoFiltro.equals(TipoFiltro.NOME_CLIENTE)){
+			lista = 
+				find("Select r From Romaneio r left JOIN FETCH r.colaborador c "
+				+ "	where c.fantasia Like ?1 order by r.codigo asc",valorFiltro);
+		}
+		else if(tipoFiltro.equals(TipoFiltro.DATA_EMISSAO)){
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				Date dt = sdf.parse(valorFiltro);				
+				lista = 
+						find("Select r From Romaneio r left JOIN FETCH r.colaborador "
+							+ "	where r.dataEmissao = ?1 order by r.codigo asc", dt);
+			} catch (Exception e) {
+
+			}
+		}
+		else if(tipoFiltro.equals(TipoFiltro.DATA_EMISSAO_MAIOR)){
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				Date dt = sdf.parse(valorFiltro);				
+				lista = 
+						find("Select r From Romaneio r left JOIN FETCH r.colaborador "
+							+ "	where r.dataEmissao >= ?1 order by r.codigo asc", dt);
+			} catch (Exception e) {
+
+			}
+		}
+				
+		return lista;
 	}
 }

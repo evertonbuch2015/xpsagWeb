@@ -1,12 +1,13 @@
 package br.com.rudar.DAO;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import br.com.rudar.entity.Usuario;
+import br.com.rudar.mbeans.UsuarioBean.TipoFiltro;
 import br.com.rudar.util.UtilMensagens;
 
 public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
@@ -64,5 +65,20 @@ public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 		}
 
 		return retorno;
+	}
+
+	
+	public List<Usuario> getByFilterTable(TipoFiltro tipoFiltro , String valorFiltro){
+		List<Usuario> lista= null;
+		
+		if(tipoFiltro.equals(TipoFiltro.CODIGO)){
+			String jpql = "Select u From Usuario u where u.idUsusario in (" + valorFiltro + ")";
+			lista = find(jpql);
+		}
+		else if(tipoFiltro.equals(TipoFiltro.NOME)){
+			lista = find("Select u From Usuario u where u.nomeUsuario like ?",valorFiltro);
+		}
+		
+		return lista;
 	}
 }

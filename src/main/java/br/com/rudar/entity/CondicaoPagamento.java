@@ -64,10 +64,8 @@ public class CondicaoPagamento implements Serializable {
 			fetch = FetchType.LAZY,	cascade = CascadeType.ALL)
 	private List<CondicaoPagamentoDias> dias;
 
-
 	
 	//--------------------------------	GETs and SETs------------------------------//
-	
 	
 	public Integer getId() {
 		return Id;
@@ -157,11 +155,9 @@ public class CondicaoPagamento implements Serializable {
 	public void setDias(List<CondicaoPagamentoDias> dias) {
 		this.dias = dias;
 	}
-
 	
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//	
-
 	
 	@Override
 	public int hashCode() {
@@ -193,5 +189,4 @@ public class CondicaoPagamento implements Serializable {
 		}
 		return true;
 	}
-	
 }

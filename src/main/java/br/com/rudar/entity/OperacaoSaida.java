@@ -34,7 +34,6 @@ public class OperacaoSaida implements Serializable {
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
-	
 	public Integer getId() {
 		return Id;
 	}
@@ -56,8 +55,8 @@ public class OperacaoSaida implements Serializable {
 	@OneToMany(mappedBy = "operacaoSaida", targetEntity = Produto.class, 
 			fetch = FetchType.LAZY,	cascade = CascadeType.ALL)
     private List<Produto> produtos;
-	//--------------------------------	Métodos Auxiliares------------------------------//
 	
+	//--------------------------------	Métodos Auxiliares------------------------------//
 	
 	@Override
 	public int hashCode() {

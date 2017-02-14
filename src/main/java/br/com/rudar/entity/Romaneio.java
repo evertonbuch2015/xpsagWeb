@@ -33,10 +33,6 @@ public class Romaneio implements Serializable{
 	private static final long serialVersionUID = 7946040661061518085L;
 
 
-	public Romaneio() {
-	
-	}
-	
 	@Id
     @SequenceGenerator(name="G_FAT_ROMANEIO_PAO", sequenceName="\"G_FAT_ROMANEIO_PAO\"", allocationSize=1)  
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_FAT_ROMANEIO_PAO")
@@ -52,8 +48,7 @@ public class Romaneio implements Serializable{
 	@Column(name = "CFIL", length = 2)
 	private String filial;
 	
-	
-	
+		
 	@Column(name = "COD_FATPEDIDO")
 	private Integer codigoPedido;
 	
@@ -65,8 +60,7 @@ public class Romaneio implements Serializable{
 	@Column(name = "TIPO_FRETE", length = 1)
 	private TipoFrete tipoFrete;
 	
-	
-	
+		
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_EMISSAO")
 	private Date dataEmissao;
@@ -101,14 +95,12 @@ public class Romaneio implements Serializable{
 	private Colaborador transportadora;
 	
 	
-	
 	@OneToMany(mappedBy = "romaneio", targetEntity = RomaneioItem.class, 
 			fetch = FetchType.LAZY,	cascade = CascadeType.ALL)
 	private List<RomaneioItem> romaneioItens;
 
 
 	//--------------------------------	GETs and SETs------------------------------//
-	
 	
 	public Integer getId() {
 		return id;
@@ -158,7 +150,7 @@ public class Romaneio implements Serializable{
 		this.codigoPedido = codigoPedido;
 	}
 
-
+	
 	
 	public String getCodigoOcCliente() {
 		return codigoOcCliente;
@@ -269,10 +261,7 @@ public class Romaneio implements Serializable{
 	}
 
 	
-	
-	
 	//--------------------------------	Métodos Auxiliares------------------------------//
-	
 	
 	@Override
 	public int hashCode() {

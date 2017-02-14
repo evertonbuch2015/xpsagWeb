@@ -31,7 +31,7 @@ public class LoginBean implements Serializable{
 		usuarioDao = new UsuarioDao();
 	}
 	
-	
+	// ================Métodos do Usuário============================================
 	public String efetuaLogin() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
@@ -58,7 +58,7 @@ public class LoginBean implements Serializable{
 	    return "index?faces-redirect=true";
 	}
 	
-	
+
 	public String prosseguir(){
 		if (this.usuario.getIdUsusario() != null && selecionandoEmpresa) {
 			SessionContext.getInstance().setAttribute("usuarioLogado", this.usuario);
@@ -68,8 +68,7 @@ public class LoginBean implements Serializable{
 		return "index?faces-redirect=true";
 	}
 	
-	
-	
+		
 	public String deslogar() {
 		SessionContext.getInstance().deleteAttribute("usuarioLogado");
 		SessionContext.getInstance().deleteAttribute("empresa");
@@ -77,7 +76,6 @@ public class LoginBean implements Serializable{
 	    
 	    return "/Login?faces-redirect=true";
 	}
-	
 	
 	
 	public String abrirUsuario(){
@@ -91,7 +89,7 @@ public class LoginBean implements Serializable{
 	}
 	
 	
-	
+	// ================Métodos GET e SET=============================================
 	public boolean isSelecionandoEmpresa() {
 		return selecionandoEmpresa;
 	}

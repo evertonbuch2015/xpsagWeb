@@ -283,9 +283,9 @@
 
 			<p:dataTable value="#{romaneioBean.entidades}" var="romaneio"
 				id="tbl" selection="#{romaneioBean.entidade}" selectionMode="single"
-				rowKey="#{romaneio.id}" paginator="true" reflow="true"
+				rowKey="#{romaneio.id}" paginator="true" reflow="true" rows="20"
 				rowsPerPageTemplate="10,25,50" paginatorPosition="bottom"
-				widgetVar="carsTable"
+				widgetVar="carsTable" emptyMessage="#{label.msg_tabela_vazia}"
 				paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 				style="margin: -5px -11px;">
 
@@ -299,7 +299,7 @@
 					<h:commandLink>
 						<p:graphicImage library="images" name="pdf.png" width="24"
 							style="float:right" />
-						<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+						<p:dataExporter type="pdf" target="tbl" fileName="cars"/>
 					</h:commandLink>
 				</f:facet>
 
@@ -338,7 +338,7 @@
 				</p:column>
 
 
-				<p:column headerText="#{label.acoes}" style="width:10%;">
+				<p:column headerText="#{label.acoes}" style="width:10%;" exportable="false">
 					<p:commandButton actionListener="#{romaneioBean.editar(romaneio)}"
 						styleClass="editarBotao" value="" update="@form" />
 

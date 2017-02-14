@@ -47,12 +47,10 @@ public class Usuario implements Serializable {
 	@Column(name = "PWD", nullable = true, length = 70)
 	private String senha;
 
-	
-	
+		
 	@NotEmpty(message = "O Grupo deve ser informado!")
 	@Column(name = "GRUPO", nullable = false, length = 40)
 	private String grupo;
-	
 	
 	
 	@Column(name = "ATIVO")
@@ -182,9 +180,7 @@ public class Usuario implements Serializable {
 	}
 
 	
-	
 	//--------------------------------	Métodos Auxiliares------------------------------//
-	
 	
 	@Override
 	public int hashCode() {
@@ -193,7 +189,6 @@ public class Usuario implements Serializable {
 		result = prime * result + ((idUsusario == null) ? 0 : idUsusario.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

@@ -23,7 +23,6 @@ import br.com.rudar.util.SessionContext;
 @SessionScoped
 public class SelecaoRomaneioItemBean {
 
-	
 	private RomaneioItem romaneioItem;
 	private ProdutoDao produtoDao;
 	
@@ -32,16 +31,7 @@ public class SelecaoRomaneioItemBean {
 		this.produtoDao = new ProdutoDao();
 	}
 	
-	
-	public RomaneioItem getRomaneioItem() {
-		return romaneioItem;
-	}
-	
-	
-	public void setRomaneioItem(RomaneioItem romaneioItem) {
-		this.romaneioItem = romaneioItem;
-	}
-	
+	// =============================METODOS DO USUÀRIO================================
 	
 	public List<Produto> completaProduto(String query) { 
         List<Produto> produtos = produtoDao.find("From Produto p where p.nome like ?1", "%"+ query +"%");
@@ -86,4 +76,15 @@ public class SelecaoRomaneioItemBean {
 		RequestContext.getCurrentInstance().closeDialog(this.romaneioItem);
 	}
 
+	
+	// =============================GET AND SET=======================================
+	
+	public RomaneioItem getRomaneioItem() {
+		return romaneioItem;
+	}
+	
+	
+	public void setRomaneioItem(RomaneioItem romaneioItem) {
+		this.romaneioItem = romaneioItem;
+	}	
 }

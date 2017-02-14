@@ -75,7 +75,6 @@ public class Pessoa implements Serializable{
 	private String contato;
 
 	
-	
 	//--------------------------------	GETs and SETs------------------------------//
 	
 	public Integer getId() {
@@ -225,10 +224,7 @@ public class Pessoa implements Serializable{
 	}
 	
 	
-	
-	
 	//--------------------------------	Métodos Auxiliares------------------------------//
-	
 	
 	@Override
 	public int hashCode() {
@@ -259,7 +255,4 @@ public class Pessoa implements Serializable{
 		}
 		return true;
 	}
-	
-	
-	
 }

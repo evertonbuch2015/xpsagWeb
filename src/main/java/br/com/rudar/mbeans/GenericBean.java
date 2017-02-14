@@ -9,16 +9,14 @@ public abstract class GenericBean<E> {
 	public enum EstadoTela {
 		INSERINDO, ALTERANDO, BUSCANDO, VISUALIZANDO
 	}
-
+	
+	protected String valorFiltro;
 	protected E entidade;
-	
 	protected List<E> entidades;
-	
 	private EstadoTela estadoTela = EstadoTela.BUSCANDO;
 	
 	
-	
-	// Métodos para controlar e consultar o estado da Tela.
+	// ================Métodos para controlar e consultar o estado da Tela.============
 	public boolean isInserindo() {
 		return estadoTela.equals(EstadoTela.INSERINDO);
 	}
@@ -36,7 +34,7 @@ public abstract class GenericBean<E> {
 	}
 
 	
-	// Métodos para alterar o estado da Tela.
+	// ================Métodos para alterar o estado da Tela.==========================
 	public void mudarInserir() {
 		this.estadoTela = EstadoTela.INSERINDO;
 	}
@@ -55,8 +53,10 @@ public abstract class GenericBean<E> {
 	
 	
 	
+	// ================Metodos a serem Implementados==================================
 	
-	//Metodos a serem Implementados
+	public abstract void filtrar();
+	
 	public abstract E criarEntidade();
 	
 	public abstract void gravar();
@@ -68,12 +68,12 @@ public abstract class GenericBean<E> {
 	public abstract void carregaEntidade();
 
 	
-	
-	//Metodos já implementados (Prontos)
+	// ================Metodos já implementados (Prontos)=============================
 	public void novo(){
 		this.entidade = criarEntidade();
 		mudarInserir();
 	}
+	
 	
 	public void editar(){
 		mudarAlterar();
@@ -92,8 +92,7 @@ public abstract class GenericBean<E> {
 		mudarBuscar();
 	}
 	
-	
-	
+		
 	public void onRowSelect(SelectEvent event) {		
 		//this.entidade = (E) event.getObject();
 	}
@@ -107,7 +106,7 @@ public abstract class GenericBean<E> {
 	}
 	
 
-	//Métodos GET e SET
+	// ================Métodos GET e SET=============================================
 	public void setEntidade(E entidade) {
 		this.entidade = entidade;
 	}
@@ -115,6 +114,7 @@ public abstract class GenericBean<E> {
 	public E getEntidade() {
 		return entidade;
 	}
+	
 	
 	public void setEntidades(List<E> entidades) {
 		this.entidades = entidades;
@@ -127,4 +127,12 @@ public abstract class GenericBean<E> {
 		return entidades;
 	}
 	
+
+	public String getValorFiltro() {
+		return valorFiltro;
+	}
+	
+	public void setValorFiltro(String valorFiltro) {
+		this.valorFiltro = valorFiltro;
+	}
 }

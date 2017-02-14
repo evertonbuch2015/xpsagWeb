@@ -231,7 +231,8 @@
 				<p:dataTable value="#{empresaBean.entidades}" var="empresa" id="tbl" 
 					selection="#{empresaBean.entidade}" selectionMode="single"
 					rowKey="#{empresa.idEmpresa}" paginator="true" reflow="true"
-					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom" widgetVar="carsTable"
+					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom"
+					widgetVar="carsTable" emptyMessage="#{label.msg_tabela_vazia}"
 					paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 					style="margin: -5px -11px;">				
 					
@@ -273,7 +274,7 @@
 					</p:column>
 					
 					
-					<p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;">						
+					<p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;" exportable="false">						
 						<p:commandButton actionListener="#{empresaBean.editar(empresa)}" 
 							styleClass="editarBotao" value="" update="@form"/>
 							

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.com.rudar.entity.Colaborador;
+import br.com.rudar.mbeans.ColaboradorBean.TipoFiltro;
 import br.com.rudar.util.UtilErros;
 import br.com.rudar.util.UtilMensagens;
 
@@ -104,5 +105,20 @@ public class ColaboradorDao extends GenericDao<Colaborador> {
 		em.getTransaction().commit();
 		em.close();
 		return retorno;
+	}
+
+	
+	public List<Colaborador> getByFilterTable(TipoFiltro tipoFiltro , String valorFiltro){
+		List<Colaborador> lista = null;
+		
+		if(tipoFiltro.equals(TipoFiltro.CODIGO)){
+			String jpql = "Select c From Colaborador c where c.codigo in (" + valorFiltro + ")";
+			lista = find(jpql);
+		}
+		else if(tipoFiltro.equals(TipoFiltro.NOME)){
+			lista = find("Select c From Colaborador c where c.fantasia like ?",valorFiltro);
+		}
+		
+		return lista;
 	}
 }

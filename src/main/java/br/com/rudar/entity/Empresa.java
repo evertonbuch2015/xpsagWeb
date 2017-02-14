@@ -46,7 +46,7 @@ public class Empresa implements Serializable {
     @Column(name = "NOME" ,nullable = true , length = 100)
     private String nomeRazao;
 
-    
+  
     @Column(name = "FANTASIA" ,nullable = true , length = 40)
     private String nomeFantasia;
     
@@ -85,12 +85,7 @@ public class Empresa implements Serializable {
     @Column(name = "OBS" , length = 255)
     private String obs;
     
- 
-    //@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JoinColumn(name ="endereco_id")
-    //private Endereco endereco;
-    
-    
+
     @Column(name = "LOGOTIPO")
     private Byte[] logo;
     
@@ -100,13 +95,11 @@ public class Empresa implements Serializable {
     private RamoAtividade ramoAtividade;
 
     
-    
     @ManyToMany(mappedBy="empresas")
     private List<Usuario> usuarios;
     
     
 	//--------------------------------	GETs and SETs------------------------------//
-    
     
 	public Integer getIdEmpresa() {
 		return idEmpresa;
@@ -236,20 +229,6 @@ public class Empresa implements Serializable {
 	}
 
 
-
-	/*public Endereco getEndereco() {
-		if(this.endereco == null){
-			this.endereco = new Endereco();
-		}
-		return endereco;
-	}
-
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}*/
-	
-
 	public String getEmail() {
 		return email;
 	}
@@ -292,7 +271,6 @@ public class Empresa implements Serializable {
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
 	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -300,7 +278,6 @@ public class Empresa implements Serializable {
 		result = prime * result + ((idEmpresa == null) ? 0 : idEmpresa.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -318,7 +295,6 @@ public class Empresa implements Serializable {
 			return false;
 		return true;
 	}
-
 
 	@Override
 	public String toString() {

@@ -20,15 +20,11 @@ public class Vendedor implements Serializable {
 
 	private static final long serialVersionUID = -8016908923732717386L;
 
-
-
 	@Id
     @SequenceGenerator(name="G_CAD_VENDEDOR", sequenceName="\"G_CAD_VENDEDOR\"", allocationSize=1)  
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_CAD_VENDEDOR")
 	@Column(name = "COD_CADVENDEDOR")
 	private Integer Id;
-	
-	
 	
 	@Column(name = "CODIGO")
 	private Integer codigo;
@@ -40,7 +36,6 @@ public class Vendedor implements Serializable {
 	private String fantasia;
 	
 	
-	
 	@Column(name = "PERC_COMISSAO_SERVICO")
 	private Double percComissaoServico;
 	
@@ -49,7 +44,6 @@ public class Vendedor implements Serializable {
 	
 	@Column(name = "PERC_COMISSAO_GERENTE")
 	private Double percComissaoGerente;
-	
 	
 	
 	@Column(name = "PFON" , length = 2)
@@ -63,10 +57,8 @@ public class Vendedor implements Serializable {
     @JoinColumn(name ="CODIGO_PESSOA")
 	private Pessoa pessoa;
 
-
 	
 	//--------------------------------	GETs and SETs------------------------------//
-	
 	
 	public Integer getId() {
 		return Id;
@@ -169,8 +161,6 @@ public class Vendedor implements Serializable {
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
 	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -178,7 +168,6 @@ public class Vendedor implements Serializable {
 		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

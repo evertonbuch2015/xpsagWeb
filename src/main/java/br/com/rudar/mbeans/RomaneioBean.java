@@ -3,12 +3,9 @@ package br.com.rudar.mbeans;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import org.primefaces.event.SelectEvent;
-
 import br.com.rudar.DAO.ColaboradorDao;
 import br.com.rudar.DAO.CondicaoPagamentoDao;
 import br.com.rudar.DAO.RomaneioDao;
@@ -23,24 +20,32 @@ import br.com.rudar.util.SessionContext;
 @ManagedBean
 @SessionScoped
 public class RomaneioBean extends GenericBean<Romaneio> {
-
 	
+	public enum TipoFiltro{
+		CODIGO("Código"), NOME_CLIENTE("Nome Cliente"),
+		DATA_EMISSAO("Data Emissão"),DATA_EMISSAO_MAIOR("Data Emissão >=");
+		
+		private String label;
+
+		TipoFiltro(String label) {
+			this.label = label;
+		}
+		
+		public String getLabel(){
+			return this.label;
+		}
+	}
+	
+	private TipoFiltro filtro;	
 	private RomaneioDao romaneioDao;
 	private ColaboradorDao colaboradorDao;
 	private CondicaoPagamentoDao condicaoPagamentoDao;
-	
-	
+		
 	private Integer usuarioId;
-	
 	private List<Colaborador> transportadoras;
-	
 	private List<Colaborador> entregadores;
-
 	private List<CondicaoPagamento> condicaoPagamentos;
-	
-	
 	private RomaneioItem romaneioItem;
-	
 	
 	public RomaneioBean() {
 		this.romaneioDao = new RomaneioDao();
@@ -49,7 +54,11 @@ public class RomaneioBean extends GenericBean<Romaneio> {
 	}
 
 	
-	// =======================METODOS DO USUARIO=================================================	
+	// =======================METODOS DO USUARIO=====================================	
+	
+	public void filtrar(){
+		this.entidades = romaneioDao.getByFilterTable(filtro, valorFiltro);
+	}
 	
 	
 	@Override
@@ -58,6 +67,7 @@ public class RomaneioBean extends GenericBean<Romaneio> {
 											+ " left JOIN FETCH r.entregador e left JOIN FETCH r.transportadora t left JOIN FETCH r.colaborador cc left JOIN FETCH r.romaneioItens ii"
 											+ " where r.id = ?1", entidade.getId());		
 	}	
+
 	
 	@Override
 	public Romaneio criarEntidade() {
@@ -73,7 +83,7 @@ public class RomaneioBean extends GenericBean<Romaneio> {
 		return romaneio;
 	}
 
-	
+
 	@Override
 	public void gravar() {
 		if (romaneioDao.gravar(this.entidade)) {									
@@ -114,19 +124,18 @@ public class RomaneioBean extends GenericBean<Romaneio> {
 	}
 	
 	
-	
 	public void adicionarItem(RomaneioItem romaneioItem){		
 		romaneioItem.setRomaneio(this.entidade);
 		romaneioItem.setItem(this.entidade.getRomaneioItens().size()+1);	
 		this.entidade.getRomaneioItens().add(romaneioItem);
 	}
-
 	
 	
 	public void ItemSelecionado(SelectEvent event){
 		RomaneioItem romaneioItem = (RomaneioItem) event.getObject();
 		adicionarItem(romaneioItem);
 	}
+
 	
 	public void colaboradorSelecionado(SelectEvent event){
 		Colaborador colaborador = (Colaborador) event.getObject();		
@@ -134,7 +143,7 @@ public class RomaneioBean extends GenericBean<Romaneio> {
 	}
 	
 	
-	// =============================GET AND SET=================================
+	// =============================GET AND SET=====================================
 	
 	public RomaneioDao getRomaneioDao() {
 		return romaneioDao;
@@ -163,8 +172,7 @@ public class RomaneioBean extends GenericBean<Romaneio> {
 	public TipoFrete[] getTiposFrete(){
 		return TipoFrete.values();
 	}
-	
-	
+		
 	//RETORNA LISTA ENTREGADORES PARA O COMBO	
 	public List<Colaborador> getEntregadores() {
 		if(this.entregadores == null){
@@ -188,4 +196,18 @@ public class RomaneioBean extends GenericBean<Romaneio> {
 		}
 		return condicaoPagamentos;
 	}
+	
+	//RETORNA LISTA DE FILTROS PARA O COMBO
+	public TipoFiltro[] tipoFiltros(){
+		return TipoFiltro.values();
+	}
+	
+	public TipoFiltro getFiltro() {
+		return filtro;
+	}
+	
+	public void setFiltro(TipoFiltro filtro) {
+		this.filtro = filtro;
+	}
+
 }

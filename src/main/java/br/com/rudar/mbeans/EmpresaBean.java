@@ -18,6 +18,21 @@ import br.com.rudar.enumerated.RegimeTributario;
 @SessionScoped
 public class EmpresaBean extends GenericBean<Empresa> {
 	
+	public enum TipoFiltro{
+		CODIGO("Código"), NOME("Nome");
+		
+		private String label;
+
+		TipoFiltro(String label) {
+			this.label = label;
+		}
+		
+		public String getLabel(){
+			return this.label;
+		}
+	}
+	
+	private TipoFiltro filtro;	
 	private Integer empresaId;
 	private EmpresaDao empresaDao;
 
@@ -27,7 +42,12 @@ public class EmpresaBean extends GenericBean<Empresa> {
 	}
 	
 	
-	// =======================METODOS DO USUARIO=================================================
+	// =======================METODOS DO USUARIO=====================================
+	
+	public void filtrar(){
+		this.entidades = empresaDao.getByFilterTable(filtro, valorFiltro);
+	}
+	
 	
 	@Override
 	public void carregaEntidade() {
@@ -45,9 +65,10 @@ public class EmpresaBean extends GenericBean<Empresa> {
 	
 	@Override
 	public void refresh() {
-		if (this.entidades == null) {
-			this.entidades = empresaDao.findAll();
-		}				
+		if(this.entidades != null){
+			this.entidades.clear();
+		}
+		this.entidades = empresaDao.findAll();				
 	}
 	
 	
@@ -82,7 +103,8 @@ public class EmpresaBean extends GenericBean<Empresa> {
 		RequestContext.getCurrentInstance().closeDialog(empresa);
 	}
 		
-	// =============================GET AND SET=================================
+	
+	// =============================GET AND SET=====================================
 	
 	public EmpresaDao getEmpresaDao() {
 		return empresaDao;
@@ -98,12 +120,24 @@ public class EmpresaBean extends GenericBean<Empresa> {
 	}
 	
 	
-	
 	public RegimeTributario[] getRegimes(){
 		return RegimeTributario.values();
 	}
 	
 	public RamoAtividade[] getRamoAtividades(){
 		return RamoAtividade.values();
+	}
+
+	
+	public TipoFiltro[] tipoFiltros(){
+		return TipoFiltro.values();
+	}
+	
+	public TipoFiltro getFiltro() {
+		return filtro;
+	}
+	
+	public void setFiltro(TipoFiltro filtro) {
+		this.filtro = filtro;
 	}
 }

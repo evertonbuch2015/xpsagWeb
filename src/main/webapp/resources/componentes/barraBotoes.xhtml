@@ -14,7 +14,20 @@
 
 <cc:implementation>
 	<p:panelGrid columns="#{cc.attrs.colunasPanel}" layout="grid" styleClass="ui-noborder" id="barraBotoes">
-
+		
+		<p:selectOneMenu value="#{cc.attrs.bean.filtro}" id="tipoFiltro" rendered="#{cc.attrs.bean.buscando}">						
+			<f:selectItem itemLabel="Selecione" style="width:150px !important"/>
+			<f:selectItems value="#{cc.attrs.bean.tipoFiltros()}" var="a"
+			itemValue="#{a}" itemLabel="#{a.label}"/>						
+		</p:selectOneMenu>
+		
+		<p:inputText style="width:200px !important" value="#{cc.attrs.bean.valorFiltro}" 
+			rendered="#{cc.attrs.bean.buscando}" id="valorfiltro"/>
+					
+		<p:commandButton value="Filtrar" update="@form" style="width:80px"
+			styleClass="botaoAzul" rendered="#{cc.attrs.bean.buscando}"
+			actionListener="#{cc.attrs.bean.filtrar()}"/>
+		
 		<p:commandButton value="#{label.btn_novo}" update="@form" style="width:80px"
 			styleClass="botaoAzul"
 			rendered="#{cc.attrs.bean.visualizando or cc.attrs.bean.buscando}"

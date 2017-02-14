@@ -17,10 +17,9 @@ import org.primefaces.component.selectonemenu.SelectOneMenu;
 @ManagedBean
 @SessionScoped
 public class LanguageBean implements Serializable {
+	
 	private static final long serialVersionUID = 201405150723L;
-
 	private String localeCode;
-
 	private static Map<String, Locale> countries;
 
 	static {
@@ -29,9 +28,22 @@ public class LanguageBean implements Serializable {
 		countries.put("Português", new Locale("pt"));
 	}
 
-	public LanguageBean() {
-	}
+	
+	// =======================METODOS DO USUARIO=====================================	
+	
+	public void localeCodeChanged(AjaxBehaviorEvent e) {
+		String newLocaleValue = ((SelectOneMenu)e.getSource()).getValue() + "";
 
+		for (Entry<String, Locale> entry : countries.entrySet()) {
+			if (entry.getValue().toString().equals(newLocaleValue)) {
+				FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
+			}
+		}
+	}
+	
+	
+	// =============================GET AND SET======================================
+	
 	public Map<String, Locale> getCountries() {
 		return countries;
 	}
@@ -47,15 +59,5 @@ public class LanguageBean implements Serializable {
 
 	public void setLocaleCode(String localeCode) {
 		this.localeCode = localeCode;
-	}
-
-	public void localeCodeChanged(AjaxBehaviorEvent e) {
-		String newLocaleValue = ((SelectOneMenu)e.getSource()).getValue() + "";
-
-		for (Entry<String, Locale> entry : countries.entrySet()) {
-			if (entry.getValue().toString().equals(newLocaleValue)) {
-				FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
-			}
-		}
 	}
 }

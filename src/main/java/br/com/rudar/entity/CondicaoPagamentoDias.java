@@ -66,10 +66,8 @@ public class CondicaoPagamentoDias implements Serializable {
 		this.condicaoPagamento = condicaoPagamento;
 	}
 
-
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
-	
 	
 	@Override
 	public int hashCode() {
@@ -107,5 +105,4 @@ public class CondicaoPagamentoDias implements Serializable {
 	public String toString() {
 		return "CondicaoPagamentoDias [Id=" + Id + ", dias=" + dias + "]";
 	}
-	
 }

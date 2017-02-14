@@ -1,11 +1,14 @@
 package br.com.rudar.mbeans;
 
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.event.SelectEvent;
+
 import br.com.rudar.DAO.UsuarioDao;
 import br.com.rudar.DAO.VendedorDao;
 import br.com.rudar.entity.Empresa;
@@ -18,6 +21,21 @@ import br.com.rudar.enumerated.GrupoUsuarios;
 @SessionScoped
 public class UsuarioBean extends GenericBean<Usuario> {
 
+	public enum TipoFiltro{
+		CODIGO("Código"), NOME("Nome Usuário");
+		
+		private String label;
+
+		TipoFiltro(String label) {
+			this.label = label;
+		}
+		
+		public String getLabel(){
+			return this.label;
+		}
+	}
+	
+	private TipoFiltro filtro;		
 	private UsuarioDao usuarioDao;	
 	private Integer usuarioId;
 	
@@ -25,16 +43,20 @@ public class UsuarioBean extends GenericBean<Usuario> {
 	public UsuarioBean() {
 		usuarioDao = new UsuarioDao();
 	}
-	
-	
+		
 	// =======================METODOS DO USUARIO=================================================
-
+	
+	public void filtrar(){
+		this.entidades = usuarioDao.getByFilterTable(filtro, valorFiltro);
+	}
+	
 	
 	@Override
 	public void carregaEntidade() {
 		this.entidade =
 				usuarioDao.findOne("Select u From Usuario u left JOIN FETCH u.empresas where u.idUsusario = ?1 ", this.entidade.getIdUsusario());
 	}
+	
 	
 	@Override
 	public Usuario criarEntidade() {		
@@ -72,8 +94,7 @@ public class UsuarioBean extends GenericBean<Usuario> {
 			this.entidade.getEmpresas().remove(empresa);
 		}
 	}
-	
-	
+		
 	
 	public void adicionarEmpresa(Empresa empresa){		
 		if(!this.entidade.getEmpresas().contains(empresa)){
@@ -83,8 +104,7 @@ public class UsuarioBean extends GenericBean<Usuario> {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}	
-	
-	
+		
 	
 	public void empresaSelecionada(SelectEvent event){
 		Empresa empresa = (Empresa) event.getObject();
@@ -92,7 +112,6 @@ public class UsuarioBean extends GenericBean<Usuario> {
 	}
 	
 	// =============================GET AND SET=================================
-
 	
 	public UsuarioDao getUsuarioDao() {
 		return usuarioDao;
@@ -107,14 +126,26 @@ public class UsuarioBean extends GenericBean<Usuario> {
 		this.usuarioId = usuarioId;
 	}
 
-	
-	
+		
 	public GrupoUsuarios[] getGrupoUsuarios(){
 		return GrupoUsuarios.values();
 	}	
-	
-	
+		
 	public List<Vendedor> getVendedores(){
 		return new VendedorDao().findAll();
+	}
+
+	
+	//RETORNA LISTA DE FILTROS PARA O COMBO
+	public TipoFiltro[] tipoFiltros(){
+		return TipoFiltro.values();
+	}
+		
+	public TipoFiltro getFiltro() {
+		return filtro;
+	}
+		
+	public void setFiltro(TipoFiltro filtro) {
+		this.filtro = filtro;
 	}
 }

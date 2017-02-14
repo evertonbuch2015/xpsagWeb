@@ -29,25 +29,8 @@ public class SelecaoColaboradorBean {
 	}
 	
 	
-	public List<Colaborador> getColaboradores() {
-		return colaboradores;
-	}
-	
-	
-	public void setColaboradores(List<Colaborador> colaboradores) {
-		this.colaboradores = colaboradores;
-	}
-	
-	public String getFiltro() {
-		return filtro;
-	}
-	
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
-	}
-	
-	
-	
+	// =============================METODOS DO USUÀRIO===============================
+
 	public void pesquisar(){
 		Integer codVendedor = SessionContext.getInstance().getUsuarioLogado().getVendedor().getId();
 				
@@ -66,5 +49,24 @@ public class SelecaoColaboradorBean {
 	
 	public void retornoDialog(Colaborador colaborador){
 		RequestContext.getCurrentInstance().closeDialog(colaborador);
+	}
+
+	// =============================GET AND SET======================================
+	
+	public List<Colaborador> getColaboradores() {
+		return colaboradores;
+	}
+	
+	public void setColaboradores(List<Colaborador> colaboradores) {
+		this.colaboradores = colaboradores;
+	}
+	
+	
+	public String getFiltro() {
+		return filtro;
+	}
+	
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
 	}
 }

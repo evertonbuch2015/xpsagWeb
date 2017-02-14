@@ -156,7 +156,6 @@ public class RomaneioItem implements Serializable {
 
 	//--------------------------------	Métodos Auxiliares------------------------------//
 	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -164,7 +163,6 @@ public class RomaneioItem implements Serializable {
 		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

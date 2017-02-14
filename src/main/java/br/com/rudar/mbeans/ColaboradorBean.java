@@ -15,6 +15,21 @@ import br.com.rudar.util.SessionContext;
 @SessionScoped
 public class ColaboradorBean extends GenericBean<Colaborador> {
 
+	public enum TipoFiltro{
+		CODIGO("Código"), NOME("Nome");
+		
+		private String label;
+
+		TipoFiltro(String label) {
+			this.label = label;
+		}
+		
+		public String getLabel(){
+			return this.label;
+		}
+	}
+	
+	private TipoFiltro filtro;	
 	private ColaboradorDao  colaboradorDao;
 	private String mascaraDocumento;
 	
@@ -25,7 +40,12 @@ public class ColaboradorBean extends GenericBean<Colaborador> {
 	}
 	
 	
-	// =======================METODOS DO USUARIO=================================================
+	// =======================METODOS DO USUARIO=====================================
+	
+	public void filtrar(){
+		this.entidades = colaboradorDao.getByFilterTable(filtro, mascaraDocumento);
+	}
+	
 	
 	@Override
 	public void carregaEntidade() {
@@ -69,7 +89,7 @@ public class ColaboradorBean extends GenericBean<Colaborador> {
 			this.entidades.clear();
 		}
 			
-		this.entidades = colaboradorDao.findByPaged(40);
+		this.entidades = colaboradorDao.findByPaged(30);
 	}
 	
 
@@ -92,7 +112,7 @@ public class ColaboradorBean extends GenericBean<Colaborador> {
 	}
 	
 	
-	// =============================GET AND SET=================================	
+	// =============================GET AND SET======================================
 	
 	//RETORNA LISTA TIPO DE PESSOA PARA O COMBO
 	public TipoPessoa[] getTipoPessoas(){
@@ -110,8 +130,21 @@ public class ColaboradorBean extends GenericBean<Colaborador> {
 		return mascaraDocumento;
 	}
 	
-	
 	public void setMascaraDocumento(String mascaraDocumento) {
 		this.mascaraDocumento = mascaraDocumento;
+	}
+
+	
+	public TipoFiltro[] tipoFiltros(){
+		return TipoFiltro.values();
+	}
+	
+	
+	public TipoFiltro getFiltro() {
+		return filtro;
+	}
+	
+	public void setFiltro(TipoFiltro filtro) {
+		this.filtro = filtro;
 	}
 }
