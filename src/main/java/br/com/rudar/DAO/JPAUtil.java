@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+//Classe responsavel por instanciar uma conexão com o banco.
 public class JPAUtil {
 	
 	private static JPAUtil instanceJPAUtil;
