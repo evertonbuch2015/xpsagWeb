@@ -24,7 +24,7 @@ public class Teste {
 		
 //		Usuario t = usuarioDao.findOne("From Usuario c where c.idUsusario > ?1", 1);
 			
-
+		//mais um teste..
 	}
 
 }
