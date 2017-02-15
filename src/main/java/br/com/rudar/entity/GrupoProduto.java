@@ -15,7 +15,8 @@ import javax.persistence.Table;
 @Table(name = "CEA_GRUPO")
 public class GrupoProduto implements Serializable {
 	
-	
+	private static final long serialVersionUID = 5236854867248324393L;
+
 	@Id
     @SequenceGenerator(name="G_CEA_GRUPO", sequenceName="\"G_CEA_GRUPO\"", allocationSize=1)  
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_CEA_GRUPO")
