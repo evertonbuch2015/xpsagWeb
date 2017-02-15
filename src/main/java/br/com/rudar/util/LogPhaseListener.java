@@ -1,4 +1,4 @@
-package br.com.rudar.controller;
+package br.com.rudar.util;
 
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;

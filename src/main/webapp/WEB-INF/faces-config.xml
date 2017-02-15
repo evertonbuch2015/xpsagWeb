@@ -26,8 +26,8 @@
 	</application>
 
 	<lifecycle>
-		<phase-listener>br.com.rudar.controller.Autorizador</phase-listener>
-		<phase-listener>br.com.rudar.controller.LogPhaseListener</phase-listener>
+		<phase-listener>br.com.rudar.util.Autorizador</phase-listener>
+		<phase-listener>br.com.rudar.util.LogPhaseListener</phase-listener>
 	</lifecycle>
 
 </faces-config>
