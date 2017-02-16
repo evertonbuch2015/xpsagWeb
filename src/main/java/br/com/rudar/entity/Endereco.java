@@ -2,181 +2,163 @@ package br.com.rudar.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+
 /**
- *
- * @author Everton Buchkorn de Souza
+ * The persistent class for the V_END_CEPNUMEROS database table.
+ * 
  */
-
-//@Entity
-//@Table(name = "cad_endereco")
+@Entity
+@Table(name="V_END_CEPNUMEROS")
+@NamedQuery(name="Endereco.findAll", query="SELECT e FROM Endereco e")
 public class Endereco implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = -7585137494415340262L;
-
-	//@Id
-	//@SequenceGenerator(name = "seq_cad_endereco_id", sequenceName = "\"seq_cad_endereco_id\"", allocationSize = 1)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cad_endereco_id")
-	//@Column(name = "id_endereco")
-	private Integer idEndereco;
-
-	//@Column(name = "logradouro", length = 50, nullable = true)
-	private String logradouro;
-
-	//@NotEmpty(message="O endereço deve ser informado!")
-	//@Column(name = "rua", length = 100, nullable = true)
-	private String rua;
-
-
-	//@Column(name = "numero", nullable = true)
-	private Integer numero;
-
-	//@Column(name = "complemento", length = 50, nullable = true)
-	private String complemento;
-
-	//@Column(name = "bairro", length = 50, nullable = true)
+	@Id
+	@Column(name="CODIGO_CEPNUMERO")
+	private Integer codigoCepnumero;
+	
+	@Column(name="BAIRRO")
 	private String bairro;
 
-	//@NotEmpty(message="Informe o CEP!")
-	//@Column(name = "cep", length = 50, nullable = true)
-	private String cep;
+	@Column(name="CEP")
+	private Integer cep;
 
-
-	//@Column(name = "estado", length = 2)
-	private String estado;
-
-	//@NotEmpty(message="A cidade deve ser informada!")
-	//@Column(name = "cidade", length = 50, nullable = true)
+	@Column(name="CIDADE")
 	private String cidade;
 
-	//@Column(name = "pais", length = 20, nullable = true)
-	private String pais;
+	@Column(name="CODIGO_PAIS")
+	private Integer codigoPais;
 
-	//@Column(name = "codigo_municipio", nullable = true)
-	private Integer codigoMunicipio;
+	@Column(name="ENDERECO")
+	private String endereco;
 
-	// -------------------------------------------------
+	@Column(name="ESTADO")
+	private String estado;
 
+	@Column(name="LGR")
+	private String lgr;
+
+	
+	@Column(name="NOME_PAIS")
+	private String nomePais;
+
+	@Column(name="UF")
+	private String uf;
+
+	
+	//--------------------------------	GETs and SETs------------------------------//
+	
 	public Endereco() {
 	}
 
-	public Integer getIdEndereco() {
-		return idEndereco;
-	}
-
-	public void setIdEndereco(Integer idEndereco) {
-		this.idEndereco = idEndereco;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getRua() {
-		return rua;
-	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Integer numero) {
-		this.numero = numero;
-	}
 	
 
-	public String getComplemento() {
-		return complemento;
+	public Integer getCodigoCepnumero() {
+		return this.codigoCepnumero;
 	}
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+	public void setCodigoCepnumero(Integer codigoCepnumero) {
+		this.codigoCepnumero = codigoCepnumero;
 	}
-
+	
+	
 	public String getBairro() {
-		return bairro;
+		return this.bairro;
 	}
 
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
 
-	public String getCep() {
-		return cep;
+	
+	public Integer getCep() {
+		return this.cep;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep.replace("-", "");
+	public void setCep(Integer cep) {
+		this.cep = cep;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
+	
 	public String getCidade() {
-		return cidade;
+		return this.cidade;
 	}
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
 
-	public String getPais() {
-		return pais;
+	
+	public Integer getCodigoPais() {
+		return this.codigoPais;
 	}
 
-	public void setPais(String pais) {
-		this.pais = pais;
+	public void setCodigoPais(Integer codigoPais) {
+		this.codigoPais = codigoPais;
 	}
 
-	public Integer getCodigoMunicipio() {
-		return codigoMunicipio;
+	
+	public String getEndereco() {
+		return this.endereco;
 	}
 
-	public void setCodigoMunicipio(Integer codigoMunicipio) {
-		this.codigoMunicipio = codigoMunicipio;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idEndereco == null) ? 0 : idEndereco.hashCode());
-		return result;
+	
+	public String getEstado() {
+		return this.estado;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (idEndereco == null) {
-			if (other.idEndereco != null)
-				return false;
-		} else if (!idEndereco.equals(other.idEndereco))
-			return false;
-		return true;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
+
+	
+	public String getLgr() {
+		return this.lgr;
+	}
+
+	public void setLgr(String lgr) {
+		this.lgr = lgr;
+	}
+
+	
+	public String getNomePais() {
+		return this.nomePais;
+	}
+
+	public void setNomePais(String nomePais) {
+		this.nomePais = nomePais;
+	}
+
+	
+	public String getUf() {
+		return this.uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+
+
 	
 	
 	@Override
 	public String toString() {
-		return rua +", "+ numero+" - "+cidade+"-"+estado;
+		return "Endereco [codigoCepnumero=" + codigoCepnumero + ", bairro=" + bairro + ", cep=" + cep + ", cidade="
+				+ cidade + ", codigoPais=" + codigoPais + ", endereco=" + endereco + ", estado=" + estado + ", lgr="
+				+ lgr + ", nomePais=" + nomePais + ", uf=" + uf + "]";
 	}
 
+	
+	
 }

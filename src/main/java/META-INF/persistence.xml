@@ -15,6 +15,7 @@
 		<class>br.com.rudar.entity.RomaneioItem</class>		
 		<class>br.com.rudar.entity.ClasFiscal</class>
 		<class>br.com.rudar.entity.ClasFiscalItem</class>
+		<class>br.com.rudar.entity.Endereco</class>
 			
 		
 		<properties>

@@ -4,8 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.com.rudar.DAO.JPAUtil;
-import br.com.rudar.entity.ClasFiscal;
-import br.com.rudar.entity.ClasFiscalItem;
 
 public class Teste {
 
@@ -65,12 +63,13 @@ public class Teste {
 			//ClasFiscal clasFiscal = em.find(ClasFiscal.class, 32450);
 			
 			//Query query = em.createQuery("Select c From ClasFiscalItem c where c.clasFiscal = 32450");
-			Query query = em.createQuery("Select c From ClasFiscal c left join fetch c.clasFiscalItems where c.codCadclasfiscal = 32450",ClasFiscal.class);
-			ClasFiscal clasFiscal = (ClasFiscal) query.getSingleResult();
+			//Query query = em.createQuery("Select e From Endereco e where e.codigoCepnumero = 1",Endereco.class);
+			//Endereco endereco = (Endereco) query.getSingleResult();
 			
-			for (ClasFiscalItem clasFiscalItem2 : clasFiscal.getClasFiscalItems()) {
-				System.out.println(clasFiscalItem2.getEstado());
-			}
+			Query query = em.createQuery("Select e From ClasFiscalItem c where c.clasFiscal = 32450");
+			
+			
+			//System.out.println(endereco);
 			
 			em.close();
 		
