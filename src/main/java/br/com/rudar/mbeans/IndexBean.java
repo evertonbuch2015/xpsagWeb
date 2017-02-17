@@ -1,18 +1,23 @@
 package br.com.rudar.mbeans;
 
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.annotation.PostConstruct;
-import java.io.Serializable;
+
 import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
 @ManagedBean
 @SessionScoped
 public class IndexBean implements Serializable{
 
+	private static final long serialVersionUID = 1478972194007531551L;
+
+	
 	private LineChartModel dateModel;
 	 
     @PostConstruct

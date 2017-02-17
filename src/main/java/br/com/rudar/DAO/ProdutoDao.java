@@ -1,11 +1,13 @@
 package br.com.rudar.DAO;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.com.rudar.entity.Produto;
+import br.com.rudar.mbeans.ProdutoBean.TipoFiltro;
 import br.com.rudar.util.UtilMensagens;
 
 public class ProdutoDao extends GenericDao<Produto> {
@@ -14,6 +16,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 		super(Produto.class);
 	}
 
+	
 	public boolean gravar(Produto produto) {
 		if (produto.getId() == null) {
 			if (save(produto)) {
@@ -29,11 +32,28 @@ public class ProdutoDao extends GenericDao<Produto> {
 		return false;		
 	}
 	
+	
 	@Override
 	public Produto findAllAttributesEntity(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+	public List<Produto> getByFilterTable(TipoFiltro tipoFiltro , String valorFiltro){
+		List<Produto> lista = null;
+		
+		if(tipoFiltro.equals(TipoFiltro.CODIGO)){
+			String jpql = "Select p From Produto p where p.codigo in (" + valorFiltro + ")";
+			lista = find(jpql);
+		}
+		else if(tipoFiltro.equals(TipoFiltro.NOME)){
+			lista = find("Select p From Produto p where p.nome like ?",valorFiltro);
+		}
+		
+		return lista;
+	}
+		
 	
 	public Double buscaPreco(Integer produto, Date data, String cemp, Integer condPagamento, Integer cliente ){
 
@@ -87,4 +107,5 @@ public class ProdutoDao extends GenericDao<Produto> {
         em.getTransaction().commit();
         em.close();*/
 	}
+
 }
