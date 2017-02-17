@@ -111,7 +111,7 @@ public class ColaboradorDao extends GenericDao<Colaborador> {
 	public List<Colaborador> getByFilterTable(TipoFiltro tipoFiltro , String valorFiltro){
 		List<Colaborador> lista = null;
 		
-		if(tipoFiltro.equals(TipoFiltro.CODIGO)){
+		if(tipoFiltro.equals(TipoFiltro.CODIGO)){			
 			String jpql = "Select c From Colaborador c where c.codigo in (" + valorFiltro + ")";
 			lista = find(jpql);
 		}

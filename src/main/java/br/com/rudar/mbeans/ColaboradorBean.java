@@ -43,7 +43,7 @@ public class ColaboradorBean extends GenericBean<Colaborador> {
 	// =======================METODOS DO USUARIO=====================================
 	
 	public void filtrar(){
-		this.entidades = colaboradorDao.getByFilterTable(filtro, mascaraDocumento);
+		this.entidades = colaboradorDao.getByFilterTable(filtro,  valorFiltro);
 	}
 	
 	

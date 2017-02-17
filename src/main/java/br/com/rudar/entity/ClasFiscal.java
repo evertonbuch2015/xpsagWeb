@@ -38,7 +38,7 @@ public class ClasFiscal implements Serializable {
 	private String nome;
 	
 	@Column(name="COD_CADCLASFISCAL")
-	@OneToMany(mappedBy = "clasFiscal", targetEntity = ClasFiscalItem.class, 
+	@OneToMany(mappedBy = "clasFiscal", targetEntity = ClasFiscalItem.class,
 			fetch = FetchType.LAZY,	cascade = CascadeType.ALL)
 	private List<ClasFiscalItem> clasFiscalItems;
 	
@@ -88,6 +88,7 @@ public class ClasFiscal implements Serializable {
 
 
 	
+	//--------------------------------	Métodos Auxiliares------------------------------//
 	
 	@Override
 	public int hashCode() {
@@ -97,8 +98,6 @@ public class ClasFiscal implements Serializable {
 		return result;
 	}
 
-
-	
 	
 	@Override
 	public boolean equals(Object obj) {
