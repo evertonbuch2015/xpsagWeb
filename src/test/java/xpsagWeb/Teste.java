@@ -1,9 +1,11 @@
 package xpsagWeb;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import br.com.rudar.DAO.JPAUtil;
+import br.com.rudar.DAO.TipoServicoDao;
+import br.com.rudar.entity.TipoServico;
+import br.com.rudar.entity.TipoServicoItem;
 
 public class Teste {
 
@@ -11,7 +13,7 @@ public class Teste {
 		//RomaneioDao dao = new RomaneioDao();
 		//UsuarioDao usuarioDao = new UsuarioDao();
 		//ColaboradorDao colaboradorDao = new ColaboradorDao();
-		EntityManager em = JPAUtil.GetInstance().getEntityManager();
+		
 		//Integer i =colaboradorDao.getMaxCodigo();
 		
 		/*List<TipoColaborador> lista = new ArrayList<>();
@@ -26,55 +28,49 @@ public class Teste {
 		
 		lista = c.getTipoColaborador();*/
 		
-		
-//		Usuario t = usuarioDao.findOne("From Usuario c where c.idUsusario > ?1", 1);
 			
 		try {
+			EntityManager em = JPAUtil.GetInstance().getEntityManager();
+			TipoServicoDao tipoServicoDao = new TipoServicoDao(); 
+			TipoServico tipoServico = new TipoServico();
+			
+			TipoServico servico = tipoServicoDao.findAllAttributesEntity(92);
+			System.out.println(servico);
+			
+			tipoServico.setCemp("01");
+			
+			tipoServico.setCodigoEstrutural("04.01");
+			
+			tipoServico.setNome("Teste");
+			tipoServico.setTipo('A');
+			
+			TipoServicoItem tipoServicoItem = new TipoServicoItem();
+			tipoServicoItem.setTipoServico(tipoServico);
+			tipoServicoItem.setValor(12.00);
+			
+			TipoServicoItem tipoServicoItem2 = new TipoServicoItem();
+			tipoServicoItem2.setTipoServico(tipoServico);
+			tipoServicoItem2.setValor(13.00);
+			
+			TipoServicoItem tipoServicoItem3 = new TipoServicoItem();
+			tipoServicoItem3.setTipoServico(tipoServico);
+			tipoServicoItem3.setValor(14.00);
+			
+			tipoServico.addTipoServicoItem(tipoServicoItem);
+			tipoServico.addTipoServicoItem(tipoServicoItem2);
+			tipoServico.addTipoServicoItem(tipoServicoItem3);
 			
 			em.getTransaction().begin();
-			/*
-			ClasFiscal clasFiscal = new ClasFiscal();
-			
-			ClasFiscalItem clasFiscalItem = new ClasFiscalItem();
-			clasFiscalItem.setClasFiscal(clasFiscal);
-			clasFiscalItem.setEstado("AA");
-			
-			ClasFiscalItem clasFiscalItem2 = new ClasFiscalItem();
-			clasFiscalItem2.setClasFiscal(clasFiscal);
-			clasFiscalItem2.setEstado("BB");
-			
-			ClasFiscalItem clasFiscalItem3 = new ClasFiscalItem();
-			clasFiscalItem3.setClasFiscal(clasFiscal);
-			clasFiscalItem3.setEstado("CC");
-			
-			ClasFiscalItem clasFiscalItem4 = new ClasFiscalItem();
-			clasFiscalItem4.setClasFiscal(clasFiscal);
-			clasFiscalItem4.setEstado("DD");
-			
-			clasFiscal.getClasFiscalItems().add(clasFiscalItem);
-			clasFiscal.getClasFiscalItems().add(clasFiscalItem2);
-			clasFiscal.getClasFiscalItems().add(clasFiscalItem3);
-			clasFiscal.getClasFiscalItems().add(clasFiscalItem4);
-			
-			
-			em.persist(clasFiscal);
-			em.getTransaction().commit();*/
-			
-			//ClasFiscal clasFiscal = em.find(ClasFiscal.class, 32450);
-			
-			//Query query = em.createQuery("Select c From ClasFiscalItem c where c.clasFiscal = 32450");
-			//Query query = em.createQuery("Select e From Endereco e where e.codigoCepnumero = 1",Endereco.class);
-			//Endereco endereco = (Endereco) query.getSingleResult();
-			
-			Query query = em.createQuery("Select e From ClasFiscalItem c where c.clasFiscal = 32450");
-			
-			
-			//System.out.println(endereco);
-			
+			em.persist(tipoServico);
+			em.getTransaction().commit();
 			em.close();
+			
+			
+			
+			//em.close();
 		
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 	}
 

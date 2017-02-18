@@ -1,7 +1,15 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
 /**
@@ -10,16 +18,16 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="CTB_PLANO_CONTAS")
-@NamedQuery(name="PlanoConta.findAll", query="SELECT p FROM PlanoConta p")
-public class PlanoConta implements Serializable {
+@NamedQuery(name="PlanoContas.findAll", query="SELECT p FROM PlanoContas p")
+public class PlanoContas implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	
 	@Id
-	@SequenceGenerator(name="CTB_PLANO_CONTAS_ID_GENERATOR", 
+	@SequenceGenerator(name="G_CTB_PLANO_CONTAS", 
 					   sequenceName="G_CTB_PLANO_CONTAS", allocationSize= 1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CTB_PLANO_CONTAS_ID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_CTB_PLANO_CONTAS")
 	@Column(name="COD_CTBPLANOCONTAS")
 	private Integer id;
 
@@ -30,7 +38,7 @@ public class PlanoConta implements Serializable {
 	private String filial;
 
 	@Column(name="COD_CTBPLANOCONTASSPED")
-	private int codCtbplanocontassped;
+	private Integer codCtbplanocontassped;
 
 	@Column(name="CODIGO_CONTABIL")
 	private String codigoContabil;
@@ -67,7 +75,7 @@ public class PlanoConta implements Serializable {
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
-	public PlanoConta() {
+	public PlanoContas() {
 	}
 
 	
@@ -100,11 +108,11 @@ public class PlanoConta implements Serializable {
 	}
 
 	
-	public int getCodCtbplanocontassped() {
+	public Integer getCodCtbplanocontassped() {
 		return this.codCtbplanocontassped;
 	}
 
-	public void setCodCtbplanocontassped(int codCtbplanocontassped) {
+	public void setCodCtbplanocontassped(Integer codCtbplanocontassped) {
 		this.codCtbplanocontassped = codCtbplanocontassped;
 	}
 
@@ -217,9 +225,6 @@ public class PlanoConta implements Serializable {
 	}
 
 
-
-
-	
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
 	
@@ -230,10 +235,6 @@ public class PlanoConta implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
-
-
-
 	
 	
 	@Override
@@ -244,7 +245,7 @@ public class PlanoConta implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PlanoConta other = (PlanoConta) obj;
+		PlanoContas other = (PlanoContas) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

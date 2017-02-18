@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+
 import br.com.rudar.entity.Usuario;
 import br.com.rudar.mbeans.UsuarioBean.TipoFiltro;
 import br.com.rudar.util.UtilMensagens;
@@ -41,6 +42,7 @@ public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	
 	public Usuario existe(Usuario usuario) {
 		EntityManager em = getEntityManager();

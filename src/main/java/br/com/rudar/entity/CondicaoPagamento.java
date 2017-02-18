@@ -1,6 +1,7 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -148,6 +149,9 @@ public class CondicaoPagamento implements Serializable {
 
 
 	public List<CondicaoPagamentoDias> getDias() {
+		if(this.dias == null){
+			this.dias = new ArrayList<>();
+		}
 		return dias;
 	}
 

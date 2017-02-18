@@ -1,8 +1,20 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
 /**
@@ -17,19 +29,24 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 
 	@Id
 	@Column(name="COD_EPIORCAMENTOITEMPROCESSO")
+	@SequenceGenerator(name="G_EPI_ORCAMENTO_ITEM_PROCESSO", sequenceName="G_EPI_ORCAMENTO_ITEM_PROCESSO")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_EPI_ORCAMENTO_ITEM_PROCESSO")
 	private Integer id;
 
-	@Column(name="COD_EPIGRUPOMAQUINA")
-	private int codEpigrupomaquina;
-
+	@Column(name="ITEM")
+	private Integer item;
+	
+	
+	@Column(name="DESCRICAO")
+	private String descricao;
+	
+		
+	@Column(name="PROCESSO")
+	private Integer processo;
+	
 	@Column(name="CUSTO_MINUTO")
 	private BigDecimal custoMinuto;
 
-	private String descricao;
-
-	private int item;
-
-	private int processo;
 
 	@Column(name="TEMPO_EXECUCAO")
 	private BigDecimal tempoExecucao;
@@ -37,12 +54,17 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 	@Column(name="VALOR_TOTAL")
 	private BigDecimal valorTotal;
 
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="COD_EPIGRUPOMAQUINA")
+	private GrupoMaquina grupomaquina;
+	
+	
 	//bi-directional many-to-one association to EpiOrcamentoItem
 	@ManyToOne
 	@JoinColumn(name="COD_EPIORCAMENTOITEM")
 	private EpiOrcamentoItem epiOrcamentoItem;
 
-	
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
@@ -59,14 +81,15 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 	}
 	
 	
-	public int getCodEpigrupomaquina() {
-		return this.codEpigrupomaquina;
+	public GrupoMaquina getGrupoMaquina() {
+		return this.grupomaquina;
 	}
 
-	public void setCodEpigrupomaquina(int codEpigrupomaquina) {
-		this.codEpigrupomaquina = codEpigrupomaquina;
+	public void setGrupoMaquina(GrupoMaquina grupomaquina) {
+		this.grupomaquina = grupomaquina;
 	}
 
+	
 	public BigDecimal getCustoMinuto() {
 		return this.custoMinuto;
 	}
@@ -75,6 +98,7 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 		this.custoMinuto = custoMinuto;
 	}
 
+	
 	public String getDescricao() {
 		return this.descricao;
 	}
@@ -83,11 +107,12 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public int getItem() {
+	
+	public Integer getItem() {
 		return this.item;
 	}
 
-	public void setItem(int item) {
+	public void setItem(Integer item) {
 		this.item = item;
 	}
 
@@ -99,6 +124,7 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 		this.processo = processo;
 	}
 
+	
 	public BigDecimal getTempoExecucao() {
 		return this.tempoExecucao;
 	}
@@ -107,6 +133,7 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 		this.tempoExecucao = tempoExecucao;
 	}
 
+	
 	public BigDecimal getValorTotal() {
 		return this.valorTotal;
 	}
@@ -115,6 +142,7 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 		this.valorTotal = valorTotal;
 	}
 
+	
 	public EpiOrcamentoItem getEpiOrcamentoItem() {
 		return this.epiOrcamentoItem;
 	}
@@ -123,4 +151,37 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 		this.epiOrcamentoItem = epiOrcamentoItem;
 	}
 
+
+	
+	
+	//--------------------------------	Métodos Auxiliares------------------------------//
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EpiOrcamentoItemProcesso other = (EpiOrcamentoItemProcesso) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	
 }

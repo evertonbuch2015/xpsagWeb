@@ -1,10 +1,27 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -25,17 +42,25 @@ public class EpiOrcamentoItem implements Serializable {
 	@Column(name="COD_EPIORCAMENTOITEM")
 	private Integer id;
 
+	@Column(name="ITEM")
+	private Integer item;
 	
-	@Column(name="COD_CADPRODUTO")
-	private int codCadproduto;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="COD_CADPRODUTO")
+	private Produto produto;
 
-	@Column(name="COD_CADUNIDADE")
-	private int codCadunidade;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="COD_CADUNIDADE")
+	private Unidade unidade;
 
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="DATA_ENTREGA")
 	private Date dataEntrega;
 
+	
 	@Column(name="FPC_INSUMOS")
 	private BigDecimal fpcInsumos;
 
@@ -48,16 +73,17 @@ public class EpiOrcamentoItem implements Serializable {
 	@Column(name="FPC_SERVICO_TERCEIRO")
 	private BigDecimal fpcServicoTerceiro;
 
-	@Column(name="ITEM")
-	private Integer item;
 
 	@Column(name="MARK_UP")
-	private double markUp;
+	private Double markUp;
 
 	@Column(name="NOME_PRODUTO")
 	private String nomeProduto;
 
+	
+	
 	@Lob
+	@Column(name="OBSERVACAO")
 	private String observacao;
 
 	@Lob
@@ -72,14 +98,16 @@ public class EpiOrcamentoItem implements Serializable {
 	@Column(name="OBSERVACAO_PROPOSTA")
 	private byte[] observacaoProposta;
 
+	
+	
 	@Column(name="PERC_COMISSAO")
-	private double percComissao;
+	private Double percComissao;
 
 	@Column(name="PERC_MARK_UP")
-	private double percMarkUp;
+	private Double percMarkUp;
 
 	@Column(name="PERC_QUEBRA")
-	private double percQuebra;
+	private Double percQuebra;
 
 	@Column(name="PRECO_CALCULADO")
 	private BigDecimal precoCalculado;
@@ -87,14 +115,19 @@ public class EpiOrcamentoItem implements Serializable {
 	@Column(name="PRECO_VENDA")
 	private BigDecimal precoVenda;
 
-	private BigDecimal quantidade;
-
+	
+	@Column(name="SITUACAO")
 	private String situacao;
 
+	@Column(name="TIPO")
 	private String tipo;
 
+
+	@Column(name="QUANTIDADE")
+	private BigDecimal quantidade;
+	
 	@Column(name="VALOR_COMISSAO")
-	private double valorComissao;
+	private Double valorComissao;
 
 	@Column(name="VALOR_FRETE")
 	private BigDecimal valorFrete;
@@ -103,11 +136,13 @@ public class EpiOrcamentoItem implements Serializable {
 	private BigDecimal valorUnitario;
 
 	
+	
 	//bi-directional many-to-one association to EpiOrcamento
 	@ManyToOne
 	@JoinColumn(name="COD_EPIORCAMENTO")
 	private EpiOrcamento epiOrcamento;
 
+	
 	
 	//bi-directional many-to-one association to EpiOrcamentoItemInsumo
 	@OneToMany(mappedBy="epiOrcamentoItem")
@@ -135,6 +170,8 @@ public class EpiOrcamentoItem implements Serializable {
 	public EpiOrcamentoItem() {
 	}
 
+	
+	
 	public Integer getId() {
 		return this.id;
 	}
@@ -143,22 +180,25 @@ public class EpiOrcamentoItem implements Serializable {
 		this.id = id;
 	}
 
-	public int getCodCadproduto() {
-		return this.codCadproduto;
+	
+	public Produto getProduto() {
+		return this.produto;
 	}
 
-	public void setCodCadproduto(int codCadproduto) {
-		this.codCadproduto = codCadproduto;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
-	public int getCodCadunidade() {
-		return this.codCadunidade;
+	
+	public Unidade getUnidade() {
+		return this.unidade;
 	}
 
-	public void setCodCadunidade(int codCadunidade) {
-		this.codCadunidade = codCadunidade;
+	public void setUnidade(Unidade unidade) {
+		this.unidade = unidade;
 	}
 
+	
 	public Date getDataEntrega() {
 		return this.dataEntrega;
 	}
@@ -167,6 +207,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.dataEntrega = dataEntrega;
 	}
 
+	
 	public BigDecimal getFpcInsumos() {
 		return this.fpcInsumos;
 	}
@@ -175,6 +216,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.fpcInsumos = fpcInsumos;
 	}
 
+	
 	public BigDecimal getFpcMaoObra() {
 		return this.fpcMaoObra;
 	}
@@ -183,6 +225,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.fpcMaoObra = fpcMaoObra;
 	}
 
+	
 	public BigDecimal getFpcMateriaPrima() {
 		return this.fpcMateriaPrima;
 	}
@@ -191,6 +234,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.fpcMateriaPrima = fpcMateriaPrima;
 	}
 
+	
 	public BigDecimal getFpcServicoTerceiro() {
 		return this.fpcServicoTerceiro;
 	}
@@ -199,6 +243,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.fpcServicoTerceiro = fpcServicoTerceiro;
 	}
 
+	
 	public Integer getItem() {
 		return this.item;
 	}
@@ -207,14 +252,16 @@ public class EpiOrcamentoItem implements Serializable {
 		this.item = item;
 	}
 
-	public double getMarkUp() {
+	
+	public Double getMarkUp() {
 		return this.markUp;
 	}
 
-	public void setMarkUp(double markUp) {
+	public void setMarkUp(Double markUp) {
 		this.markUp = markUp;
 	}
 
+	
 	public String getNomeProduto() {
 		return this.nomeProduto;
 	}
@@ -223,6 +270,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.nomeProduto = nomeProduto;
 	}
 
+	
 	public String getObservacao() {
 		return this.observacao;
 	}
@@ -231,6 +279,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.observacao = observacao;
 	}
 
+	
 	public byte[] getObservacaoCliente() {
 		return this.observacaoCliente;
 	}
@@ -239,6 +288,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.observacaoCliente = observacaoCliente;
 	}
 
+	
 	public byte[] getObservacaoInterna() {
 		return this.observacaoInterna;
 	}
@@ -247,6 +297,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.observacaoInterna = observacaoInterna;
 	}
 
+	
 	public byte[] getObservacaoProposta() {
 		return this.observacaoProposta;
 	}
@@ -255,30 +306,34 @@ public class EpiOrcamentoItem implements Serializable {
 		this.observacaoProposta = observacaoProposta;
 	}
 
-	public double getPercComissao() {
+	
+	public Double getPercComissao() {
 		return this.percComissao;
 	}
 
-	public void setPercComissao(double percComissao) {
+	public void setPercComissao(Double percComissao) {
 		this.percComissao = percComissao;
 	}
 
-	public double getPercMarkUp() {
+	
+	public Double getPercMarkUp() {
 		return this.percMarkUp;
 	}
 
-	public void setPercMarkUp(double percMarkUp) {
+	public void setPercMarkUp(Double percMarkUp) {
 		this.percMarkUp = percMarkUp;
 	}
 
-	public double getPercQuebra() {
+	
+	public Double getPercQuebra() {
 		return this.percQuebra;
 	}
 
-	public void setPercQuebra(double percQuebra) {
+	public void setPercQuebra(Double percQuebra) {
 		this.percQuebra = percQuebra;
 	}
 
+	
 	public BigDecimal getPrecoCalculado() {
 		return this.precoCalculado;
 	}
@@ -287,6 +342,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.precoCalculado = precoCalculado;
 	}
 
+	
 	public BigDecimal getPrecoVenda() {
 		return this.precoVenda;
 	}
@@ -295,6 +351,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.precoVenda = precoVenda;
 	}
 
+	
 	public BigDecimal getQuantidade() {
 		return this.quantidade;
 	}
@@ -303,6 +360,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.quantidade = quantidade;
 	}
 
+	
 	public String getSituacao() {
 		return this.situacao;
 	}
@@ -311,6 +369,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.situacao = situacao;
 	}
 
+	
 	public String getTipo() {
 		return this.tipo;
 	}
@@ -319,14 +378,16 @@ public class EpiOrcamentoItem implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public double getValorComissao() {
+	
+	public Double getValorComissao() {
 		return this.valorComissao;
 	}
 
-	public void setValorComissao(double valorComissao) {
+	public void setValorComissao(Double valorComissao) {
 		this.valorComissao = valorComissao;
 	}
 
+	
 	public BigDecimal getValorFrete() {
 		return this.valorFrete;
 	}
@@ -335,6 +396,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.valorFrete = valorFrete;
 	}
 
+	
 	public BigDecimal getValorUnitario() {
 		return this.valorUnitario;
 	}
@@ -343,6 +405,7 @@ public class EpiOrcamentoItem implements Serializable {
 		this.valorUnitario = valorUnitario;
 	}
 
+	
 	public EpiOrcamento getEpiOrcamento() {
 		return this.epiOrcamento;
 	}
@@ -351,13 +414,59 @@ public class EpiOrcamentoItem implements Serializable {
 		this.epiOrcamento = epiOrcamento;
 	}
 
+	
 	public List<EpiOrcamentoItemInsumo> getEpiOrcamentoItemInsumos() {
+		if(this.epiOrcamentoItemInsumos == null){
+			this.epiOrcamentoItemInsumos = new ArrayList<>();
+		}
 		return this.epiOrcamentoItemInsumos;
 	}
 
 	public void setEpiOrcamentoItemInsumos(List<EpiOrcamentoItemInsumo> epiOrcamentoItemInsumos) {
 		this.epiOrcamentoItemInsumos = epiOrcamentoItemInsumos;
 	}
+
+		
+	
+	public List<EpiOrcamentoItemMp> getEpiOrcamentoItemMps() {
+		if(this.epiOrcamentoItemMps == null){
+			this.epiOrcamentoItemMps = new ArrayList<>();
+		}
+		return this.epiOrcamentoItemMps;
+	}
+
+	public void setEpiOrcamentoItemMps(List<EpiOrcamentoItemMp> epiOrcamentoItemMps) {
+		this.epiOrcamentoItemMps = epiOrcamentoItemMps;
+	}
+
+	
+	public List<EpiOrcamentoItemProcesso> getEpiOrcamentoItemProcessos() {
+		if(this.epiOrcamentoItemProcessos == null){
+			this.epiOrcamentoItemProcessos = new ArrayList<>();
+		}
+		return this.epiOrcamentoItemProcessos;
+	}
+
+	public void setEpiOrcamentoItemProcessos(List<EpiOrcamentoItemProcesso> epiOrcamentoItemProcessos) {
+		this.epiOrcamentoItemProcessos = epiOrcamentoItemProcessos;
+	}
+	
+	
+	
+	public List<EpiOrcamentoItemServico> getEpiOrcamentoItemServicos() {
+		if(this.epiOrcamentoItemServicos == null){
+			this.epiOrcamentoItemServicos = new ArrayList<>();
+		}
+		return this.epiOrcamentoItemServicos;
+	}
+
+	public void setEpiOrcamentoItemServicos(List<EpiOrcamentoItemServico> epiOrcamentoItemServicos) {
+		this.epiOrcamentoItemServicos = epiOrcamentoItemServicos;
+	}
+
+
+	//--------------------------------	Métodos Auxiliares------------------------------//
+	
 
 	public EpiOrcamentoItemInsumo addEpiOrcamentoItemInsumo(EpiOrcamentoItemInsumo epiOrcamentoItemInsumo) {
 		getEpiOrcamentoItemInsumos().add(epiOrcamentoItemInsumo);
@@ -373,13 +482,7 @@ public class EpiOrcamentoItem implements Serializable {
 		return epiOrcamentoItemInsumo;
 	}
 
-	public List<EpiOrcamentoItemMp> getEpiOrcamentoItemMps() {
-		return this.epiOrcamentoItemMps;
-	}
-
-	public void setEpiOrcamentoItemMps(List<EpiOrcamentoItemMp> epiOrcamentoItemMps) {
-		this.epiOrcamentoItemMps = epiOrcamentoItemMps;
-	}
+	
 
 	public EpiOrcamentoItemMp addEpiOrcamentoItemMp(EpiOrcamentoItemMp epiOrcamentoItemMp) {
 		getEpiOrcamentoItemMps().add(epiOrcamentoItemMp);
@@ -395,14 +498,8 @@ public class EpiOrcamentoItem implements Serializable {
 		return epiOrcamentoItemMp;
 	}
 
-	public List<EpiOrcamentoItemProcesso> getEpiOrcamentoItemProcessos() {
-		return this.epiOrcamentoItemProcessos;
-	}
-
-	public void setEpiOrcamentoItemProcessos(List<EpiOrcamentoItemProcesso> epiOrcamentoItemProcessos) {
-		this.epiOrcamentoItemProcessos = epiOrcamentoItemProcessos;
-	}
-
+	
+	
 	public EpiOrcamentoItemProcesso addEpiOrcamentoItemProcesso(EpiOrcamentoItemProcesso epiOrcamentoItemProcesso) {
 		getEpiOrcamentoItemProcessos().add(epiOrcamentoItemProcesso);
 		epiOrcamentoItemProcesso.setEpiOrcamentoItem(this);
@@ -417,13 +514,7 @@ public class EpiOrcamentoItem implements Serializable {
 		return epiOrcamentoItemProcesso;
 	}
 
-	public List<EpiOrcamentoItemServico> getEpiOrcamentoItemServicos() {
-		return this.epiOrcamentoItemServicos;
-	}
-
-	public void setEpiOrcamentoItemServicos(List<EpiOrcamentoItemServico> epiOrcamentoItemServicos) {
-		this.epiOrcamentoItemServicos = epiOrcamentoItemServicos;
-	}
+	
 
 	public EpiOrcamentoItemServico addEpiOrcamentoItemServico(EpiOrcamentoItemServico epiOrcamentoItemServico) {
 		getEpiOrcamentoItemServicos().add(epiOrcamentoItemServico);
@@ -438,5 +529,6 @@ public class EpiOrcamentoItem implements Serializable {
 
 		return epiOrcamentoItemServico;
 	}
-
+	
+	
 }

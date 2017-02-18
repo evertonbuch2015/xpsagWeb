@@ -1,8 +1,22 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
 /**
@@ -11,8 +25,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="CAD_TIPOSERVICO")
-@NamedQuery(name="CadTiposervico.findAll", query="SELECT c FROM CadTiposervico c")
-public class CadTiposervico implements Serializable {
+@NamedQuery(name="Tiposervico.findAll", query="SELECT c FROM TipoServico c")
+public class TipoServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,37 +41,42 @@ public class CadTiposervico implements Serializable {
 	@Column(name="CODIGO_ESTRUTURAL")
 	private String codigoEstrutural;
 
+	
+	@Column(name="GRAU",insertable=false,updatable=false)
 	private long grau;
+	
 
 	private String nome;
 
 	private String obs;
 
 	@Column(name="PERC_QUEBRA")
-	private double percQuebra;
+	private Double percQuebra;
 
 	private String terceiro;
 
 	private Character tipo;
 
-	private double valor;
+	private Double valor;
 
 	
-	//uni-directional many-to-one association to PlanoConta
+	//uni-directional many-to-one association to PlanoContas
 	@ManyToOne
 	@JoinColumn(name="COD_CTBPLANOCONTAS")
-	private PlanoConta planoContas;
+	private PlanoContas planoContas;
 
 	
-	//bi-directional many-to-one association to CadTipoServicoItem
-	@OneToMany(mappedBy="tipoServico")
-	private List<CadTipoServicoItem> tiposervicoItens;
+	//bi-directional many-to-one association to TipoServicoItem
+	@OneToMany(mappedBy="tipoServico", targetEntity = TipoServicoItem.class, 
+			fetch = FetchType.LAZY,	
+			cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH})
+	private List<TipoServicoItem> tipoServicoItens;
 
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
 	
-	public CadTiposervico() {
+	public TipoServico() {
 	}
 
 	
@@ -116,11 +135,11 @@ public class CadTiposervico implements Serializable {
 	}
 
 	
-	public double getPercQuebra() {
+	public Double getPercQuebra() {
 		return this.percQuebra;
 	}
 
-	public void setPercQuebra(double percQuebra) {
+	public void setPercQuebra(Double percQuebra) {
 		this.percQuebra = percQuebra;
 	}
 
@@ -143,50 +162,53 @@ public class CadTiposervico implements Serializable {
 	}
 
 	
-	public double getValor() {
+	public Double getValor() {
 		return this.valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
 	
-	public PlanoConta getPlanoContas() {
+	public PlanoContas getPlanoContas() {
 		return this.planoContas;
 	}
 
-	public void setPlanoContas(PlanoConta planoContas) {
+	public void setPlanoContas(PlanoContas planoContas) {
 		this.planoContas = planoContas;
 	}
 
 	
-	public List<CadTipoServicoItem> getTiposervicoItens() {
-		return this.tiposervicoItens;
+	public List<TipoServicoItem> getTipoServicoItens() {
+		if(this.tipoServicoItens == null){
+			this.tipoServicoItens = new ArrayList<>();
+		}
+		return this.tipoServicoItens;
 	}
 
-	public void setTiposervicoItens(List<CadTipoServicoItem> tiposervicoItens) {
-		this.tiposervicoItens = tiposervicoItens;
+	public void setTipoServicoItens(List<TipoServicoItem> tipoServicoItens) {
+		this.tipoServicoItens = tipoServicoItens;
 	}
-
-	
-	public CadTipoServicoItem addTiposervicoIten(CadTipoServicoItem tiposervicoIten) {
-		getTiposervicoItens().add(tiposervicoIten);
-		tiposervicoIten.setTipoServico(this);
-
-		return tiposervicoIten;
-	}
-
-	public CadTipoServicoItem removeTiposervicoIten(CadTipoServicoItem tiposervicoIten) {
-		getTiposervicoItens().remove(tiposervicoIten);
-		tiposervicoIten.setTipoServico(null);
-
-		return tiposervicoIten;
-	}
-
 
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
+	
+	public TipoServicoItem addTipoServicoItem(TipoServicoItem tipoServicoIten) {
+		getTipoServicoItens().add(tipoServicoIten);
+		tipoServicoIten.setTipoServico(this);
+
+		return tipoServicoIten;
+	}
+
+	public TipoServicoItem removeTipoServicoItem(TipoServicoItem tipoServicoIten) {
+		getTipoServicoItens().remove(tipoServicoIten);
+		tipoServicoIten.setTipoServico(null);
+
+		return tipoServicoIten;
+	}
+
+	
 	
 	@Override
 	public int hashCode() {
@@ -204,7 +226,7 @@ public class CadTiposervico implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CadTiposervico other = (CadTiposervico) obj;
+		TipoServico other = (TipoServico) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

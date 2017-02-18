@@ -1,7 +1,20 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
 /**
@@ -10,22 +23,25 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="CAD_TIPOSERVICO_ITEM")
-@NamedQuery(name="CadTipoServicoItem.findAll", query="SELECT c FROM CadTipoServicoItem c")
-public class CadTipoServicoItem implements Serializable {
+@NamedQuery(name="TipoServicoItem.findAll", query="SELECT c FROM TipoServicoItem c")
+public class TipoServicoItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CAD_TIPOSERVICO_ITEM_ID_GENERATOR", 
+	@SequenceGenerator(name="G_CAD_TIPO_SERVICO_ITEM", 
 					   sequenceName="G_CAD_TIPO_SERVICO_ITEM", allocationSize= 1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CAD_TIPOSERVICO_ITEM_ID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_CAD_TIPO_SERVICO_ITEM")
 	@Column(name="COD_CADTIPOSERVICOITEM")
 	private Integer id;
 
-	@Column(name="COD_CADCOLABORADOR")
-	private int codCadcolaborador;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="COD_CADCOLABORADOR")
+	private Colaborador colaborador;
 
-	@Column(name="COD_CADUNIDADE")
-	private int codCadunidade;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="COD_CADUNIDADE")
+	private Unidade unidade;
 
 	
 	@Column(name="LEADTIME")
@@ -37,18 +53,18 @@ public class CadTipoServicoItem implements Serializable {
 
 	
 	@Column(name="VALOR")
-	private double valor;
+	private Double valor;
 
 	
-	//bi-directional many-to-one association to CadTiposervico
+	//bi-directional many-to-one association to Tiposervico
 	@ManyToOne
 	@JoinColumn(name="COD_CADTIPOSERVICO")
-	private CadTiposervico tipoServico;
+	private TipoServico tipoServico;
 
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
-	public CadTipoServicoItem() {
+	public TipoServicoItem() {
 	}
 
 	
@@ -62,21 +78,21 @@ public class CadTipoServicoItem implements Serializable {
 	}
 
 	
-	public int getCodCadcolaborador() {
-		return this.codCadcolaborador;
+	public Colaborador getColaborador() {
+		return this.colaborador;
 	}
 
-	public void setCodCadcolaborador(int codCadcolaborador) {
-		this.codCadcolaborador = codCadcolaborador;
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 
 	
-	public int getCodCadunidade() {
-		return this.codCadunidade;
+	public Unidade getUnidade() {
+		return this.unidade;
 	}
 
-	public void setCodCadunidade(int codCadunidade) {
-		this.codCadunidade = codCadunidade;
+	public void setUnidade(Unidade unidade) {
+		this.unidade = unidade;
 	}
 
 	
@@ -98,20 +114,20 @@ public class CadTipoServicoItem implements Serializable {
 	}
 
 	
-	public double getValor() {
+	public Double getValor() {
 		return this.valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
 	
-	public CadTiposervico getTipoServico() {
+	public TipoServico getTipoServico() {
 		return this.tipoServico;
 	}
 
-	public void setTipoServico(CadTiposervico tipoServico) {
+	public void setTipoServico(TipoServico tipoServico) {
 		this.tipoServico = tipoServico;
 	}
 
@@ -135,7 +151,7 @@ public class CadTipoServicoItem implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CadTipoServicoItem other = (CadTipoServicoItem) obj;
+		TipoServicoItem other = (TipoServicoItem) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

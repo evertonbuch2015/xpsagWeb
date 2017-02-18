@@ -1,10 +1,28 @@
 package br.com.rudar.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import br.com.rudar.enumerated.TipoFrete;
 
 
 /**
@@ -25,26 +43,32 @@ public class EpiOrcamento implements Serializable {
 	@Column(name="COD_EPIORCAMENTO")
 	private Integer id; 
 
-	private String cemp;
-
-	private String cfil;
-
-	private String cidade;
-
 	
-	@Column(name="COD_CADCOLABORADOR")
-	private int codCadcolaborador;
-
-	@Column(name="COD_CADCONDPAGAMENTO")
-	private int codCadcondpagamento;
-
-	@Column(name="COD_CADVENDEDOR")
-	private int codCadvendedor;
-
 	@Column(name="CODIGO")
 	private int codigo;
+	
+	@Column(name="CEMP")
+	private String cemp;
+
+	@Column(name="CFIL")
+	private String filial;
 
 	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="COD_CADCOLABORADOR")
+	private Colaborador colaborador;
+
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="COD_CADCONDPAGAMENTO")
+	private CondicaoPagamento condicaoPagamento;
+
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="COD_CADVENDEDOR")
+	private Vendedor vendedor;
+
+		
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="DATA_EMISSAO")
@@ -58,6 +82,9 @@ public class EpiOrcamento implements Serializable {
 	private int diasValidade;
 
 	
+
+	@Column(name="NOME_COLABORADOR")
+	private String nomeColaborador;
 	
 	@Column(name="DOCUMENTO_REF")
 	private String documentoRef;
@@ -68,6 +95,14 @@ public class EpiOrcamento implements Serializable {
 	@Column(name="ESTADO")
 	private String estado;
 
+	@Column(name="CIDADE")
+	private String cidade;
+
+	
+	
+	@Column(name="CONTATO")
+	private String contato;	
+	
 	@Column(name="NFON")
 	private String nfon;
 
@@ -75,13 +110,6 @@ public class EpiOrcamento implements Serializable {
 	private String pfon;
 
 	
-	@Column(name="CONTATO")
-	private String contato;
-	
-	
-	@Column(name="NOME_COLABORADOR")
-	private String nomeColaborador;
-
 	@Lob
 	@Column(name="OBSERVACAO")
 	private String observacao;
@@ -90,14 +118,13 @@ public class EpiOrcamento implements Serializable {
 	private String situacao;
 
 	@Column(name="TIPO_FRETE")
-	private String tipoFrete;
+	private TipoFrete tipoFrete;
 
 	
 	@Column(name="USUARIO")
 	private String usuario;
 
-	
-	
+		
 	
 	@Column(name="VALOR_COMISSAO")
 	private BigDecimal valorComissao;
@@ -152,14 +179,16 @@ public class EpiOrcamento implements Serializable {
 		this.cemp = cemp;
 	}
 
-	public String getCfil() {
-		return this.cfil;
+	
+	public String getFilial() {
+		return this.filial;
 	}
 
-	public void setCfil(String cfil) {
-		this.cfil = cfil;
+	public void setFilial(String filial) {
+		this.filial = filial;
 	}
 
+	
 	public String getCidade() {
 		return this.cidade;
 	}
@@ -168,30 +197,34 @@ public class EpiOrcamento implements Serializable {
 		this.cidade = cidade;
 	}
 
-	public int getCodCadcolaborador() {
-		return this.codCadcolaborador;
+	
+	public Colaborador getColaborador() {
+		return this.colaborador;
 	}
 
-	public void setCodCadcolaborador(int codCadcolaborador) {
-		this.codCadcolaborador = codCadcolaborador;
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 
-	public int getCodCadcondpagamento() {
-		return this.codCadcondpagamento;
+	
+	public CondicaoPagamento getCondicaoPagamento() {
+		return this.condicaoPagamento;
 	}
 
-	public void setCodCadcondpagamento(int codCadcondpagamento) {
-		this.codCadcondpagamento = codCadcondpagamento;
+	public void setCondicaoPagamento(CondicaoPagamento condicaoPagamento) {
+		this.condicaoPagamento = condicaoPagamento;
 	}
 
-	public int getCodCadvendedor() {
-		return this.codCadvendedor;
+	
+	public Vendedor getVendedor() {
+		return this.vendedor;
 	}
 
-	public void setCodCadvendedor(int codCadvendedor) {
-		this.codCadvendedor = codCadvendedor;
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
 	}
 
+	
 	public int getCodigo() {
 		return this.codigo;
 	}
@@ -200,6 +233,7 @@ public class EpiOrcamento implements Serializable {
 		this.codigo = codigo;
 	}
 
+	
 	public String getContato() {
 		return this.contato;
 	}
@@ -208,6 +242,7 @@ public class EpiOrcamento implements Serializable {
 		this.contato = contato;
 	}
 
+	
 	public Date getDataEmissao() {
 		return this.dataEmissao;
 	}
@@ -216,6 +251,7 @@ public class EpiOrcamento implements Serializable {
 		this.dataEmissao = dataEmissao;
 	}
 
+	
 	public Date getDataEntrega() {
 		return this.dataEntrega;
 	}
@@ -224,6 +260,7 @@ public class EpiOrcamento implements Serializable {
 		this.dataEntrega = dataEntrega;
 	}
 
+	
 	public int getDiasValidade() {
 		return this.diasValidade;
 	}
@@ -232,6 +269,7 @@ public class EpiOrcamento implements Serializable {
 		this.diasValidade = diasValidade;
 	}
 
+	
 	public String getDocumentoRef() {
 		return this.documentoRef;
 	}
@@ -240,6 +278,7 @@ public class EpiOrcamento implements Serializable {
 		this.documentoRef = documentoRef;
 	}
 
+	
 	public String getEmail() {
 		return this.email;
 	}
@@ -248,6 +287,7 @@ public class EpiOrcamento implements Serializable {
 		this.email = email;
 	}
 
+	
 	public String getEstado() {
 		return this.estado;
 	}
@@ -256,6 +296,7 @@ public class EpiOrcamento implements Serializable {
 		this.estado = estado;
 	}
 
+	
 	public String getNfon() {
 		return this.nfon;
 	}
@@ -264,6 +305,7 @@ public class EpiOrcamento implements Serializable {
 		this.nfon = nfon;
 	}
 
+	
 	public String getNomeColaborador() {
 		return this.nomeColaborador;
 	}
@@ -272,6 +314,7 @@ public class EpiOrcamento implements Serializable {
 		this.nomeColaborador = nomeColaborador;
 	}
 
+	
 	public String getObservacao() {
 		return this.observacao;
 	}
@@ -280,6 +323,7 @@ public class EpiOrcamento implements Serializable {
 		this.observacao = observacao;
 	}
 
+	
 	public String getPfon() {
 		return this.pfon;
 	}
@@ -288,6 +332,7 @@ public class EpiOrcamento implements Serializable {
 		this.pfon = pfon;
 	}
 
+	
 	public String getSituacao() {
 		return this.situacao;
 	}
@@ -296,14 +341,16 @@ public class EpiOrcamento implements Serializable {
 		this.situacao = situacao;
 	}
 
-	public String getTipoFrete() {
+	
+	public TipoFrete getTipoFrete() {
 		return this.tipoFrete;
 	}
 
-	public void setTipoFrete(String tipoFrete) {
+	public void setTipoFrete(TipoFrete tipoFrete) {
 		this.tipoFrete = tipoFrete;
 	}
 
+	
 	public String getUsuario() {
 		return this.usuario;
 	}
@@ -312,6 +359,7 @@ public class EpiOrcamento implements Serializable {
 		this.usuario = usuario;
 	}
 
+	
 	public BigDecimal getValorComissao() {
 		return this.valorComissao;
 	}
@@ -320,6 +368,7 @@ public class EpiOrcamento implements Serializable {
 		this.valorComissao = valorComissao;
 	}
 
+	
 	public BigDecimal getValorFrete() {
 		return this.valorFrete;
 	}
@@ -328,6 +377,7 @@ public class EpiOrcamento implements Serializable {
 		this.valorFrete = valorFrete;
 	}
 
+	
 	public BigDecimal getValorInsumos() {
 		return this.valorInsumos;
 	}
@@ -336,6 +386,7 @@ public class EpiOrcamento implements Serializable {
 		this.valorInsumos = valorInsumos;
 	}
 
+	
 	public BigDecimal getValorMaoObra() {
 		return this.valorMaoObra;
 	}
@@ -344,6 +395,7 @@ public class EpiOrcamento implements Serializable {
 		this.valorMaoObra = valorMaoObra;
 	}
 
+	
 	public BigDecimal getValorMateriaPrima() {
 		return this.valorMateriaPrima;
 	}
@@ -352,6 +404,7 @@ public class EpiOrcamento implements Serializable {
 		this.valorMateriaPrima = valorMateriaPrima;
 	}
 
+	
 	public BigDecimal getValorTotalCalculado() {
 		return this.valorTotalCalculado;
 	}
@@ -360,6 +413,7 @@ public class EpiOrcamento implements Serializable {
 		this.valorTotalCalculado = valorTotalCalculado;
 	}
 
+	
 	public BigDecimal getValorTotalVenda() {
 		return this.valorTotalVenda;
 	}
@@ -370,12 +424,18 @@ public class EpiOrcamento implements Serializable {
 
 	
 	public List<EpiOrcamentoItem> getEpiOrcamentoItems() {
+		if(this.epiOrcamentoItems == null){
+			this.epiOrcamentoItems = new ArrayList<>();
+		}
 		return this.epiOrcamentoItems;
 	}
 
 	public void setEpiOrcamentoItems(List<EpiOrcamentoItem> epiOrcamentoItems) {
 		this.epiOrcamentoItems = epiOrcamentoItems;
 	}
+
+	
+	//--------------------------------	Métodos Auxiliares------------------------------//
 
 	
 	public EpiOrcamentoItem addEpiOrcamentoItem(EpiOrcamentoItem epiOrcamentoItem) {
@@ -392,8 +452,30 @@ public class EpiOrcamento implements Serializable {
 		return epiOrcamentoItem;
 	}
 
-	
-	//--------------------------------	Métodos Auxiliares------------------------------//
-	
-	
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EpiOrcamento other = (EpiOrcamento) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}	
 }
