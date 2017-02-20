@@ -24,7 +24,7 @@
 		<p:inputText style="width:200px !important" value="#{cc.attrs.bean.valorFiltro}" 
 			rendered="#{cc.attrs.bean.buscando}" id="valorfiltro"/>
 					
-		<p:commandButton value="Filtrar" update="@form" style="width:80px"
+		<p:commandButton value="Filtrar" update="tbl" style="width:80px"
 			styleClass="botaoAzul" rendered="#{cc.attrs.bean.buscando}"
 			actionListener="#{cc.attrs.bean.filtrar()}"/>
 		

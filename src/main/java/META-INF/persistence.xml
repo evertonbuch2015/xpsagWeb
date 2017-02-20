@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="Web" transaction-type="RESOURCE_LOCAL">
-		<class>br.com.rudar.entity.Usuario</class>
-		<class>br.com.rudar.entity.Empresa</class>
-		<class>br.com.rudar.entity.Colaborador</class>
-		<class>br.com.rudar.entity.Vendedor</class>
-		<class>br.com.rudar.entity.Romaneio</class>
-		<class>br.com.rudar.entity.CondicaoPagamento</class>
-		<class>br.com.rudar.entity.CondicaoPagamentoDias</class>
-		<class>br.com.rudar.entity.OperacaoSaida</class>
-		<class>br.com.rudar.entity.Unidade</class>
-		<class>br.com.rudar.entity.Produto</class>
-		<class>br.com.rudar.entity.Pessoa</class>
-		<class>br.com.rudar.entity.RomaneioItem</class>		
-		<class>br.com.rudar.entity.ClasFiscal</class>
-		<class>br.com.rudar.entity.ClasFiscalItem</class>
-		<class>br.com.rudar.entity.Endereco</class>
-		<class>br.com.rudar.entity.GrupoMaquina</class>
+		<class>br.com.rudar.core.entity.Usuario</class>
+		<class>br.com.rudar.core.entity.Empresa</class>
+		<class>br.com.rudar.core.entity.Colaborador</class>
+		<class>br.com.rudar.core.entity.Vendedor</class>
+		<class>br.com.rudar.core.entity.Romaneio</class>
+		<class>br.com.rudar.core.entity.CondicaoPagamento</class>
+		<class>br.com.rudar.core.entity.CondicaoPagamentoDias</class>
+		<class>br.com.rudar.core.entity.OperacaoSaida</class>
+		<class>br.com.rudar.core.entity.Unidade</class>
+		<class>br.com.rudar.core.entity.Produto</class>
+		<class>br.com.rudar.core.entity.Pessoa</class>
+		<class>br.com.rudar.core.entity.RomaneioItem</class>		
+		<class>br.com.rudar.core.entity.ClasFiscal</class>
+		<class>br.com.rudar.core.entity.ClasFiscalItem</class>
+		<class>br.com.rudar.core.entity.Endereco</class>
+		<class>br.com.rudar.core.entity.GrupoMaquina</class>
 			
 		
 		<properties>
