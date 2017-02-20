@@ -19,8 +19,11 @@ public class ProdutoDao extends GenericDao<Produto> {
 	
 	@Override
 	public Produto findAllAttributesEntity(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select p, g, u, o, c From Produto p left join fetch p.gupoProduto g"
+				+ "	left join fetch p.unidade u left join fetch p.operacaoSaida o"
+				+ " left join fetch p.clasFiscal"
+				+ "	where p.id = ?1";
+		return findOne(jpql, id);
 	}
 
 			

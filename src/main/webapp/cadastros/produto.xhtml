@@ -1,0 +1,301 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template.xhtml"
+	xmlns:app="http://java.sun.com/jsf/composite/componentes" >
+
+	<ui:define name="tituloPagina">#{label.nome_programa_produto}</ui:define>
+	<ui:define name="nomePrograma"> #{label.nome_programa_produto}</ui:define>
+
+	<ui:define name="head">
+		<style type="text/css">
+			.label {width: 20%;	padding: 2px;}
+			
+			.value {width: 80%;	padding: 2px;}
+			
+			.grid {	width: 70%;}
+			
+			.editarBotao {            
+    			background: url('../resources/img/edit16x16.png') no-repeat !important;
+    			background-color: #004080 !important; 
+   				height: 22px;
+    			width: 25px;
+				margin-left: 18%;
+			}
+
+			.excluirBotao { 
+			    background: url('../resources/img/delete16x16.png') no-repeat !important; 
+			    background-color: #d9534f  !important; 
+			    height: 22px;
+			    width: 25px;
+				margin-left: 18%;
+			}
+		</style>
+	</ui:define>
+
+
+	<ui:define name="content">
+			
+			<p:growl id="msgs" autoUpdate="true" showDetail="True" life="4000"/>
+			<p:messages autoUpdate="true" closable="true">
+				<p:effect type="puff" event="load" delay="9000" />
+			</p:messages>
+			
+			
+			<!-- ################### BOTÕES ############################## -->
+			
+			<app:barraBotoes bean="#{produtoBean}"/>
+						
+						
+			<!-- ################## CONPONENTES EDIÇÃO ########################## -->				
+			
+			<p:panel id="panel" header="#{label.pnl_manut_produto}" rendered="#{!produtoBean.buscando}">
+			
+			  	<p:tabView id="tab" styleClass="ddd" style="border:none ;font-size: 13px !important;">
+			
+					<!--  Inicio da Tab Dados Gerais-->
+				   	<p:tab title="#{label.dados_gerais}" id="tabDadosGerais">
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Código Empresa:" for="id" />
+								<p:inputMask value="#{empresaBean.entidade.codigo}" id="id"
+									readonly="#{empresaBean.visualizando}" mask="99" style="width: 50%" 
+									required="true" requiredMessage="Informe o Código da Empresa!"/>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Código Filial:" for="filial" />
+								<p:inputMask value="#{empresaBean.entidade.filial}" id="filial"
+									readonly="#{empresaBean.visualizando}" mask="99" style="width: 50%"
+									required="true" requiredMessage="Informe o Código da Filial!"/>
+							</h:panelGrid>
+						</div>
+						
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1">
+								<p:outputLabel value="Data do Cadastro:" for="dataCadastro" />
+								<p:inputMask id="dataCadastro"  mask="99/99/9999" readonly="true"
+									value="#{empresaBean.entidade.dataCadastroFormatada}"/>
+							</h:panelGrid>
+						</div>
+					</div>
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="CNPJ:" for="cnpj" />
+								<p:inputMask mask="99.999.999/9999-99" id="cnpj"
+									value="#{empresaBean.entidade.cnpj}" style="width: 60%"
+									readonly="#{empresaBean.visualizando}"
+									required="true" requiredMessage="Informe o Número do CNPJ!"/>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Inscrição Estadual" for="insc_est" />
+								<p:inputText value="#{empresaBean.entidade.inscEstadual}" id="insc_est" 
+									readonly="#{empresaBean.visualizando}" style="width: 60%">								
+									<f:validator validatorId="ValidadorNumero"/>
+								</p:inputText>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%;padding-top: 15px">
+								<p:outputLabel value="Inscrição Municipal" for="insc_mun" />
+								<p:inputText value="#{empresaBean.entidade.inscMunicipal}" id="insc_mun" 
+									readonly="#{empresaBean.visualizando}" style="width: 60%"/>
+							</h:panelGrid>
+						</div>
+					</div>
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Nome Razão" for="nome_razao" />
+								<p:inputText value="#{empresaBean.entidade.nomeRazao}" id="nome_razao"
+									readonly="#{empresaBean.visualizando}" style="width: 80%"
+									required="true" requiredMessage="Informe o Nome Razão!"/>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<h:outputLabel value="Ramo de Atividade" for="ramo_ativ" />
+								<p:selectOneMenu value="#{empresaBean.entidade.ramoAtividade}" 
+									id="ramo_ativ" style="width: 53%"
+									required="true" requiredMessage="Informe o Ramo de Atividade!">
+									
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{empresaBean.ramoAtividades}" var="a"
+										itemValue="#{a}" itemLabel="#{a.label}"/>
+								</p:selectOneMenu>	
+							</h:panelGrid>
+						</div>
+					</div>
+						
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Nome Fantasia" for="nome_fant" />
+								<p:inputText value="#{empresaBean.entidade.nomeFantasia}" id="nome_fant"
+									readonly="#{empresaBean.visualizando}" style="width: 80%"/>
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<h:outputLabel value="Regime Tributário" for="regTribut"/>
+								<p:selectOneMenu value="#{empresaBean.entidade.regimeTributario}"
+									id="regTribut" style="width: 53%">
+									
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{empresaBean.regimes}" var="a"
+										itemValue="#{a}" itemLabel="#{a.label}"/>
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</div>
+					</div>
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="E-mail" for="email" />
+								<p:inputText value="#{empresaBean.entidade.email}" id="email"
+									readonly="#{empresaBean.visualizando}" style="width: 80%" 
+									validatorMessage="Informe um E-mail válido!">
+									<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+								</p:inputText>
+							</h:panelGrid>
+						</div>
+					</div>
+					
+					
+					<div class="ui-g">    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="Site" for="site" />
+								<p:inputText value="#{empresaBean.entidade.site}" id="site"
+									readonly="#{empresaBean.visualizando}" style="width: 80%" />
+							</h:panelGrid>
+						</div>
+					</div>
+					
+					
+					<div class="ui-g">    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    					<h:panelGrid columns="1" style="width: 100%">
+    						<p:outputLabel value="Observações" for="obs" />
+							<p:inputTextarea value="#{empresaBean.entidade.obs}" id="obs"
+								style="width: 80%" rows="5" cols="30" counter="display"
+								maxlength="255" counterTemplate="{0} Caracteres Restantes"
+								autoResize="false" readonly="!#{empresaBean.visualizando}" />
+							<h:outputText id="display" />
+						</h:panelGrid>
+						</div>
+					</div>	
+										
+				   	</p:tab>
+				   			
+				   
+				   	<!--  Inicio da Tab Endereço-->
+				   <p:tab title="#{label.outros_dados}" id="tabOutrosDados">
+						
+				   </p:tab>			
+			
+			  	</p:tabView>
+			</p:panel>
+				
+			
+			
+			<!-- ################## TABELA ########################## -->			
+						
+			<p:panel id="tabela" header="#{label.pnl_consulta_produto}" rendered="#{produtoBean.buscando}" 
+				 style="padding: 0" styleClass="menuSemBorda">
+				 
+				 
+				<p:dataTable value="#{produtoBean.entidades}" var="produto" id="tbl" 
+					selection="#{produtoBean.entidade}" selectionMode="single"
+					rowKey="#{produto.id}" paginator="true" reflow="true"
+					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom"
+					emptyMessage="#{label.msg_tabela_vazia}"
+					paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+					style="margin: -5px -11px;">				
+					
+					<f:facet name="{Exporters}" >											
+						<h:commandLink>
+			                <p:graphicImage library="images" name="excel.png" width="24" style="float:right"/>
+			                <p:dataExporter type="xls" target="tbl" fileName="cars" />
+			            </h:commandLink>
+			 
+			            <h:commandLink>
+			                <p:graphicImage library="images" name="pdf.png" width="24" style="float:right"/>
+			                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+			            </h:commandLink>
+					</f:facet>	
+
+
+					<p:ajax event="rowDblselect" listener="#{produtoBean.onRowDblClckSelect}"
+						global="false" update="@form"/>
+
+					<p:ajax event="rowSelect" listener="#{produtoBean.onRowSelect}" />
+
+					<p:column headerText="#{label.ativo}" style="width: 7%; ">
+						<p:graphicImage value="/resources/images/checked.png"
+										rendered="#{produto.situacao}" />
+						<p:graphicImage value="/resources/images/unchecked.png"
+										rendered="#{ not produto.situacao}" />
+					</p:column>
+
+					<p:column headerText="#{label.codigo}" style="width: 7%;font-size:13px;">
+						<h:outputText value="#{produto.codigo}" />
+					</p:column>
+
+
+					<p:column headerText="#{label.nome}" style="width: 30%;font-size:13px;">
+						<h:outputText value="#{produto.nome}" />
+					</p:column>
+
+
+					<p:column headerText="#{label.grupo}" style="width:20%;font-size:13px;">
+						<h:outputText value="#{produto.gupoProduto.codigoEstrutural}" />
+					</p:column>
+					
+					
+					<p:column headerText="#{label.nome_grupo}" style="width:25%;font-size:13px;">
+						<h:outputText value="#{produto.gupoProduto.nome}" />
+					</p:column>
+					
+					
+					<p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;" exportable="false">						
+						<p:commandButton actionListener="#{produtoBean.editar(empresa)}" 
+							styleClass="editarBotao" value="" update="@form"/>
+							
+						<p:commandButton actionListener="#{produtoBean.excluir(empresa)}" 
+							styleClass="excluirBotao" value=""	
+							update="@form">
+							
+							<p:confirm header="Confirmação" message="Deseja Excluir este Produto?" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>					
+
+				</p:dataTable>
+						
+			</p:panel>
+	</ui:define>
+
+</ui:composition>

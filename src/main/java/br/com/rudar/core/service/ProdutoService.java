@@ -72,11 +72,14 @@ public class ProdutoService implements GenericService<Produto> {
 		List<Produto> lista = null;
 		
 		if(tipoFiltro.equals(TipoFiltro.CODIGO)){
-			String jpql = "Select p From Produto p where p.codigo in (" + valorFiltro + ")";
+			String jpql = 
+				"Select p, g From Produto p left join fetch p.gupoProduto g where p.codigo in (" + valorFiltro + ")";
 			lista = produtoDao.find(jpql);
 		}
 		else if(tipoFiltro.equals(TipoFiltro.NOME)){
-			lista = produtoDao.find("Select p From Produto p where p.nome like ?",valorFiltro);
+			String jpql =
+				"Select p, g From Produto p left join fetch p.gupoProduto g where p.nome like ?";
+			lista = produtoDao.find(jpql,valorFiltro);
 		}
 		
 		return lista;
@@ -87,5 +90,19 @@ public class ProdutoService implements GenericService<Produto> {
 		return produtoDao.findPrice(produto, data, cemp, condPagamento, cliente);
 	}
 
+
+	/**
+	 * Retorna o id,codigo e nome do produto e o id, codigo estrutural e nome do grupo,
+	 * usado para preencher a tabela do cadastro de produto.
+	 * @return List<Produto>
+	 */
+	public List<Produto> preencherTabela(){
+		String jpql = 
+			"SELECT new br.com.rudar.core.entity.Produto(p.id, p.codigo, p.nome,"
+			+ " g.id as idGrupo, g.codigoEstrutural, g.nome as nomeGrupo)"
+			+ " FROM Produto p "
+			+ " left JOIN p.gupoProduto g";
+		return produtoDao.find(jpql);
+	}
 
 }

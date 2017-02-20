@@ -130,7 +130,7 @@ public class GrupoProduto implements Serializable {
 	@Column(name = "INATIVO", length = 1)
 	private Character inativo;	
 	
-	@Column(name = "TIPO_ITEM_SPED", length = 1)
+	@Column(name = "TIPO_ITEM_SPED")
 	private String tipoItemSped;
 
 	

@@ -12,14 +12,40 @@ import br.com.rudar.core.entity.EpiOrcamentoItemInsumo;
 import br.com.rudar.core.entity.EpiOrcamentoItemMp;
 import br.com.rudar.core.entity.EpiOrcamentoItemProcesso;
 import br.com.rudar.core.entity.GrupoMaquina;
+import br.com.rudar.core.entity.Produto;
 import br.com.rudar.core.entity.TipoServico;
 import br.com.rudar.core.entity.TipoServicoItem;
+import br.com.rudar.core.service.ProdutoService;
 
 public class Teste {
 
 	public static void main(String[] args) {	
-		testeOrcamento();
+		//testeOrcamento();
+		testeProduto();
 	}
+	
+	
+	
+	public static void testeProduto(){
+		try {
+			//EntityManager em = JPAUtil.GetInstance().getEntityManager();
+			ProdutoService produtoService = new ProdutoService();
+			//List<Produto> lista = produtoService.preencherTabela();
+			
+			Produto p = produtoService.carregarEntidade(29);
+			
+			System.out.println(p);
+			/*em.getTransaction().begin();
+			em.persist(tipoServico);
+			em.getTransaction().commit();
+			em.close();*/
+		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	
 	
 	public static void testeTipoServico(){
 		try {

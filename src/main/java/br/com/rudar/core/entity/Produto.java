@@ -31,7 +31,7 @@ public class Produto implements Serializable {
     @SequenceGenerator(name="G_CAD_PRODUTO", sequenceName="\"G_CAD_PRODUTO\"", allocationSize=1)  
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_CAD_PRODUTO")
 	@Column(name = "COD_CADPRODUTO")
-	private Integer Id;
+	private Integer id;
 	
 	@Column(name = "CODIGO")
 	private Integer codigo;
@@ -115,14 +115,34 @@ public class Produto implements Serializable {
     private OperacaoSaida operacaoSaida;
  
 	
-	//--------------------------------	GETs and SETs------------------------------//
+	//--------------------------------	METODOS CONSTRUTORES -----------------------//
 	
+	public Produto() {}
+	
+	
+	
+	
+	public Produto(Integer id, Integer codigo, String nome,Integer idGrupo, String codigoEstrutural, String nomeGrupo) {
+		super();
+		this.id = id;
+		this.codigo = codigo;
+		this.nome = nome;
+		
+		this.gupoProduto = new GrupoProduto();
+		this.gupoProduto.setId(idGrupo);
+		this.gupoProduto.setCodigoEstrutural(codigoEstrutural);
+		this.gupoProduto.setNome(nomeGrupo);
+	}
+
+
+	//--------------------------------	GETs and SETs------------------------------//
 
 	public Integer getId() {
-		return Id;
+		return id;
 	}
+	
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
 	
 	
@@ -328,7 +348,7 @@ public class Produto implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -344,11 +364,11 @@ public class Produto implements Serializable {
 			return false;
 		}
 		Produto other = (Produto) obj;
-		if (Id == null) {
-			if (other.Id != null) {
+		if (id == null) {
+			if (other.id != null) {
 				return false;
 			}
-		} else if (!Id.equals(other.Id)) {
+		} else if (!id.equals(other.id)) {
 			return false;
 		}
 		return true;
