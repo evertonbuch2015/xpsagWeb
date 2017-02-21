@@ -1,5 +1,7 @@
 package br.com.rudar.view.managedBean;
 
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -7,7 +9,10 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.rudar.core.entity.GrupoProduto;
 import br.com.rudar.core.entity.Produto;
+import br.com.rudar.core.entity.Unidade;
+import br.com.rudar.core.service.GrupoProdutoService;
 import br.com.rudar.core.service.ProdutoService;
+import br.com.rudar.core.service.UnidadeService;
 
 @ManagedBean
 @SessionScoped
@@ -29,11 +34,17 @@ public class ProdutoBean extends GenericBean<Produto> {
 	
 	private TipoFiltro filtro;	
 	private Integer entidadeId;
-	private ProdutoService produtoService;
 	
+	private ProdutoService produtoService;
+	private UnidadeService unidadeService;
+	private GrupoProdutoService grupoProdutoService;
+	
+	private List<Unidade> unidades;
 	
 	public ProdutoBean() {
-		produtoService = new ProdutoService();
+		produtoService 		= new ProdutoService();
+		unidadeService 		= new UnidadeService();
+		grupoProdutoService = new GrupoProdutoService();
 	}
 	
 	
@@ -84,11 +95,22 @@ public class ProdutoBean extends GenericBean<Produto> {
 	
 	
 	public void grupoProdutoSelecionado(SelectEvent event){
-		this.entidade.setGupoProduto((GrupoProduto) event.getObject());
+		this.entidade.setGrupoProduto((GrupoProduto) event.getObject());
 		
 	}
 	
 	
+	public List<GrupoProduto> completaGrupoProduto(String query){
+		return grupoProdutoService.buscar("From GrupoProduto g where g.nome like ?1", "%"+query+"%");
+	}
+	
+	
+	public void buscarGrupoProduto(){
+		GrupoProduto grupoProduto = grupoProdutoService.buscarPeloCodigoEstrutural(this.entidade.getGrupoProduto().getCodigoEstrutural());
+		if(grupoProduto != null){
+			this.entidade.setGrupoProduto(grupoProduto);
+		}		
+	}
 	// =============================GET AND SET=====================================
 	
 	public Integer getEntidadeId() {
@@ -100,6 +122,16 @@ public class ProdutoBean extends GenericBean<Produto> {
 	}
 	
 
+	
+	//RETORNA LISTA DE UNIDADES PARA O COMBO
+	public List<Unidade> getUnidades(){
+		if(this.unidades == null){
+			this.unidades = unidadeService.buscarTodos();
+		}
+		return unidades; 
+	}
+	
+	
 	public TipoFiltro[] tipoFiltros(){
 		return TipoFiltro.values();
 	}

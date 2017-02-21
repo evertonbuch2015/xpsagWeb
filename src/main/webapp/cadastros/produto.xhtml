@@ -60,162 +60,236 @@
 						
 						
 					<div class="ui-g">
-    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    					<div class="ui-g-12 ui-md-6 ui-lg-2">
     						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="Código Empresa:" for="id" />
-								<p:inputMask value="#{empresaBean.entidade.codigo}" id="id"
-									readonly="#{empresaBean.visualizando}" mask="99" style="width: 50%" 
-									required="true" requiredMessage="Informe o Código da Empresa!"/>
+								<p:outputLabel value="#{label.codigo}" for="id" />
+								<p:inputMask value="#{produtoBean.entidade.codigo}" id="id"
+									readonly="#{produtoBean.visualizando}" mask="99" style="width: 70%" 
+									required="true" requiredMessage="Informe o Código do Produto!"/>
 							</h:panelGrid>
-						</div>
-    					
-    					<div class="ui-g-12 ui-md-6 ui-lg-3">
-    						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="Código Filial:" for="filial" />
-								<p:inputMask value="#{empresaBean.entidade.filial}" id="filial"
-									readonly="#{empresaBean.visualizando}" mask="99" style="width: 50%"
-									required="true" requiredMessage="Informe o Código da Filial!"/>
-							</h:panelGrid>
-						</div>
-						
+						</div>    										
     					
     					<div class="ui-g-12 ui-md-6 ui-lg-3">
     						<h:panelGrid columns="1">
-								<p:outputLabel value="Data do Cadastro:" for="dataCadastro" />
+								<p:outputLabel value="#{label.data_cadastro}" for="dataCadastro" />
 								<p:inputMask id="dataCadastro"  mask="99/99/9999" readonly="true"
-									value="#{empresaBean.entidade.dataCadastroFormatada}"/>
+									value="#{produtoBean.entidade.dataInsercao}"/>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.usuario}" for="usuario" />								
+								<p:inputText value="#{produtoBean.entidade.usuario}" id="usuario" style="width: 80%" />								
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+							<h:panelGrid columns="1" style="width: 100%">
+	        					<p:outputLabel for="situacao" value="Situação" />
+	        					<p:selectOneRadio id="situacao" value="#{produtoBean.entidade.situacao}" style="width: 90%">
+	            					<f:selectItem itemLabel="Normal" itemValue="true" />
+	            					<f:selectItem itemLabel="#{label.inativo}" itemValue="false" />
+	        					</p:selectOneRadio>
+	    					</h:panelGrid>
+    					</div>
+						
+					</div>
+						
+						
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-5">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.nome}" for="nome" />
+								<p:inputText value="#{produtoBean.entidade.nome}" id="nome" 
+									readonly="#{produtoBean.visualizando}" style="width: 90%"/>								
+							</h:panelGrid>
+    						
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.codigo_barras}" for="cod_barras" />
+								<p:inputText value="#{produtoBean.entidade.codigoBarras}" id="cod_barras" 
+									readonly="#{produtoBean.visualizando}" style="width: 80%"/>								
+							</h:panelGrid>
+						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-2">
+    						<h:panelGrid columns="1" style="width: 100%;">
+								<p:outputLabel value="#{label.peso_bruto}" for="peso_bruto" />
+								<p:inputText value="#{produtoBean.entidade.pesoBruto}" id="peso_bruto" 
+									readonly="#{produtoBean.visualizando}" style="width: 80%"/>
 							</h:panelGrid>
 						</div>
 					</div>
 						
 						
 					<div class="ui-g">
-    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+    					<div class="ui-g-12 ui-md-6 ui-lg-1">
     						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="CNPJ:" for="cnpj" />
-								<p:inputMask mask="99.999.999/9999-99" id="cnpj"
-									value="#{empresaBean.entidade.cnpj}" style="width: 60%"
-									readonly="#{empresaBean.visualizando}"
-									required="true" requiredMessage="Informe o Número do CNPJ!"/>
-							</h:panelGrid>
-						</div>
-    					
-    					<div class="ui-g-12 ui-md-6 ui-lg-3">
-    						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="Inscrição Estadual" for="insc_est" />
-								<p:inputText value="#{empresaBean.entidade.inscEstadual}" id="insc_est" 
-									readonly="#{empresaBean.visualizando}" style="width: 60%">								
-									<f:validator validatorId="ValidadorNumero"/>
+								<p:outputLabel value="#{label.grupo}" for="grupo" />
+								
+								<p:inputText value="#{produtoBean.entidade.grupoProduto.codigoEstrutural}" id="grupo" style="width: 100%">
+									<p:ajax event="change" update="grupoNome" listener="#{produtoBean.buscarGrupoProduto}"/>
+								
 								</p:inputText>
+								
+							</h:panelGrid>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+						
+							<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.nome_grupo}" for="grupoNome" />
+								
+								<p:autoComplete id="grupoNome" value="#{produtoBean.entidade.grupoProduto}"
+    								var="grupo" itemLabel="#{grupo.nome}" itemValue="#{grupo}" minQueryLength="4"
+									forceSelection="true" size="47"
+									completeMethod="#{produtoBean.completaGrupoProduto}">
+									<p:watermark value="#{label.pesquise_pelo_nome}" for="grupoNome"/>
+									<p:ajax event="itemSelect" update="grupo"/>
+								</p:autoComplete>
 							</h:panelGrid>
 						</div>
     					
     					<div class="ui-g-12 ui-md-6 ui-lg-3">
-    						<h:panelGrid columns="1" style="width: 100%;padding-top: 15px">
-								<p:outputLabel value="Inscrição Municipal" for="insc_mun" />
-								<p:inputText value="#{empresaBean.entidade.inscMunicipal}" id="insc_mun" 
-									readonly="#{empresaBean.visualizando}" style="width: 60%"/>
+    						<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.codigo_barras_ean14}" for="cod_barras_ean14" />
+								<p:inputText value="#{produtoBean.entidade.codigoBarrasEan14}" id="cod_barras_ean14" 
+									readonly="#{produtoBean.visualizando}" style="width: 80%"/>								
 							</h:panelGrid>
 						</div>
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-2">
+    						<h:panelGrid columns="1" style="width: 100%;">
+								<p:outputLabel value="#{label.peso_liquido}" for="peso_liquido" />
+								<p:inputText value="#{produtoBean.entidade.pesoLiquido}" id="peso_liquido" 
+									readonly="#{produtoBean.visualizando}" style="width: 80%"/>
+							</h:panelGrid>
+						</div>
+    					
 					</div>
 						
 						
+						
 					<div class="ui-g">
-    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-1">
     						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="Nome Razão" for="nome_razao" />
-								<p:inputText value="#{empresaBean.entidade.nomeRazao}" id="nome_razao"
-									readonly="#{empresaBean.visualizando}" style="width: 80%"
-									required="true" requiredMessage="Informe o Nome Razão!"/>
+								<p:outputLabel value="#{label.clas_fiscal}" for="clas_fiscal" />
+								
+								<p:inputText value="#{produtoBean.entidade.clasFiscal.codigo}" id="clas_fiscal" style="width: 100%" />
+								
 							</h:panelGrid>
 						</div>
-    					
-    					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-4">						
+							<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.clas_fiscal_nome}" for="clas_fiscal_nome" />
+								<p:inputText value="#{produtoBean.entidade.clasFiscal.nome}" id="clas_fiscal_nome" style="width: 87%" />
+							</h:panelGrid>
+						</div>
+						
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">						
+							<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.codigo_ncm}" for="cod_ncm" />
+								<p:inputText value="#{produtoBean.entidade.codigoNcm}" id="cod_ncm" style="width: 87%" />
+							</h:panelGrid>
+						</div>
+						
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">						
+							<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.codigo_tipi}" for="cod_tipi" />
+								<p:inputText value="#{produtoBean.entidade.codigoNcmExtipi}" id="cod_tipi" style="width: 87%" />
+							</h:panelGrid>
+						</div>
+						
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">						
+							<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.codigo_strib}" for="cod_strib" />
+								<p:inputText value="#{produtoBean.entidade.codigoCest}" id="cod_strib" style="width: 87%" />
+							</h:panelGrid>
+						</div>
+						
+						
+					</div>				
+					
+					
+					<div class="ui-g">
+    					<div class="ui-g-12 ui-md-6 ui-lg-5">
     						<h:panelGrid columns="1" style="width: 100%">
-								<h:outputLabel value="Ramo de Atividade" for="ramo_ativ" />
-								<p:selectOneMenu value="#{empresaBean.entidade.ramoAtividade}" 
-									id="ramo_ativ" style="width: 53%"
-									required="true" requiredMessage="Informe o Ramo de Atividade!">
+								<h:outputLabel value="#{label.origem_mercadoria}" for="origem" />
+								<p:selectOneMenu value="#{produtoBean.entidade.unidade}" 
+									id="origem" style="width: 86%"
+									required="true" requiredMessage="Informe a Unidade!">
 									
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{empresaBean.ramoAtividades}" var="a"
-										itemValue="#{a}" itemLabel="#{a.label}"/>
+									<f:selectItems value="#{produtoBean.unidades}" var="a"
+										itemValue="#{a}" itemLabel="#{a.nome}"/>
 								</p:selectOneMenu>	
 							</h:panelGrid>
 						</div>
-					</div>
 						
-						
-						
-					<div class="ui-g">
-    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
     						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="Nome Fantasia" for="nome_fant" />
-								<p:inputText value="#{empresaBean.entidade.nomeFantasia}" id="nome_fant"
-									readonly="#{empresaBean.visualizando}" style="width: 80%"/>
-							</h:panelGrid>
-						</div>
-    					
-    					<div class="ui-g-12 ui-md-6 ui-lg-3">
-    						<h:panelGrid columns="1" style="width: 100%">
-								<h:outputLabel value="Regime Tributário" for="regTribut"/>
-								<p:selectOneMenu value="#{empresaBean.entidade.regimeTributario}"
-									id="regTribut" style="width: 53%">
+								<h:outputLabel value="#{label.unidade}" for="unidade" />
+								<p:selectOneMenu value="#{produtoBean.entidade.unidade}" 
+									id="unidade" style="width: 74%"
+									required="true" requiredMessage="Informe a Unidade!">
 									
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{empresaBean.regimes}" var="a"
-										itemValue="#{a}" itemLabel="#{a.label}"/>
-								</p:selectOneMenu>
+									<f:selectItems value="#{produtoBean.unidades}" var="a"
+										itemValue="#{a}" itemLabel="#{a.nome}"/>
+								</p:selectOneMenu>	
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">						
+							<h:panelGrid columns="1" style="width: 100%">
+								<p:outputLabel value="#{label.referencia_fabrica}" for="ref_fabrica" />
+								<p:inputText value="#{produtoBean.entidade.refFabrica}" id="ref_fabrica" style="width: 87%" />
 							</h:panelGrid>
 						</div>
 					</div>
-						
-						
-					<div class="ui-g">
-    					<div class="ui-g-12 ui-md-6 ui-lg-6">
-    						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="E-mail" for="email" />
-								<p:inputText value="#{empresaBean.entidade.email}" id="email"
-									readonly="#{empresaBean.visualizando}" style="width: 80%" 
-									validatorMessage="Informe um E-mail válido!">
-									<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-								</p:inputText>
-							</h:panelGrid>
-						</div>
-					</div>
-					
 					
 					<div class="ui-g">    					
-    					<div class="ui-g-12 ui-md-6 ui-lg-6">
-    						<h:panelGrid columns="1" style="width: 100%">
-								<p:outputLabel value="Site" for="site" />
-								<p:inputText value="#{empresaBean.entidade.site}" id="site"
-									readonly="#{empresaBean.visualizando}" style="width: 80%" />
-							</h:panelGrid>
-						</div>
-					</div>
-					
-					
-					<div class="ui-g">    					
-    					<div class="ui-g-12 ui-md-6 ui-lg-6">
+    					<div class="ui-g-12 ui-md-6 ui-lg-5">
     					<h:panelGrid columns="1" style="width: 100%">
     						<p:outputLabel value="Observações" for="obs" />
 							<p:inputTextarea value="#{empresaBean.entidade.obs}" id="obs"
-								style="width: 80%" rows="5" cols="30" counter="display"
+								style="width: 90%" rows="5" cols="30" counter="display"
 								maxlength="255" counterTemplate="{0} Caracteres Restantes"
 								autoResize="false" readonly="!#{empresaBean.visualizando}" />
 							<h:outputText id="display" />
 						</h:panelGrid>
 						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+    					<h:panelGrid columns="2" style="width: 100%">
+    						
+							<p:selectBooleanCheckbox value="#{produtoBean.entidade.ncmUsaMvaAjustado}" id="mva"
+								style="width: 80%" />
+							<p:outputLabel value="#{label.usar_mva_ajustado}" for="mva" />
+						</h:panelGrid>
+						</div>
 					</div>	
-										
+					
+															
 				   	</p:tab>
 				   			
 				   
-				   	<!--  Inicio da Tab Endereço-->
-				   <p:tab title="#{label.outros_dados}" id="tabOutrosDados">
+				   	<!--  Inicio da Industria Geral-->
+				   <p:tab title="#{label.industria_geral}" id="tabIndGeral">
 						
-				   </p:tab>			
+				   </p:tab>
+				   
+				   <!--  Inicio da Industria Textil-->
+				   <p:tab title="#{label.industria_textil}" id="tabIndTextil">
+						
+				   </p:tab>						
 			
 			  	</p:tabView>
 			</p:panel>
@@ -272,12 +346,12 @@
 
 
 					<p:column headerText="#{label.grupo}" style="width:20%;font-size:13px;">
-						<h:outputText value="#{produto.gupoProduto.codigoEstrutural}" />
+						<h:outputText value="#{produto.grupoProduto.codigoEstrutural}" />
 					</p:column>
 					
 					
 					<p:column headerText="#{label.nome_grupo}" style="width:25%;font-size:13px;">
-						<h:outputText value="#{produto.gupoProduto.nome}" />
+						<h:outputText value="#{produto.grupoProduto.nome}" />
 					</p:column>
 					
 					

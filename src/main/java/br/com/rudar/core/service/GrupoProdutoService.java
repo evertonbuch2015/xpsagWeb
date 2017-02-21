@@ -64,4 +64,14 @@ public class GrupoProdutoService implements GenericService<GrupoProduto> {
 		
 		return lista;
 	}
+
+
+	public List<GrupoProduto> buscar(String jpql , Object...params){
+		return grupoProdutoDao.find(jpql, params);
+	}
+
+
+	public GrupoProduto buscarPeloCodigoEstrutural(String codigo){
+		return grupoProdutoDao.findOne("From GrupoProduto g where g.codigoEstrutural = ?1", codigo);
+	}
 }

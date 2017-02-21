@@ -100,7 +100,7 @@ public class Produto implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="COD_CEAGRUPO")
-	private GrupoProduto gupoProduto;
+	private GrupoProduto grupoProduto;
 	
 	
 	@OneToOne(fetch = FetchType.LAZY)
@@ -128,10 +128,10 @@ public class Produto implements Serializable {
 		this.codigo = codigo;
 		this.nome = nome;
 		
-		this.gupoProduto = new GrupoProduto();
-		this.gupoProduto.setId(idGrupo);
-		this.gupoProduto.setCodigoEstrutural(codigoEstrutural);
-		this.gupoProduto.setNome(nomeGrupo);
+		this.grupoProduto = new GrupoProduto();
+		this.grupoProduto.setId(idGrupo);
+		this.grupoProduto.setCodigoEstrutural(codigoEstrutural);
+		this.grupoProduto.setNome(nomeGrupo);
 	}
 
 
@@ -173,7 +173,7 @@ public class Produto implements Serializable {
 	}
 
 		
-	public Unidade getUnidade() {
+	public Unidade getUnidade() {		
 		return unidade;
 	}
 	
@@ -182,16 +182,22 @@ public class Produto implements Serializable {
 	}
 	
 	
-	public GrupoProduto getGupoProduto() {
-		return gupoProduto;
+	public GrupoProduto getGrupoProduto() {
+		if(this.grupoProduto == null){
+			this.grupoProduto = new GrupoProduto();
+		}
+		return grupoProduto;
 	}
 	
-	public void setGupoProduto(GrupoProduto gupoProduto) {
-		this.gupoProduto = gupoProduto;
+	public void setGrupoProduto(GrupoProduto grupoProduto) {
+		this.grupoProduto = grupoProduto;
 	}
 
 	
 	public OperacaoSaida getOperacaoSaida() {
+		if(this.operacaoSaida == null){
+			this.operacaoSaida = new OperacaoSaida();
+		}
 		return operacaoSaida;
 	}
 	
@@ -318,6 +324,9 @@ public class Produto implements Serializable {
 	
 	
 	public ClasFiscal getClasFiscal() {
+		if(this.clasFiscal == null){
+			this.clasFiscal = new ClasFiscal();
+		}
 		return clasFiscal;
 	}
 	

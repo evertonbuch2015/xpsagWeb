@@ -97,9 +97,11 @@ public abstract class GenericDao<T extends Serializable> {
 			UtilMensagens.mensagemErro("Erro ao Carregar os dados da Entidade " + aClass.getName() +
 					" no método findOne(String jpql , Object...params).\n "
 					+ "Foram Retornados mais de um registro para o parâmetro indicado.\n Erro: " +	UtilErros.getMensagemErro(ex));
+			return null;
 		}catch (Exception e) {
 			UtilMensagens.mensagemErro("Erro ao Carregar os dados da Entidade " + aClass.getName() +
 					" no método findOne(String jpql , Object...params) \nErro: " +	UtilErros.getMensagemErro(e));
+			return null;
 		}		
         
         return entity;
