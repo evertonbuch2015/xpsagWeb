@@ -28,15 +28,35 @@ public class Teste {
 	
 	public static void testeProduto(){
 		try {
-			//EntityManager em = JPAUtil.GetInstance().getEntityManager();
+			EntityManager em = JPAUtil.GetInstance().getEntityManager();
 			ProdutoService produtoService = new ProdutoService();
 			//List<Produto> lista = produtoService.preencherTabela();
 			
-			Produto p = produtoService.carregarEntidade(29);
+			Produto p2 = produtoService.carregarEntidade(13);//em.find(Produto.class, 13);
+			System.out.println(p2);
+			/*Produto p = new Produto();//em.find(Produto.class, 2);
+			p.setClasFiscal(em.find(ClasFiscal.class, 35));
+			p.setCodigo(12345689);
+			p.setNome("teste 12345");
+			p.setCodigoNcm(123456.33);
+			p.setSituacao(true);
+			p.setOrigemMercadoria('0');
 			
-			System.out.println(p);
-			/*em.getTransaction().begin();
-			em.persist(tipoServico);
+			
+			ProdutoInd produtoInd = new ProdutoInd();
+			p.setProdutoInd(produtoInd);
+			
+			
+			
+			ProdutoIndMetal produtoIndMetal = new ProdutoIndMetal();
+			produtoInd.setProdutoIndMetal(produtoIndMetal);
+			
+			
+			ProdutoIndText produtoIndText = new ProdutoIndText();
+			produtoInd.setProdutoIndText(produtoIndText);
+			
+			em.getTransaction().begin();
+			em.persist(p);
 			em.getTransaction().commit();
 			em.close();*/
 		

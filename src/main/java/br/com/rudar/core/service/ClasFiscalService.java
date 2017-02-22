@@ -51,6 +51,10 @@ public class ClasFiscalService implements GenericService<ClasFiscal> {
 	}
 
 	
+	public List<ClasFiscal> buscar(String jpql , Object...params){
+		return clasFiscalDao.find(jpql, params);
+	}
+	
 	public ClasFiscal buscarPeloCodigo(Integer codigo){
 		try {
 			return clasFiscalDao.findOne("From ClasFiscal c where c.codigo = ?1", codigo);

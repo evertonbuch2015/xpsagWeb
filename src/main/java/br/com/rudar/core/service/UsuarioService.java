@@ -106,7 +106,7 @@ public class UsuarioService implements GenericService<Usuario> {
 	public Usuario buscarPeloNome(Usuario usuario) {
 		try{
 			String jpql = "select u from Usuario u where u.nomeUsuario = ?1";
-			return usuarioDao.findOne(jpql, usuario.getNomeUsuario());
+			return usuarioDao.findOne(jpql, usuario.getNomeUsuario().toUpperCase());
 		}
 		catch(javax.persistence.NonUniqueResultException ex){
 			ex.printStackTrace();

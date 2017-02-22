@@ -70,6 +70,9 @@ public class ProdutoBean extends GenericBean<Produto> {
 		Produto produto = new Produto();
 		produto.setDataInsercao(new Date());
 		produto.setUsuario(SessionContext.getInstance().getUsuarioLogado().getNomeUsuario());
+		produto.setCemp("0");
+		
+		produto.getProdutoInd().setObservacao("teste");
 		return produto;
 	}
 	
@@ -117,6 +120,11 @@ public class ProdutoBean extends GenericBean<Produto> {
 	}
 	
 	
+	public List<ClasFiscal> completaClasFiscal(String query){
+		return clasFiscalService.buscar("From ClasFiscal c where c.nome like ?1", "%"+query+"%");
+	}
+	
+	
 	public void buscarGrupoProduto(){
 		GrupoProduto grupoProduto = grupoProdutoService.buscarPeloCodigoEstrutural(this.entidade.getGrupoProduto().getCodigoEstrutural());
 		if(grupoProduto != null){
@@ -135,6 +143,7 @@ public class ProdutoBean extends GenericBean<Produto> {
 			this.entidade.getClasFiscal().setCodigo(null);
 		}
 	}
+	
 	// =============================GET AND SET=====================================
 	
 	public Integer getEntidadeId() {

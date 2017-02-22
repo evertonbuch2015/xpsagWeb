@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -69,7 +70,6 @@ public class Produto implements Serializable {
 	@Column(name = "PESO_LIQUIDO")
 	private Double pesoLiquido;
 	
-	//@Enumerated(EnumType.STRING)
 	@Column(name = "ORIGEM_MERCADORIA")
 	private Character origemMercadoria;
 	
@@ -116,13 +116,15 @@ public class Produto implements Serializable {
     private OperacaoSaida operacaoSaida;
  
 	
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true,mappedBy="produto")
+	private ProdutoInd produtoInd;
+	
+	
 	//--------------------------------	METODOS CONSTRUTORES -----------------------//
 	
 	public Produto() {}
 	
-	
-	
-	
+		
 	public Produto(Integer id, Integer codigo, String nome,Integer idGrupo, String codigoEstrutural, String nomeGrupo) {
 		super();
 		this.id = id;
@@ -138,6 +140,7 @@ public class Produto implements Serializable {
 
 	//--------------------------------	GETs and SETs------------------------------//
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -287,8 +290,7 @@ public class Produto implements Serializable {
 			this.origemMercadoria = origemMercadoria;		
 	}
 	
-	
-	
+		
 	public Date getDataInsercao() {
 		return dataInsercao;
 	}
@@ -304,8 +306,7 @@ public class Produto implements Serializable {
 		this.dataInsercao = dataInsercao;
 	}
 	
-	
-	
+		
 	public String getUsuario() {
 		return usuario;
 	}
@@ -336,6 +337,21 @@ public class Produto implements Serializable {
 	}
 	
 	
+	public ProdutoInd getProdutoInd() {
+		if(this.produtoInd == null){			
+			this.produtoInd = new ProdutoInd();
+			this.produtoInd.setProduto(this);
+		}
+		return produtoInd;
+	}
+
+	public void setProdutoInd(ProdutoInd produtoInd) {
+		
+		this.produtoInd = produtoInd;
+	}
+
+
+	
 	//Métodos Modificados
 	public Boolean getSituacao() {
 		if(this.situacao == null) return null;
@@ -365,10 +381,14 @@ public class Produto implements Serializable {
 		}
 	}
 	
-	
+			
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
 	
+
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

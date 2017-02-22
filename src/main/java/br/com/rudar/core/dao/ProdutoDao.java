@@ -19,9 +19,9 @@ public class ProdutoDao extends GenericDao<Produto> {
 	
 	@Override
 	public Produto findAllAttributesEntity(Integer id) {
-		String jpql = "Select p, g, u, o, c From Produto p left join fetch p.grupoProduto g"
+		String jpql = "Select p, g, u, o, c, ind From Produto p left join fetch p.grupoProduto g"
 				+ "	left join fetch p.unidade u left join fetch p.operacaoSaida o"
-				+ " left join fetch p.clasFiscal c"
+				+ " left join fetch p.clasFiscal c left join fetch p.produtoInd ind"
 				+ "	where p.id = ?1";
 		
 		try {
