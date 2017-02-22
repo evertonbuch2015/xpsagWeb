@@ -44,9 +44,21 @@ public class UsuarioService implements GenericService<Usuario> {
 
 	
 	@Override
-	public Usuario carregarEntidade(Integer id) {
-		String jpql = "Select u From Usuario u left JOIN FETCH u.empresas where u.idUsusario = ?1";
-		return usuarioDao.findOne(jpql, id);
+	public Usuario carregarEntidade(Integer id) {		
+		try{
+			String jpql = "Select u From Usuario u left JOIN FETCH u.empresas where u.idUsusario = ?1";
+			return usuarioDao.findOne(jpql, id);
+		}
+		catch(javax.persistence.NonUniqueResultException ex){
+			ex.printStackTrace();
+			UtilMensagens.mensagemAtencao("Existem mais de um Usuário para o código "+id);
+			return null;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			UtilMensagens.mensagemAtencao("Usuário não encontrado!");
+			return null;
+		}
 	}
 
 	
@@ -92,7 +104,19 @@ public class UsuarioService implements GenericService<Usuario> {
 
 
 	public Usuario buscarPeloNome(Usuario usuario) {
-		String jpql = "select u from Usuario u where u.nomeUsuario = ?1";
-		return usuarioDao.findOne(jpql, usuario.getNomeUsuario());
+		try{
+			String jpql = "select u from Usuario u where u.nomeUsuario = ?1";
+			return usuarioDao.findOne(jpql, usuario.getNomeUsuario());
+		}
+		catch(javax.persistence.NonUniqueResultException ex){
+			ex.printStackTrace();
+			UtilMensagens.mensagemAtencao("Existem mais de um Usuário para o nome "+usuario.getNomeUsuario());
+			return null;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			UtilMensagens.mensagemAtencao("Usuário não encontrado!");
+			return null;
+		}
 	}
 }

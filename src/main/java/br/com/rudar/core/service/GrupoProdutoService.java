@@ -72,6 +72,17 @@ public class GrupoProdutoService implements GenericService<GrupoProduto> {
 
 
 	public GrupoProduto buscarPeloCodigoEstrutural(String codigo){
-		return grupoProdutoDao.findOne("From GrupoProduto g where g.codigoEstrutural = ?1", codigo);
+		try {
+			return grupoProdutoDao.findOne("From GrupoProduto g where g.codigoEstrutural = ?1", codigo);
+			
+		}catch(javax.persistence.NonUniqueResultException ex){
+			ex.printStackTrace();
+			UtilMensagens.mensagemAtencao("Existem mais de um Grupo de Produto para o código estrutural "+codigo);
+			return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			UtilMensagens.mensagemAtencao("Grupo de Produto não encontrado para o código "+codigo);
+			return null;
+		}			
 	}
 }

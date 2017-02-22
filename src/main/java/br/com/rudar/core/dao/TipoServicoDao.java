@@ -14,7 +14,13 @@ public class TipoServicoDao extends GenericDao<TipoServico> {
 		String jpql =
 				"Select t, c, ii From TipoServico t left Join fetch t.planoContas c "
 						+ "	left Join fetch t.tipoServicoItens ii where t.id = ?1";
-		return findOne(jpql, id);
+		
+		try {
+			return findOne(jpql, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;			
+		}
 	}
 
 }

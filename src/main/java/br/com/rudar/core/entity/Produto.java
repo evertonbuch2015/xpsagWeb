@@ -1,6 +1,7 @@
 package br.com.rudar.core.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -287,22 +288,22 @@ public class Produto implements Serializable {
 	}
 	
 	
-	public Character getNcmUsaMvaAjustado() {
-		return ncmUsaMvaAjustado;
-	}
-	
-	public void setNcmUsaMvaAjustado(Character ncmUsaMvaAjustado) {
-		this.ncmUsaMvaAjustado = ncmUsaMvaAjustado;
-	}
-	
 	
 	public Date getDataInsercao() {
 		return dataInsercao;
 	}
 	
+	public String getDataInsercaoFormatada(){
+		if(this.dataInsercao != null){
+			return new SimpleDateFormat("dd/MM/yyyy").format(dataInsercao);
+		}
+			return null;
+	}
+	
 	public void setDataInsercao(Date dataInsercao) {
 		this.dataInsercao = dataInsercao;
 	}
+	
 	
 	
 	public String getUsuario() {
@@ -338,8 +339,7 @@ public class Produto implements Serializable {
 	//Métodos Modificados
 	public Boolean getSituacao() {
 		if(this.situacao == null) return null;
-		
-		return situacao.equals("N") ? Boolean.TRUE : Boolean.TRUE;
+		return situacao.equals('N') ? true : false;
 	}
 
 	public void setSituacao(Boolean value) {
@@ -349,6 +349,22 @@ public class Produto implements Serializable {
 			this.situacao = value == true ? 'N' : 'I';
 		}
 	}
+	
+
+	public Boolean getNcmUsaMvaAjustado() {
+		if(this.ncmUsaMvaAjustado == null) return null;
+		
+		return ncmUsaMvaAjustado.equals('S') ? true: false;
+	}
+	
+	public void setNcmUsaMvaAjustado(Boolean ncmUsaMvaAjustado) {
+		if(ncmUsaMvaAjustado == null){ 
+			this.ncmUsaMvaAjustado = null;
+		}else{
+			this.ncmUsaMvaAjustado = ncmUsaMvaAjustado == true ? 'S' : 'N';
+		}
+	}
+	
 	
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//

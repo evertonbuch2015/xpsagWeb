@@ -76,7 +76,7 @@ public abstract class GenericDao<T extends Serializable> {
     */
     @SuppressWarnings("unchecked")
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public T findOne(String jpql , Object...params){
+    public T findOne(String jpql , Object...params)throws Exception{
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         
@@ -91,17 +91,9 @@ public abstract class GenericDao<T extends Serializable> {
         try {
         	entity = (T) query.getSingleResult();
         	em.getTransaction().commit();
+		
+		}finally {
 			em.close();
-			
-		}catch(javax.persistence.NonUniqueResultException ex){
-			UtilMensagens.mensagemErro("Erro ao Carregar os dados da Entidade " + aClass.getName() +
-					" no método findOne(String jpql , Object...params).\n "
-					+ "Foram Retornados mais de um registro para o parâmetro indicado.\n Erro: " +	UtilErros.getMensagemErro(ex));
-			return null;
-		}catch (Exception e) {
-			UtilMensagens.mensagemErro("Erro ao Carregar os dados da Entidade " + aClass.getName() +
-					" no método findOne(String jpql , Object...params) \nErro: " +	UtilErros.getMensagemErro(e));
-			return null;
 		}		
         
         return entity;

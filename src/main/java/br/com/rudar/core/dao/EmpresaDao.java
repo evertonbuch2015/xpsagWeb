@@ -12,6 +12,12 @@ public class EmpresaDao extends GenericDao<Empresa> {
 	@Override
 	public Empresa findAllAttributesEntity(Integer id) {
 		String jpql = "Select e From Empresa e where e.id = ?1";
-		return findOne(jpql, id);
+		
+		try {
+			return findOne(jpql, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;			
+		}
 	}
 }

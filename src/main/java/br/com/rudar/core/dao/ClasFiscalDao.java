@@ -12,6 +12,11 @@ public class ClasFiscalDao extends GenericDao<ClasFiscal> {
 	@Override
 	public ClasFiscal findAllAttributesEntity(Integer id) {
 		String jpql = "Select c From ClasFiscal c left join fetch c.clasFiscalItems where c.id = ?1";
-		return findOne(jpql, id);
+		try {
+			return findOne(jpql, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;			
+		}
 	}
 }

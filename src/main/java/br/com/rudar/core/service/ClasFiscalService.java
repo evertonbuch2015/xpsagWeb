@@ -50,4 +50,19 @@ public class ClasFiscalService implements GenericService<ClasFiscal> {
 		return clasFiscalDao.findAll();
 	}
 
+	
+	public ClasFiscal buscarPeloCodigo(Integer codigo){
+		try {
+			return clasFiscalDao.findOne("From ClasFiscal c where c.codigo = ?1", codigo);
+			
+		}catch(javax.persistence.NonUniqueResultException ex){
+			ex.printStackTrace();
+			UtilMensagens.mensagemAtencao("Existem mais de uma Classificação Fiscal para o código"+codigo);
+			return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			UtilMensagens.mensagemAtencao("Classificação Fiscal não encontrada para o código "+codigo);
+			return null;
+		}	
+	}
 }

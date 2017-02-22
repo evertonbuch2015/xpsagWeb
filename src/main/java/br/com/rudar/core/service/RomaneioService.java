@@ -32,9 +32,14 @@ public class RomaneioService implements GenericService<Romaneio> {
 	
 	@Override
 	public Romaneio carregarEntidade(Integer id) {
-		return romaneioDao.findOne("SELECT r, c, v, e, t, cc,ii FROM Romaneio r left JOIN FETCH r.condicaoPagamento c left JOIN FETCH r.vendedor v"
-				+ " left JOIN FETCH r.entregador e left JOIN FETCH r.transportadora t left JOIN FETCH r.colaborador cc left JOIN FETCH r.romaneioItens ii"
-				+ " where r.id = ?1", id);
+		try {
+			return romaneioDao.findOne("SELECT r, c, v, e, t, cc,ii FROM Romaneio r left JOIN FETCH r.condicaoPagamento c left JOIN FETCH r.vendedor v"
+					+ " left JOIN FETCH r.entregador e left JOIN FETCH r.transportadora t left JOIN FETCH r.colaborador cc left JOIN FETCH r.romaneioItens ii"
+					+ " where r.id = ?1", id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	

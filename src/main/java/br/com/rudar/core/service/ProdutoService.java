@@ -21,6 +21,8 @@ public class ProdutoService implements GenericService<Produto> {
 	@Override
 	public boolean salvar(Produto entidate) {
 		if (entidate.getId() == null) {
+			entidate.setCodigo(produtoDao.getMaxCodigo()+1);
+			
 			if (produtoDao.save(entidate)) {
 				UtilMensagens.mensagemInformacao("Cadastro de Produto Realizado com Sucesso");
 				return true;
@@ -54,7 +56,18 @@ public class ProdutoService implements GenericService<Produto> {
 
 	
 	public Produto buscarProduto(String jpql , Object...params){
-		return produtoDao.findOne(jpql, params);
+		try {
+			return produtoDao.findOne(jpql, params);
+			
+		}catch(javax.persistence.NonUniqueResultException ex){
+			ex.printStackTrace();
+			UtilMensagens.mensagemAtencao("Existe mais de um Produto para o código fornecido!");
+			return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			UtilMensagens.mensagemAtencao("Produto não encontrado para os parâmetros fornecidos!");
+			return null;
+		}				
 	}
 	
 	
@@ -73,12 +86,12 @@ public class ProdutoService implements GenericService<Produto> {
 		
 		if(tipoFiltro.equals(TipoFiltro.CODIGO)){
 			String jpql = 
-				"Select p, g From Produto p left join fetch p.gupoProduto g where p.codigo in (" + valorFiltro + ")";
+				"Select p, g From Produto p left join fetch p.grupoProduto g where p.codigo in (" + valorFiltro + ")";
 			lista = produtoDao.find(jpql);
 		}
 		else if(tipoFiltro.equals(TipoFiltro.NOME)){
 			String jpql =
-				"Select p, g From Produto p left join fetch p.gupoProduto g where p.nome like ?";
+				"Select p, g From Produto p left join fetch p.grupoProduto g where p.nome like ?";
 			lista = produtoDao.find(jpql,valorFiltro);
 		}
 		

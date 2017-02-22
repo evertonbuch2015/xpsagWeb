@@ -95,7 +95,17 @@ public class ColaboradorService implements GenericService<Colaborador>{
 			UtilMensagens.mensagemErro("Código do colaborador deve ser numérico");
 		}
 		
-		String jpql = "Select c From Colaborador c where c.codigo = ?1";
-		return colaboradorDao.findOne(jpql, codigo);
+		try {
+			String jpql = "Select c From Colaborador c where c.codigo = ?1";
+			return colaboradorDao.findOne(jpql, codigo);	
+		}catch(javax.persistence.NonUniqueResultException ex){
+			ex.printStackTrace();
+			UtilMensagens.mensagemAtencao("Existem mais de uma Colaborador para o código"+codigo);
+			return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			UtilMensagens.mensagemAtencao("Colaborador não encontrado com o código "+codigo);
+			return null;
+		}
 	}
 }

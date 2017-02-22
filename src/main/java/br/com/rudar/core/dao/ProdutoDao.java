@@ -19,11 +19,17 @@ public class ProdutoDao extends GenericDao<Produto> {
 	
 	@Override
 	public Produto findAllAttributesEntity(Integer id) {
-		String jpql = "Select p, g, u, o, c From Produto p left join fetch p.gupoProduto g"
+		String jpql = "Select p, g, u, o, c From Produto p left join fetch p.grupoProduto g"
 				+ "	left join fetch p.unidade u left join fetch p.operacaoSaida o"
-				+ " left join fetch p.clasFiscal"
+				+ " left join fetch p.clasFiscal c"
 				+ "	where p.id = ?1";
-		return findOne(jpql, id);
+		
+		try {
+			return findOne(jpql, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;			
+		}
 	}
 
 			
@@ -62,4 +68,18 @@ public class ProdutoDao extends GenericDao<Produto> {
         return valor;
 	}
 
+	
+	public Integer getMaxCodigo(){
+		
+		EntityManager em = getEntityManager();
+		em.getTransaction().begin();
+		
+		Query query = em.createQuery("Select max(p.codigo) From Produto p",Integer.class);
+		
+		Integer retorno = (Integer) query.getSingleResult();
+		
+		em.getTransaction().commit();
+		em.close();
+		return retorno;
+	}
 }

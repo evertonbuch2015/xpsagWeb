@@ -57,7 +57,12 @@ public class ColaboradorDao extends GenericDao<Colaborador> {
 	public Colaborador findAllAttributesEntity(Integer id) {
 		String jpql =
 			"Select c From Colaborador c left Join fetch c.pessoa where c.id = ?1";
-		return findOne(jpql, id);
+		try {
+			return findOne(jpql, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;			
+		}
 	}
 
 	
