@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.rudar.core.entity.Usuario;
+import br.com.rudar.view.util.Criptografia;
 
 public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 
@@ -24,7 +25,7 @@ public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 	}
 	
 	
-	public Usuario existe(Usuario usuario) {
+	public Usuario existe(String login, String senha) {
 		EntityManager em = getEntityManager();
 		
 		em.getTransaction().begin();
@@ -32,8 +33,8 @@ public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 						"select u from Usuario u where u.nomeUsuario = :pUsuario and u.senha = :pSenha",
 						Usuario.class);
 
-		query.setParameter("pUsuario", usuario.getNomeUsuario().toUpperCase());
-		query.setParameter("pSenha", usuario.getSenha());
+		query.setParameter("pUsuario", login.toUpperCase());
+		query.setParameter("pSenha", Criptografia.criptografarSha256(senha));
 
 		Usuario retorno;
 		try {

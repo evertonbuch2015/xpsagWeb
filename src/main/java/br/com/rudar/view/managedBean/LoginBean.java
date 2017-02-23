@@ -19,6 +19,10 @@ public class LoginBean implements Serializable{
 	private static final long serialVersionUID = 1444783038549353503L;
 	private boolean selecionandoEmpresa; 
 	private Usuario usuario;
+	
+	private String senha;
+	private String login;
+	
 	private Empresa empresa;
 	private UsuarioService usuarioService;
 	
@@ -32,7 +36,8 @@ public class LoginBean implements Serializable{
 	
 	// ================Métodos do Usuário============================================
 	public void efetuaLogin() {		
-		if(usuarioService.logar(this.usuario)){;
+		if(usuarioService.logar(this.login, this.senha)){
+			this.usuario.setNomeUsuario(login);
 			this.usuario = usuarioService.buscarPeloNome(this.usuario);
 			selecionandoEmpresa = true;
 		}else{
@@ -98,4 +103,30 @@ public class LoginBean implements Serializable{
 	public List<Empresa> getEmpresas(){
 		return new EmpresaDao().findAll();
 	}
+
+
+	
+	
+	public String getSenha() {
+		return senha;
+	}
+	
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
+
+
+	public String getLogin() {
+		return login;
+	}
+	
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}	
 }

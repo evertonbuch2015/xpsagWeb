@@ -83,8 +83,9 @@
 							
 							<p:outputLabel value="#{label.senha}" for="senha" />
 							<p:password id="senha" value="#{usuarioBean.entidade.senha}" feedback="true"
-							required="true"	readonly="#{usuarioBean.visualizando}"
-							requiredMessage="Informe a senha!"/>
+								required="true" readonly="#{usuarioBean.visualizando}"
+								requiredMessage="Informe a senha!" redisplay="true">
+							</p:password>
 		
 												
 							

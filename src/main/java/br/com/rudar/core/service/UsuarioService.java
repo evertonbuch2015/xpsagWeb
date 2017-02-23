@@ -23,11 +23,16 @@ public class UsuarioService implements GenericService<Usuario> {
 	@Override
 	public boolean salvar(Usuario entidate) {
 		if (entidate.getIdUsusario() == null) {
+			entidate.setSenha(entidate.getSenhaCriptografada());
 			if (usuarioDao.save(entidate)) {
 				UtilMensagens.mensagemInformacao("Usuário Inserido com Sucesso");
 				return true;
 			}
-		} else {
+		} else {			
+			if(entidate.getSenha().length() <= 40){
+				entidate.setSenha(entidate.getSenhaCriptografada());
+			}
+			
 			if (usuarioDao.update(entidate)) {
 				UtilMensagens.mensagemInformacao("Usuário Alterado com Sucesso");
 				return true;
@@ -82,11 +87,13 @@ public class UsuarioService implements GenericService<Usuario> {
 	}
 
 	
-	public boolean logar(Usuario usuario){
+	public boolean logar(String login, String senha){
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		if(usuario.getNomeUsuario() != null && usuario.getSenha() != null){
-			usuario = usuarioDao.existe(usuario);
+		Usuario usuario = null;
+		
+		if(login != null && senha != null){
+			usuario = usuarioDao.existe(login, senha);
 		}	    
 		
 		if(usuario != null){
