@@ -16,7 +16,6 @@ import br.com.rudar.core.entity.Produto;
 import br.com.rudar.core.entity.TipoServico;
 import br.com.rudar.core.entity.TipoServicoItem;
 import br.com.rudar.core.service.ProdutoService;
-import br.com.rudar.view.util.Criptografia;
 
 public class Teste {
 
@@ -24,8 +23,8 @@ public class Teste {
 		// testeOrcamento();
 		// testeProduto();
 
-		String nomeUsuario 	= "XPSAG";
-		String senha 		= Criptografia.criptografarSha256("SINTECH");
+		//String nomeUsuario 	= "XPSAG";
+		//String senha 		= Criptografia.criptografarSha256("ADMIN");
 		
 		///EntityManager em = JPAUtil.GetInstance().getEntityManager();
 		
@@ -38,7 +37,7 @@ public class Teste {
 
 	public static void testeProduto() {
 		try {
-			EntityManager em = JPAUtil.GetInstance().getEntityManager();
+			//EntityManager em = JPAUtil.GetInstance().getEntityManager();
 			ProdutoService produtoService = new ProdutoService();
 			// List<Produto> lista = produtoService.preencherTabela();
 
