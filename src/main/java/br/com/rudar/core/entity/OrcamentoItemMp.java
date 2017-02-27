@@ -23,8 +23,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="EPI_ORCAMENTO_ITEM_MP")
-@NamedQuery(name="EpiOrcamentoItemMp.findAll", query="SELECT e FROM EpiOrcamentoItemMp e")
-public class EpiOrcamentoItemMp implements Serializable {
+@NamedQuery(name="OrcamentoItemMp.findAll", query="SELECT e FROM OrcamentoItemMp e")
+public class OrcamentoItemMp implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -97,15 +97,15 @@ public class EpiOrcamentoItemMp implements Serializable {
 
 	
 	
-	//bi-directional many-to-one association to EpiOrcamentoItem
+	//bi-directional many-to-one association to OrcamentoItem
 	@ManyToOne
 	@JoinColumn(name="COD_EPIORCAMENTOITEM")
-	private EpiOrcamentoItem epiOrcamentoItem;
+	private OrcamentoItem orcamentoItem;
 
 		
 	//--------------------------------	GETs and SETs------------------------------//
 	
-	public EpiOrcamentoItemMp() {
+	public OrcamentoItemMp() {
 	}
 
 
@@ -262,12 +262,12 @@ public class EpiOrcamentoItemMp implements Serializable {
 	}
 
 
-	public EpiOrcamentoItem getEpiOrcamentoItem() {
-		return epiOrcamentoItem;
+	public OrcamentoItem getOrcamentoItem() {
+		return orcamentoItem;
 	}
 
-	public void setEpiOrcamentoItem(EpiOrcamentoItem epiOrcamentoItem) {
-		this.epiOrcamentoItem = epiOrcamentoItem;
+	public void setOrcamentoItem(OrcamentoItem orcamentoItem) {
+		this.orcamentoItem = orcamentoItem;
 	}
 
 
@@ -294,7 +294,7 @@ public class EpiOrcamentoItemMp implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EpiOrcamentoItemMp other = (EpiOrcamentoItemMp) obj;
+		OrcamentoItemMp other = (OrcamentoItemMp) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

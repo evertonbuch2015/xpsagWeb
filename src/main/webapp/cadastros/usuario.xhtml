@@ -60,23 +60,27 @@
 					<p:tab title="#{label.dados_gerais}" id="tabDadosGerais">
 			
 						<h:panelGrid columns="2" columnClasses="label,value"
-							styleClass="grid" layout="grid">
+							styleClass="grid" layout="grid" style="width: 70%">
 											
-							<p:outputLabel value="#{label.codigo}" for="id" />
+							<p:outputLabel value="#{label.codigo}" for="id"/>
 							<p:inputText value="#{usuarioBean.entidade.idUsusario}" id="id"
-								readonly="True" />
+								readonly="True" style="width: 30%"/>
+								
+							<p:outputLabel value="#{label.codigo_estrutural}" for="estrutura"/>
+							<p:inputText value="#{usuarioBean.entidade.codigoEstrutural}" id="estrutura"
+								readonly="#{usuarioBean.visualizando}" style="width: 30%"/>
 		
 		
 							<p:outputLabel value="#{label.nome_colaborador}" for="nome" />
 							<p:inputText value="#{usuarioBean.entidade.nomeColaborador}" id="nome"
 								required="true" requiredMessage="Informe nome do Colaborador!"
-								size="50"	readonly="#{usuarioBean.visualizando}"/>
+								readonly="#{usuarioBean.visualizando}" style="width: 50%"/>
 		
 							
 							<p:outputLabel value="#{label.nome_usuario}" for="usr" />
 							<p:inputText value="#{usuarioBean.entidade.nomeUsuario}" id="usr" 
-								readonly="#{usuarioBean.visualizando}" 
-								required="true" requiredMessage="Informe o Usuário!">
+								readonly="#{usuarioBean.visualizando}" onblur="value=value.toUpperCase()"
+								required="true" requiredMessage="Informe o Usuário!" style="width: 50%">
 								<f:validateLength maximum="15"/>							
 							</p:inputText>
 							
@@ -84,13 +88,21 @@
 							<p:outputLabel value="#{label.senha}" for="senha" />
 							<p:password id="senha" value="#{usuarioBean.entidade.senha}" feedback="true"
 								required="true" readonly="#{usuarioBean.visualizando}"
-								requiredMessage="Informe a senha!" redisplay="true">
+								requiredMessage="Informe a senha!" redisplay="true" style="width: 30%">
 							</p:password>
 		
+							
+							<p:outputLabel value="#{label.setor}" for="setor" />
+							<p:selectOneMenu value="#{usuarioBean.entidade.setor}" id="setor" 
+								style="width: 28%" editable="true" autoWidth="false"> 
+								<f:selectItems value="#{usuarioBean.setores}" />
+							</p:selectOneMenu>
 												
 							
 							<p:outputLabel value="#{label.grupo_acesso}" for="grupo" />
-							<p:selectOneMenu value="#{usuarioBean.entidade.grupo}" id="grupo"> 
+							<p:selectOneMenu value="#{usuarioBean.entidade.grupo}" id="grupo"
+								required="true" requiredMessage="Informe o Grupo de Acesso"
+								style="width: 28%"> 
 								<f:selectItems value="#{usuarioBean.grupoUsuarios}" />
 							</p:selectOneMenu>
 							
@@ -98,8 +110,8 @@
 							<p:outputLabel value="#{label.vendedor}" for="vendedor"/>
 							<p:selectOneMenu value="#{usuarioBean.entidade.vendedor}" id="vendedor"
 								required="true" requiredMessage="Informe o Vendedor vinculado"
-								disabled="#{usuarioBean}.visualizando"
-								style="width: 230px !important" autoWidth="false">
+								disabled="#{usuarioBean.visualizando}"
+								style="width: 48%" autoWidth="false">
 								
 								<f:selectItem itemLabel="#{label.selecione}" />
 								<f:selectItems value="#{usuarioBean.vendedores}" var="vendedor"
@@ -109,9 +121,9 @@
 							
 							
 							<h:panelGrid columns="2">
-								<p:outputLabel value="#{label.ativo}" for="ativo" />
-								<p:selectBooleanCheckbox id="ativo" title="Cadastro Ativo"
-									value="#{usuarioBean.entidade.ativo}" 
+								<p:outputLabel value="#{label.inativo}" for="inativo" />
+								<p:selectBooleanCheckbox id="inativo" title="Cadastro Inativo"
+									value="#{usuarioBean.entidade.inativo}" 
 									disabled="#{usuarioBean.visualizando}"/>
 																																		
 							</h:panelGrid>
@@ -134,21 +146,22 @@
 							<p:ajax event="dialogReturn" listener="#{usuarioBean.empresaSelecionada}" process="@this" update="tblEmpresas" />
 						</p:commandButton>	
 						
-						<p:dataTable var="empresa" value="#{usuarioBean.entidade.empresas}" id="tblEmpresas">
+						<p:dataTable var="empresa" value="#{usuarioBean.entidade.empresas}" 
+							id="tblEmpresas" style="width: 70%">
 						
-			                <p:column headerText="#{label.codigo}">
+			                <p:column headerText="#{label.codigo}" style="width: 15%">
 			                    <h:outputText value="#{empresa.codigo}" />
 			                </p:column>
 			 
-			                <p:column headerText="#{label.nome}">
+			                <p:column headerText="#{label.nome}" style="width: 40%">
 			                    <h:outputText value="#{empresa.nomeRazao}" />
 			                </p:column>
 			 
-			                <p:column headerText="#{label.documento}">
-			                    <h:outputText value="#{empresa.cnpj}" />
+			                <p:column headerText="#{label.documento}" style="width: 30%">
+			                    <h:outputText value="#{empresa.cnpjFormatado}" />
 			                </p:column>
 			 
-			                <p:column headerText="#{label.acoes}" style="width:10%;font-size:13px;">						
+			                <p:column headerText="#{label.acoes}" style="width:15%;">						
 							
 								<p:commandButton actionListener="#{usuarioBean.excluirEmpresa(empresa)}" 
 									styleClass="excluirBotao" value="" process="@this"	
@@ -198,15 +211,19 @@
 
 					<p:column headerText="#{label.ativo}" style="width: 7%; ">
 						<p:graphicImage value="/resources/images/checked.png"
-										rendered="#{usuario.ativo}" />
+										rendered="#{not usuario.inativo}" />
 						<p:graphicImage value="/resources/images/unchecked.png"
-										rendered="#{ not usuario.ativo}" />
+										rendered="#{usuario.inativo}" />
 					</p:column>
 
 					<p:column headerText="#{label.codigo}" style="width: 7%;">
 						<h:outputText value="#{usuario.idUsusario}" />
 					</p:column>
-
+					
+					<p:column headerText="#{label.codigo_estrutural}" style="width: 10%;">
+						<h:outputText value="#{usuario.codigoEstrutural}" />
+					</p:column>
+					
 					<p:column headerText="#{label.nome_colaborador}" style="width: 30%;">
 						<h:outputText value="#{usuario.nomeColaborador}" />
 					</p:column>

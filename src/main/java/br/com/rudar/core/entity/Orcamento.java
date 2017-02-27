@@ -2,6 +2,7 @@ package br.com.rudar.core.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,8 +33,8 @@ import br.com.rudar.core.enumerated.TipoFrete;
  */
 @Entity
 @Table(name="EPI_ORCAMENTO")
-@NamedQuery(name="EpiOrcamento.findAll", query="SELECT e FROM EpiOrcamento e")
-public class EpiOrcamento implements Serializable {
+@NamedQuery(name="Orcamento.findAll", query="SELECT e FROM Orcamento e")
+public class Orcamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -150,15 +151,15 @@ public class EpiOrcamento implements Serializable {
 
 	
 	
-	//bi-directional many-to-one association to EpiOrcamentoItem
-	@OneToMany(mappedBy="epiOrcamento", targetEntity = EpiOrcamentoItem.class,
+	//bi-directional many-to-one association to OrcamentoItem
+	@OneToMany(mappedBy="orcamento", targetEntity = OrcamentoItem.class,
 			fetch = FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
-	private List<EpiOrcamentoItem> epiOrcamentoItems;
+	private List<OrcamentoItem> orcamentoItems;
 
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
-	public EpiOrcamento() {
+	public Orcamento() {
 	}
 
 
@@ -244,6 +245,13 @@ public class EpiOrcamento implements Serializable {
 	}
 
 	
+	public String getDataEmissaoFormatada() {
+		if(this.dataEmissao != null){
+			return new SimpleDateFormat("dd/MM/yyyy").format(dataEmissao);
+		}
+		return null;
+	}
+	
 	public Date getDataEmissao() {
 		return this.dataEmissao;
 	}
@@ -252,6 +260,13 @@ public class EpiOrcamento implements Serializable {
 		this.dataEmissao = dataEmissao;
 	}
 
+	
+	public String getDataEntregaFormatada() {
+		if(this.dataEntrega != null){
+			return new SimpleDateFormat("dd/MM/yyyy").format(dataEntrega);
+		}
+		return null;
+	}
 	
 	public Date getDataEntrega() {
 		return this.dataEntrega;
@@ -424,33 +439,33 @@ public class EpiOrcamento implements Serializable {
 	}
 
 	
-	public List<EpiOrcamentoItem> getEpiOrcamentoItems() {
-		if(this.epiOrcamentoItems == null){
-			this.epiOrcamentoItems = new ArrayList<>();
+	public List<OrcamentoItem> getOrcamentoItems() {
+		if(this.orcamentoItems == null){
+			this.orcamentoItems = new ArrayList<>();
 		}
-		return this.epiOrcamentoItems;
+		return this.orcamentoItems;
 	}
 
-	public void setEpiOrcamentoItems(List<EpiOrcamentoItem> epiOrcamentoItems) {
-		this.epiOrcamentoItems = epiOrcamentoItems;
+	public void setOrcamentoItems(List<OrcamentoItem> orcamentoItems) {
+		this.orcamentoItems = orcamentoItems;
 	}
 
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
 
 	
-	public EpiOrcamentoItem addEpiOrcamentoItem(EpiOrcamentoItem epiOrcamentoItem) {
-		getEpiOrcamentoItems().add(epiOrcamentoItem);
-		epiOrcamentoItem.setEpiOrcamento(this);
+	public OrcamentoItem addOrcamentoItem(OrcamentoItem orcamentoItem) {
+		getOrcamentoItems().add(orcamentoItem);
+		orcamentoItem.setOrcamento(this);
 
-		return epiOrcamentoItem;
+		return orcamentoItem;
 	}
 
-	public EpiOrcamentoItem removeEpiOrcamentoItem(EpiOrcamentoItem epiOrcamentoItem) {
-		getEpiOrcamentoItems().remove(epiOrcamentoItem);
-		epiOrcamentoItem.setEpiOrcamento(null);
+	public OrcamentoItem removeOrcamentoItem(OrcamentoItem orcamentoItem) {
+		getOrcamentoItems().remove(orcamentoItem);
+		orcamentoItem.setOrcamento(null);
 
-		return epiOrcamentoItem;
+		return orcamentoItem;
 	}
 
 
@@ -471,7 +486,7 @@ public class EpiOrcamento implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EpiOrcamento other = (EpiOrcamento) obj;
+		Orcamento other = (Orcamento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

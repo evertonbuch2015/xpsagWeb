@@ -42,10 +42,14 @@ public class Usuario implements Serializable {
 	private String nomeColaborador;
 
 	@NotEmpty(message = "O Usuário deve ser informado!")
-	@Column(name = "NOME", nullable = true, length = 10)
+	@Column(name = "NOME", nullable = true, length = 20)
 	private String nomeUsuario;
 
 
+	@NotEmpty(message = "O Código Estrutural deve ser informado!")
+	@Column(name = "CODIGO_ESTRUTURAL",length = 20)
+	private String codigoEstrutural;
+	
 	@Column(name = "PWD", nullable = true, length = 70)
 	private String senha;
 
@@ -53,9 +57,13 @@ public class Usuario implements Serializable {
 	@NotEmpty(message = "O Grupo deve ser informado!")
 	@Column(name = "GRUPO", nullable = false, length = 40)
 	private String grupo;
+	
+	@NotEmpty(message = "O Setor deve ser informado!")
+	@Column(name = "SETOR", length = 50)
+	private String setor;
 
-	@Column(name = "ATIVO")
-	private Character ativo;
+	@Column(name = "INATIVO")
+	private Character inativo;
 
 	@Column(name = "EM_FERIAS")
 	private Character emFerias;
@@ -132,19 +140,37 @@ public class Usuario implements Serializable {
 	}
 
 	
-	// Métodos Modificados
-	public Boolean getAtivo() {
-		if (this.ativo == null)
-			return null;
-
-		return ativo.equals('S') ? true : false;
+	public String getCodigoEstrutural() {
+		return codigoEstrutural;
 	}
 
-	public void setAtivo(Boolean value) {
+	public void setCodigoEstrutural(String codigoEstrutural) {
+		this.codigoEstrutural = codigoEstrutural;
+	}
+
+
+	public String getSetor() {
+		return setor;
+	}
+
+	public void setSetor(String setor) {
+		this.setor = setor;
+	}
+
+
+	// Métodos Modificados
+	public Boolean getInativo() {
+		if (this.inativo == null)
+			return null;
+
+		return inativo.equals('S') ? true : false;
+	}
+
+	public void setInativo(Boolean value) {
 		if (value == null) {
-			this.ativo = null;
+			this.inativo = null;
 		} else {
-			this.ativo = value == true ? 'S' : 'N';
+			this.inativo = value == true ? 'S' : 'N';
 		}
 	}
 

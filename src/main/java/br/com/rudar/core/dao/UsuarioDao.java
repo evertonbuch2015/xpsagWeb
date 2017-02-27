@@ -1,6 +1,7 @@
 package br.com.rudar.core.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -20,7 +21,6 @@ public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 	
 	@Override
 	public Usuario findAllAttributesEntity(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -50,4 +50,21 @@ public class UsuarioDao extends GenericDao<Usuario> implements Serializable {
 		return retorno;
 	}
 
+	
+	public List<String> findSectors(String jpql){
+		
+		EntityManager em = getEntityManager();
+		TypedQuery<String> query = em.createQuery(jpql, String.class);
+		
+		List<String> lista;
+		try {
+			lista =  query.getResultList();
+			
+		} catch (Exception ex) {
+			lista = null;
+		}finally {
+			em.close();
+		}
+		return lista;
+	}
 }

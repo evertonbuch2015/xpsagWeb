@@ -23,8 +23,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="EPI_ORCAMENTO_ITEM_PROCESSO")
-@NamedQuery(name="EpiOrcamentoItemProcesso.findAll", query="SELECT e FROM EpiOrcamentoItemProcesso e")
-public class EpiOrcamentoItemProcesso implements Serializable {
+@NamedQuery(name="OrcamentoItemProcesso.findAll", query="SELECT e FROM OrcamentoItemProcesso e")
+public class OrcamentoItemProcesso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -60,15 +60,15 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 	private GrupoMaquina grupomaquina;
 	
 	
-	//bi-directional many-to-one association to EpiOrcamentoItem
+	//bi-directional many-to-one association to OrcamentoItem
 	@ManyToOne
 	@JoinColumn(name="COD_EPIORCAMENTOITEM")
-	private EpiOrcamentoItem epiOrcamentoItem;
+	private OrcamentoItem orcamentoItem;
 
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
-	public EpiOrcamentoItemProcesso() {
+	public OrcamentoItemProcesso() {
 	}
 
 	
@@ -143,12 +143,12 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 	}
 
 	
-	public EpiOrcamentoItem getEpiOrcamentoItem() {
-		return this.epiOrcamentoItem;
+	public OrcamentoItem getOrcamentoItem() {
+		return this.orcamentoItem;
 	}
 
-	public void setEpiOrcamentoItem(EpiOrcamentoItem epiOrcamentoItem) {
-		this.epiOrcamentoItem = epiOrcamentoItem;
+	public void setOrcamentoItem(OrcamentoItem orcamentoItem) {
+		this.orcamentoItem = orcamentoItem;
 	}
 
 
@@ -174,7 +174,7 @@ public class EpiOrcamentoItemProcesso implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EpiOrcamentoItemProcesso other = (EpiOrcamentoItemProcesso) obj;
+		OrcamentoItemProcesso other = (OrcamentoItemProcesso) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

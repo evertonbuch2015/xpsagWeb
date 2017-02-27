@@ -31,8 +31,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="EPI_ORCAMENTO_ITEM")
-@NamedQuery(name="EpiOrcamentoItem.findAll", query="SELECT e FROM EpiOrcamentoItem e")
-public class EpiOrcamentoItem implements Serializable {
+@NamedQuery(name="OrcamentoItem.findAll", query="SELECT e FROM OrcamentoItem e")
+public class OrcamentoItem implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -138,37 +138,37 @@ public class EpiOrcamentoItem implements Serializable {
 	private String tipo;
 	
 	
-	//bi-directional many-to-one association to EpiOrcamento
+	//bi-directional many-to-one association to Orcamento
 	@ManyToOne
 	@JoinColumn(name="COD_EPIORCAMENTO")
-	private EpiOrcamento epiOrcamento;
+	private Orcamento orcamento;
 
 	
 	
-	//bi-directional many-to-one association to EpiOrcamentoItemInsumo
-	@OneToMany(mappedBy="epiOrcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
-	private List<EpiOrcamentoItemInsumo> epiOrcamentoItemInsumos;
+	//bi-directional many-to-one association to OrcamentoItemInsumo
+	@OneToMany(mappedBy="orcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
+	private List<OrcamentoItemInsumo> orcamentoItemInsumos;
 
 		
-	//bi-directional many-to-one association to EpiOrcamentoItemMp
-	@OneToMany(mappedBy="epiOrcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
-	private List<EpiOrcamentoItemMp> epiOrcamentoItemMps;
+	//bi-directional many-to-one association to OrcamentoItemMp
+	@OneToMany(mappedBy="orcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
+	private List<OrcamentoItemMp> orcamentoItemMps;
 
 	
-	//bi-directional many-to-one association to EpiOrcamentoItemProcesso
-	@OneToMany(mappedBy="epiOrcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
-	private List<EpiOrcamentoItemProcesso> epiOrcamentoItemProcessos;
+	//bi-directional many-to-one association to OrcamentoItemProcesso
+	@OneToMany(mappedBy="orcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
+	private List<OrcamentoItemProcesso> orcamentoItemProcessos;
 
 	
-	//bi-directional many-to-one association to EpiOrcamentoItemServico
-	@OneToMany(mappedBy="epiOrcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
-	private List<EpiOrcamentoItemServico> epiOrcamentoItemServicos;
+	//bi-directional many-to-one association to OrcamentoItemServico
+	@OneToMany(mappedBy="orcamentoItem",cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
+	private List<OrcamentoItemServico> orcamentoItemServicos;
 
 	
 	
 	//--------------------------------	GETs and SETs------------------------------//
 	
-	public EpiOrcamentoItem() {
+	public OrcamentoItem() {
 	}
 
 	
@@ -407,128 +407,128 @@ public class EpiOrcamentoItem implements Serializable {
 	}
 
 	
-	public EpiOrcamento getEpiOrcamento() {
-		return this.epiOrcamento;
+	public Orcamento getOrcamento() {
+		return this.orcamento;
 	}
 
-	public void setEpiOrcamento(EpiOrcamento epiOrcamento) {
-		this.epiOrcamento = epiOrcamento;
+	public void setOrcamento(Orcamento orcamento) {
+		this.orcamento = orcamento;
 	}
 
 	
-	public List<EpiOrcamentoItemInsumo> getEpiOrcamentoItemInsumos() {
-		if(this.epiOrcamentoItemInsumos == null){
-			this.epiOrcamentoItemInsumos = new ArrayList<>();
+	public List<OrcamentoItemInsumo> getOrcamentoItemInsumos() {
+		if(this.orcamentoItemInsumos == null){
+			this.orcamentoItemInsumos = new ArrayList<>();
 		}
-		return this.epiOrcamentoItemInsumos;
+		return this.orcamentoItemInsumos;
 	}
 
-	public void setEpiOrcamentoItemInsumos(List<EpiOrcamentoItemInsumo> epiOrcamentoItemInsumos) {
-		this.epiOrcamentoItemInsumos = epiOrcamentoItemInsumos;
+	public void setOrcamentoItemInsumos(List<OrcamentoItemInsumo> orcamentoItemInsumos) {
+		this.orcamentoItemInsumos = orcamentoItemInsumos;
 	}
 
 		
 	
-	public List<EpiOrcamentoItemMp> getEpiOrcamentoItemMps() {
-		if(this.epiOrcamentoItemMps == null){
-			this.epiOrcamentoItemMps = new ArrayList<>();
+	public List<OrcamentoItemMp> getOrcamentoItemMps() {
+		if(this.orcamentoItemMps == null){
+			this.orcamentoItemMps = new ArrayList<>();
 		}
-		return this.epiOrcamentoItemMps;
+		return this.orcamentoItemMps;
 	}
 
-	public void setEpiOrcamentoItemMps(List<EpiOrcamentoItemMp> epiOrcamentoItemMps) {
-		this.epiOrcamentoItemMps = epiOrcamentoItemMps;
+	public void setOrcamentoItemMps(List<OrcamentoItemMp> orcamentoItemMps) {
+		this.orcamentoItemMps = orcamentoItemMps;
 	}
 
 	
-	public List<EpiOrcamentoItemProcesso> getEpiOrcamentoItemProcessos() {
-		if(this.epiOrcamentoItemProcessos == null){
-			this.epiOrcamentoItemProcessos = new ArrayList<>();
+	public List<OrcamentoItemProcesso> getOrcamentoItemProcessos() {
+		if(this.orcamentoItemProcessos == null){
+			this.orcamentoItemProcessos = new ArrayList<>();
 		}
-		return this.epiOrcamentoItemProcessos;
+		return this.orcamentoItemProcessos;
 	}
 
-	public void setEpiOrcamentoItemProcessos(List<EpiOrcamentoItemProcesso> epiOrcamentoItemProcessos) {
-		this.epiOrcamentoItemProcessos = epiOrcamentoItemProcessos;
+	public void setOrcamentoItemProcessos(List<OrcamentoItemProcesso> orcamentoItemProcessos) {
+		this.orcamentoItemProcessos = orcamentoItemProcessos;
 	}
 	
 	
 	
-	public List<EpiOrcamentoItemServico> getEpiOrcamentoItemServicos() {
-		if(this.epiOrcamentoItemServicos == null){
-			this.epiOrcamentoItemServicos = new ArrayList<>();
+	public List<OrcamentoItemServico> getOrcamentoItemServicos() {
+		if(this.orcamentoItemServicos == null){
+			this.orcamentoItemServicos = new ArrayList<>();
 		}
-		return this.epiOrcamentoItemServicos;
+		return this.orcamentoItemServicos;
 	}
 
-	public void setEpiOrcamentoItemServicos(List<EpiOrcamentoItemServico> epiOrcamentoItemServicos) {
-		this.epiOrcamentoItemServicos = epiOrcamentoItemServicos;
+	public void setOrcamentoItemServicos(List<OrcamentoItemServico> orcamentoItemServicos) {
+		this.orcamentoItemServicos = orcamentoItemServicos;
 	}
 
 
 	//--------------------------------	Métodos Auxiliares------------------------------//
 	
 
-	public EpiOrcamentoItemInsumo addEpiOrcamentoItemInsumo(EpiOrcamentoItemInsumo epiOrcamentoItemInsumo) {
-		getEpiOrcamentoItemInsumos().add(epiOrcamentoItemInsumo);
-		epiOrcamentoItemInsumo.setEpiOrcamentoItem(this);
+	public OrcamentoItemInsumo addOrcamentoItemInsumo(OrcamentoItemInsumo orcamentoItemInsumo) {
+		getOrcamentoItemInsumos().add(orcamentoItemInsumo);
+		orcamentoItemInsumo.setOrcamentoItem(this);
 
-		return epiOrcamentoItemInsumo;
+		return orcamentoItemInsumo;
 	}
 
-	public EpiOrcamentoItemInsumo removeEpiOrcamentoItemInsumo(EpiOrcamentoItemInsumo epiOrcamentoItemInsumo) {
-		getEpiOrcamentoItemInsumos().remove(epiOrcamentoItemInsumo);
-		epiOrcamentoItemInsumo.setEpiOrcamentoItem(null);
+	public OrcamentoItemInsumo removeOrcamentoItemInsumo(OrcamentoItemInsumo orcamentoItemInsumo) {
+		getOrcamentoItemInsumos().remove(orcamentoItemInsumo);
+		orcamentoItemInsumo.setOrcamentoItem(null);
 
-		return epiOrcamentoItemInsumo;
-	}
-
-	
-
-	public EpiOrcamentoItemMp addEpiOrcamentoItemMp(EpiOrcamentoItemMp epiOrcamentoItemMp) {
-		getEpiOrcamentoItemMps().add(epiOrcamentoItemMp);
-		epiOrcamentoItemMp.setEpiOrcamentoItem(this);
-
-		return epiOrcamentoItemMp;
-	}
-
-	public EpiOrcamentoItemMp removeEpiOrcamentoItemMp(EpiOrcamentoItemMp epiOrcamentoItemMp) {
-		getEpiOrcamentoItemMps().remove(epiOrcamentoItemMp);
-		epiOrcamentoItemMp.setEpiOrcamentoItem(null);
-
-		return epiOrcamentoItemMp;
-	}
-
-	
-	
-	public EpiOrcamentoItemProcesso addEpiOrcamentoItemProcesso(EpiOrcamentoItemProcesso epiOrcamentoItemProcesso) {
-		getEpiOrcamentoItemProcessos().add(epiOrcamentoItemProcesso);
-		epiOrcamentoItemProcesso.setEpiOrcamentoItem(this);
-
-		return epiOrcamentoItemProcesso;
-	}
-
-	public EpiOrcamentoItemProcesso removeEpiOrcamentoItemProcesso(EpiOrcamentoItemProcesso epiOrcamentoItemProcesso) {
-		getEpiOrcamentoItemProcessos().remove(epiOrcamentoItemProcesso);
-		epiOrcamentoItemProcesso.setEpiOrcamentoItem(null);
-
-		return epiOrcamentoItemProcesso;
+		return orcamentoItemInsumo;
 	}
 
 	
 
-	public EpiOrcamentoItemServico addEpiOrcamentoItemServico(EpiOrcamentoItemServico epiOrcamentoItemServico) {
-		getEpiOrcamentoItemServicos().add(epiOrcamentoItemServico);
-		epiOrcamentoItemServico.setEpiOrcamentoItem(this);
+	public OrcamentoItemMp addOrcamentoItemMp(OrcamentoItemMp orcamentoItemMp) {
+		getOrcamentoItemMps().add(orcamentoItemMp);
+		orcamentoItemMp.setOrcamentoItem(this);
 
-		return epiOrcamentoItemServico;
+		return orcamentoItemMp;
 	}
 
-	public EpiOrcamentoItemServico removeEpiOrcamentoItemServico(EpiOrcamentoItemServico epiOrcamentoItemServico) {
-		getEpiOrcamentoItemServicos().remove(epiOrcamentoItemServico);
-		epiOrcamentoItemServico.setEpiOrcamentoItem(null);
+	public OrcamentoItemMp removeOrcamentoItemMp(OrcamentoItemMp orcamentoItemMp) {
+		getOrcamentoItemMps().remove(orcamentoItemMp);
+		orcamentoItemMp.setOrcamentoItem(null);
 
-		return epiOrcamentoItemServico;
+		return orcamentoItemMp;
+	}
+
+	
+	
+	public OrcamentoItemProcesso addOrcamentoItemProcesso(OrcamentoItemProcesso orcamentoItemProcesso) {
+		getOrcamentoItemProcessos().add(orcamentoItemProcesso);
+		orcamentoItemProcesso.setOrcamentoItem(this);
+
+		return orcamentoItemProcesso;
+	}
+
+	public OrcamentoItemProcesso removeOrcamentoItemProcesso(OrcamentoItemProcesso orcamentoItemProcesso) {
+		getOrcamentoItemProcessos().remove(orcamentoItemProcesso);
+		orcamentoItemProcesso.setOrcamentoItem(null);
+
+		return orcamentoItemProcesso;
+	}
+
+	
+
+	public OrcamentoItemServico addOrcamentoItemServico(OrcamentoItemServico orcamentoItemServico) {
+		getOrcamentoItemServicos().add(orcamentoItemServico);
+		orcamentoItemServico.setOrcamentoItem(this);
+
+		return orcamentoItemServico;
+	}
+
+	public OrcamentoItemServico removeOrcamentoItemServico(OrcamentoItemServico orcamentoItemServico) {
+		getOrcamentoItemServicos().remove(orcamentoItemServico);
+		orcamentoItemServico.setOrcamentoItem(null);
+
+		return orcamentoItemServico;
 	}
 	
 	

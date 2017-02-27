@@ -1,0 +1,309 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template.xhtml"
+	xmlns:app="http://java.sun.com/jsf/composite/componentes" >
+
+	<ui:define name="tituloPagina">#{label.nome_programa_orcameto}</ui:define>
+	<ui:define name="nomePrograma">#{label.nome_programa_orcameto}</ui:define>
+
+	<ui:define name="head">
+		<style type="text/css">
+			.label {width: 20%;	padding: 2px;}
+			
+			.value {width: 80%;	padding: 2px;}
+			
+			.grid {	width: 70%;}
+			
+			.editarBotao {            
+    			background: url('../resources/img/edit16x16.png') no-repeat !important;
+    			background-color: #004080 !important; 
+   				height: 22px;
+    			width: 25px;
+				margin-left: 18%;
+			}
+
+			.excluirBotao { 
+			    background: url('../resources/img/delete16x16.png') no-repeat !important; 
+			    background-color: #d9534f  !important; 
+			    height: 22px;
+			    width: 25px;
+				margin-left: 18%;
+			}
+		</style>
+	</ui:define>
+
+
+	<ui:define name="content">
+		
+			
+			<p:growl id="msgs" autoUpdate="true" showDetail="True" life="4000"/>
+			<p:messages autoUpdate="true" closable="true">
+				<p:effect type="puff" event="load" delay="9000" />
+			</p:messages>
+			
+			
+			<!-- ################### BOTÕES ############################## -->
+			
+			<app:barraBotoes bean="#{orcamentoBean}"/>
+						
+						
+			<!-- ################## CONPONENTES EDIÇÃO ########################## -->				
+			
+			
+			<p:panel id="panel" header="#{label.pnl_manut_orcameto}" rendered="#{!orcamentoBean.buscando}">
+				<p:tabView id="tab" styleClass="ddd" style="border:none ;font-size: 13px !important;">
+			
+			
+			
+					<p:tab title="#{label.dados_gerais}" id="tabDadosGerais">
+			
+					<div class="ui-g">
+	    				<div class="ui-g-12 ui-md-6 ui-lg-3">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="#{label.codigo}" for="id" />
+								<p:inputText value="#{orcamentoBean.entidade.codigo}" id="id"
+									readonly="true" size="15"/>
+							</h:panelGrid>
+						</div>
+    					
+	    				<div class="ui-g-12 ui-md-6 ui-lg-3">
+	    					<h:panelGrid columns="1">
+								<p:outputLabel value="#{label.data_emissao}" for="dataEmissao" />
+								<p:calendar id="dataEmissao" readonly="#{orcamentoBean.visualizando}"
+									value="#{orcamentoBean.entidade.dataEmissao}" size="15"
+									pattern="dd/MM/yyyy" mask="true" required="true"
+									requiredMessage="Informe a Data de Emissão!" />
+							</h:panelGrid>
+						</div>
+							
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="#{label.data_entrega}" for="dataEntrega" />
+								<p:calendar id="dataEntrega" readonly="#{orcamentoBean.visualizando}"
+									value="#{orcamentoBean.entidade.dataEntrega}" size="15"
+									pattern="dd/MM/yyyy" mask="true" required="true"
+									requiredMessage="Informe a Data de Entrega!"/>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+							<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="#{label.lbl_dias_validade}" for="dias" />
+								<p:spinner id="dias" value="#{orcamentoBean.entidade.diasValidade}" />
+							</h:panelGrid>
+					    	
+					    </div>
+					</div>
+						
+					
+					 
+					<div class="ui-g">
+					
+					    <div class="ui-g-12 ui-md-6 ui-lg-3">
+					    	<h:panelGrid columns="1" style="width: 100%">
+						    	<p:outputLabel value="#{label.vendedor}" for="vendedor"/>
+								<p:selectOneMenu value="#{orcamentoBean.entidade.vendedor}" id="vendedor"
+									required="true" requiredMessage="Informe o Vendedor"
+									disabled="#{usuarioBean.visualizando}" 
+									style="width: 75%" autoWidth="false">
+									
+									<f:selectItem itemLabel="#{label.selecione}" />
+									<f:selectItems value="#{orcamentoBean.vendedores}" var="vendedor"
+										 itemValue="#{vendedor}"	itemLabel="#{vendedor.fantasia}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+					    </div>
+					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-3">
+					    	<h:panelGrid columns="1" style="width: 100%">
+								<h:outputLabel value="Condição de Pagamento" />
+								<p:selectOneMenu value="#{orcamentoBean.entidade.condicaoPagamento}"
+									required="true"	requiredMessage="Informe a condição de Pagamento!"
+									disabled="#{orcamentoBean.visualizando}"
+									style="width: 75%" autoWidth="false">
+									
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{orcamentoBean.condicaoPagamentos}" var="condPag"
+										 itemValue="#{condPag}" itemLabel="#{condPag.nome}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+					    </div>
+					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-3">
+					  		<h:panelGrid columns="1" style="width: 100%">
+								<h:outputLabel value="Tipo de Frete" />
+								<p:selectOneMenu
+									value="#{orcamentoBean.entidade.tipoFrete}"									
+									required="true"	requiredMessage="Informe o Tipo de Frete!"
+									disabled="#{orcamentoBean.visualizando}"
+									style="width: 75%" autoWidth="false">
+									
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{orcamentoBean.tiposFrete}" var="tipoFrete"
+										 itemValue="#{tipoFrete}" itemLabel="#{tipoFrete.label}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+					    </div>
+					</div>
+					
+					<div class="ui-g" >
+						<div class="ui-g-12 ui-md-6 ui-lg-12">							
+							<p:selectBooleanCheckbox id="futuroCliente"
+								value="#{orcamentoBean.futuroCliente}"
+								disabled="#{orcamentoBean.visualizando}">
+								<p:ajax event="change" update="nome_cliente,doc_cliente,cidade,estado" />
+							</p:selectBooleanCheckbox>
+							<p:outputLabel value="Futuro Cliente" for="futuroCliente" />
+						</div>
+					</div>
+					
+					<div class="ui-g">    					    					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-3">					    	
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="#{label.nome_cliente}" for="nome_cliente" />
+								<p:inputText value="#{orcamentoBean.entidade.codigo}" id="nome_cliente"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
+							</h:panelGrid>							
+					    </div>
+					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-2">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="#{label.documento}" for="doc_cliente"/>
+								<p:inputText value="#{orcamentoBean.entidade.codigo}" id="doc_cliente"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
+							</h:panelGrid>							
+					    </div>
+					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-2">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="Estado" for="estado"/>
+								<p:inputText value="#{orcamentoBean.entidade.estado}" id="estado"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
+							</h:panelGrid>							
+					    </div>
+					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-2">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="Cidade" for="cidade"/>
+								<p:inputText value="#{orcamentoBean.entidade.cidade}" id="cidade"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
+							</h:panelGrid>							
+					    </div>
+					    
+					</div>
+					
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-12">
+						</div>
+					</div>
+					
+					<div class="ui-g">
+					    <div class="ui-g-12 ui-md-6 ui-lg-4">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="E-mail" for="email"/>
+								<p:inputText value="#{orcamentoBean.entidade.email}" id="email"
+									readonly="#{orcamentoBean.visualizando}" style="width: 80%"/>
+							</h:panelGrid>							
+					    </div>
+					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-4">
+					    6
+					    </div>
+					</div>	
+					
+					</p:tab>
+								
+					
+			
+					<p:tab title="#{label.tbl_itens_orcamento}" id="tabDadosOrcamento">
+						
+			           
+					</p:tab>
+					
+				</p:tabView>
+			</p:panel>
+			
+			
+			
+			<!-- ################## TABELA ########################## -->			
+						
+			<p:panel id="tabela" header="#{label.pnl_consulta_orcameto}" rendered="#{orcamentoBean.buscando}" 
+				 style="padding: 0" styleClass="menuSemBorda">
+				 
+				 
+				<p:dataTable value="#{orcamentoBean.entidades}" var="orcamento" id="tbl" 
+					selection="#{orcamentoBean.entidade}" selectionMode="single"
+					rowKey="#{orcamento.idUsusario}" paginator="true" reflow="true"
+					emptyMessage="#{label.msg_tabela_vazia}"
+					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+					style="margin: -5px -11px;">				
+					
+					<f:facet name="{Exporters}" >											
+						<h:commandLink>
+			                <p:graphicImage library="images" name="excel.png" width="24" style="float:right"/>
+			                <p:dataExporter type="xls" target="tbl" fileName="cars" />
+			            </h:commandLink>
+			 
+			            <h:commandLink>
+			                <p:graphicImage library="images" name="pdf.png" width="24" style="float:right"/>
+			                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+			            </h:commandLink>
+					</f:facet>	
+
+					<p:ajax event="rowDblselect" listener="#{orcamentoBean.onRowDblClckSelect}"
+						global="false" update="@form"/>
+
+					<p:ajax event="rowSelect" listener="#{orcamentoBean.onRowSelect}" />
+
+
+					<p:column headerText="#{label.codigo}" style="width: 7%;">
+						<h:outputText value="#{orcamento.codigo}" />
+					</p:column>
+										
+					<p:column headerText="#{label.lbl_codigo_cliente}" style="width: 8%;">
+						<h:outputText value="#{orcamento.colaborador.codigo}" />
+					</p:column>
+					
+					<p:column headerText="#{label.lbl_nome_cliente}" style="width: 30%;">
+						<h:outputText value="#{orcamento.colaborador.fantasia}" />
+					</p:column>
+
+					<p:column headerText="#{label.data_emissao}" style="width:15%;">
+						<h:outputText value="#{orcamento.dataEmissaoFormatada}" />
+					</p:column>
+					
+					<p:column headerText="#{label.data_entrega}" style="width:15%;">
+						<h:outputText value="#{orcamento.dataEntregaFormatada}" />
+					</p:column>
+					
+					<p:column headerText="#{label.situacao}" style="width:10%;">
+						<h:outputText value="#{orcamento.situacao}" />
+					</p:column>
+					
+					
+					<p:column headerText="#{label.acoes}" style="width:10%;" exportable="false">						
+						<p:commandButton actionListener="#{orcamentoBean.editar(orcamento)}" 
+							styleClass="editarBotao" value="" update="@form">
+						</p:commandButton>
+							
+						<p:commandButton actionListener="#{orcamentoBean.excluir(orcamento)}" 
+							styleClass="excluirBotao" value=""						
+							update="@form">
+							
+							<p:confirm header="#{label.confirmacao}" message="#{label.msg_exclusao_orcamento}" 
+								icon="ui-icon-alert"/>
+						</p:commandButton>						
+					</p:column>					
+
+				</p:dataTable>
+						
+			</p:panel>
+			
+		
+	</ui:define>
+
+</ui:composition>

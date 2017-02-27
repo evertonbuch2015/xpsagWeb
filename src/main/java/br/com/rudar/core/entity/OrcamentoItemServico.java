@@ -18,64 +18,66 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the EPI_ORCAMENTO_ITEM_INSUMO database table.
+ * The persistent class for the EPI_ORCAMENTO_ITEM_SERVICO database table.
  * 
  */
 @Entity
-@Table(name="EPI_ORCAMENTO_ITEM_INSUMO")
-@NamedQuery(name="EpiOrcamentoItemInsumo.findAll", query="SELECT e FROM EpiOrcamentoItemInsumo e")
-public class EpiOrcamentoItemInsumo implements Serializable {
+@Table(name="EPI_ORCAMENTO_ITEM_SERVICO")
+@NamedQuery(name="OrcamentoItemServico.findAll", query="SELECT e FROM OrcamentoItemServico e")
+public class OrcamentoItemServico implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
+	
 	@Id
-	@SequenceGenerator(name="G_EPI_ORCAMENTO_ITEM_INSUMO", sequenceName="G_EPI_ORCAMENTO_ITEM_INSUMO", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_EPI_ORCAMENTO_ITEM_INSUMO")
-	@Column(name="COD_EPIORCAMENTOITEMINSUMO")
+	@SequenceGenerator(name="G_EPI_ORCAMENTO_ITEM_SERVICO", sequenceName="G_EPI_ORCAMENTO_ITEM_SERVICO", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="G_EPI_ORCAMENTO_ITEM_SERVICO")
+	@Column(name="COD_EPIORCAMENTOITEMSERVICO")
 	private Integer id;
 
-	@Column(name="ITEM")
-	private Integer item;
-	
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="COD_CADPRODUTO")
-	private Produto produto;
+	@JoinColumn(name="COD_CADCOLABORADOR")
+	private Colaborador colaborador;
+
+	//@Column(name="COD_CADTIPOSERVICO")
+	//private int codCadtiposervico;
 
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="COD_CADUNIDADE")
 	private Unidade unidade;
 
-		
-	@Column(name="NOME_PRODUTO")
-	private String nomeProduto;
-
-	@Column(name="OBSERVACAO")
-	private String observacao;
-
-
 	
+	@Column(name="DESCRICAO")
+	private String descricao;
+
+	@Column(name="ITEM")
+	private int item;
+
 	@Column(name="QUANTIDADE")
 	private BigDecimal quantidade;
 
+	@Column(name="TIPO")
+	private String tipo;
+
+	
 	@Column(name="VALOR_TOTAL",insertable=false,updatable=false)
 	private BigDecimal valorTotal;
-	
+
 	@Column(name="VALOR_UNITARIO")
 	private BigDecimal valorUnitario;
 
 	
-	//bi-directional many-to-one association to EpiOrcamentoItem
+	//bi-directional many-to-one association to OrcamentoItem
 	@ManyToOne
 	@JoinColumn(name="COD_EPIORCAMENTOITEM")
-	private EpiOrcamentoItem epiOrcamentoItem;
-	
-	
-	
+	private OrcamentoItem orcamentoItem;
+
+		
 	//--------------------------------	GETs and SETs------------------------------//
 	
-
-	public EpiOrcamentoItemInsumo() {
+	public OrcamentoItemServico() {
 	}
 
 	
@@ -87,14 +89,14 @@ public class EpiOrcamentoItemInsumo implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 
-
-	public Produto getProduto() {
-		return this.produto;
+	public Colaborador getColaborador() {
+		return this.colaborador;
 	}
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 
 	
@@ -104,6 +106,16 @@ public class EpiOrcamentoItemInsumo implements Serializable {
 
 	public void setUnidade(Unidade unidade) {
 		this.unidade = unidade;
+	}
+
+
+	
+	public String getDescricao() {
+		return this.descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	
@@ -116,30 +128,21 @@ public class EpiOrcamentoItemInsumo implements Serializable {
 	}
 
 	
-	public String getNomeProduto() {
-		return this.nomeProduto;
-	}
-
-	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
-	}
-
-	
-	public String getObservacao() {
-		return this.observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
-
-	
 	public BigDecimal getQuantidade() {
 		return this.quantidade;
 	}
 
 	public void setQuantidade(BigDecimal quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	
+	public String getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	
@@ -161,14 +164,14 @@ public class EpiOrcamentoItemInsumo implements Serializable {
 	}
 
 	
-	public EpiOrcamentoItem getEpiOrcamentoItem() {
-		return this.epiOrcamentoItem;
+	public OrcamentoItem getOrcamentoItem() {
+		return this.orcamentoItem;
 	}
 
-	public void setEpiOrcamentoItem(EpiOrcamentoItem epiOrcamentoItem) {
-		this.epiOrcamentoItem = epiOrcamentoItem;
+	public void setOrcamentoItem(OrcamentoItem orcamentoItem) {
+		this.orcamentoItem = orcamentoItem;
 	}
-
+	
 	
 	//--------------------------------	Métodos Auxiliares------------------------------//
 	
@@ -188,12 +191,12 @@ public class EpiOrcamentoItemInsumo implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EpiOrcamentoItemInsumo other = (EpiOrcamentoItemInsumo) obj;
+		OrcamentoItemServico other = (OrcamentoItemServico) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
+	}	
 }

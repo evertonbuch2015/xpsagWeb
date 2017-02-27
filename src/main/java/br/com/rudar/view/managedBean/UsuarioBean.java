@@ -130,6 +130,11 @@ public class UsuarioBean extends GenericBean<Usuario> {
 	}
 
 	
+	//RETORNA LISTA DE SETORES PARA O COMBO
+	public List<String> getSetores(){
+		return usuarioService.buscarSetores();
+	}
+	
 	//RETORNA LISTA DE FILTROS PARA O COMBO
 	public TipoFiltro[] tipoFiltros(){
 		return TipoFiltro.values();

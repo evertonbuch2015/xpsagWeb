@@ -1,21 +1,23 @@
 package xpsagWeb;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import br.com.rudar.core.dao.JPAUtil;
 import br.com.rudar.core.dao.TipoServicoDao;
-import br.com.rudar.core.entity.EpiOrcamento;
-import br.com.rudar.core.entity.EpiOrcamentoItem;
-import br.com.rudar.core.entity.EpiOrcamentoItemInsumo;
-import br.com.rudar.core.entity.EpiOrcamentoItemMp;
-import br.com.rudar.core.entity.EpiOrcamentoItemProcesso;
 import br.com.rudar.core.entity.GrupoMaquina;
+import br.com.rudar.core.entity.Orcamento;
+import br.com.rudar.core.entity.OrcamentoItem;
+import br.com.rudar.core.entity.OrcamentoItemInsumo;
+import br.com.rudar.core.entity.OrcamentoItemMp;
+import br.com.rudar.core.entity.OrcamentoItemProcesso;
 import br.com.rudar.core.entity.Produto;
 import br.com.rudar.core.entity.TipoServico;
 import br.com.rudar.core.entity.TipoServicoItem;
 import br.com.rudar.core.service.ProdutoService;
+import br.com.rudar.core.service.UsuarioService;
 
 public class Teste {
 
@@ -25,9 +27,10 @@ public class Teste {
 
 		//String nomeUsuario 	= "XPSAG";
 		//String senha 		= Criptografia.criptografarSha256("ADMIN");
+		UsuarioService usuarioService = new UsuarioService();
 		
-		///EntityManager em = JPAUtil.GetInstance().getEntityManager();
-		
+		List<String> lista = usuarioService.buscarSetores();
+		System.out.println(lista);
 		///Query query = em.createQuery("From Usuario u where u.nomeUsuario = ?1 and u.senha = ?2");
 		///query.setParameter(1, nomeUsuario);
 		//query.setParameter(2, senha);
@@ -121,13 +124,13 @@ public class Teste {
 		try {
 			EntityManager em = JPAUtil.GetInstance().getEntityManager();
 
-			EpiOrcamento epiOrcamento = new EpiOrcamento();
+			Orcamento epiOrcamento = new Orcamento();
 			epiOrcamento.setCodigo(130);
 			epiOrcamento.setNomeColaborador("teste3");
 			epiOrcamento.setCemp("01");
 			epiOrcamento.setFilial("01");
 
-			EpiOrcamentoItem epiOrcamentoItem = new EpiOrcamentoItem();
+			OrcamentoItem epiOrcamentoItem = new OrcamentoItem();
 			epiOrcamentoItem.setItem(1);
 			epiOrcamentoItem.setSituacao("N");
 			epiOrcamentoItem.setTipo("N");
@@ -135,13 +138,13 @@ public class Teste {
 			epiOrcamentoItem.setPercComissao(2.00);
 			epiOrcamentoItem.setValorFrete(new BigDecimal("50.00"));
 
-			EpiOrcamentoItemInsumo epiOrcamentoItemInsumo = new EpiOrcamentoItemInsumo();
+			OrcamentoItemInsumo epiOrcamentoItemInsumo = new OrcamentoItemInsumo();
 			epiOrcamentoItemInsumo.setItem(1);
 			epiOrcamentoItemInsumo.setNomeProduto("teste3");
 			epiOrcamentoItemInsumo.setQuantidade(new BigDecimal("2"));
 			epiOrcamentoItemInsumo.setValorUnitario(new BigDecimal("2.50"));
 
-			EpiOrcamentoItemMp orcamentoItemMp = new EpiOrcamentoItemMp();
+			OrcamentoItemMp orcamentoItemMp = new OrcamentoItemMp();
 			orcamentoItemMp.setItem(1);
 			orcamentoItemMp.setNomeProduto("teste3");
 			orcamentoItemMp.setQuantidade(new BigDecimal("2"));
@@ -150,18 +153,18 @@ public class Teste {
 			GrupoMaquina grupoMaquina = new GrupoMaquina();
 			grupoMaquina.setId(2);
 
-			EpiOrcamentoItemProcesso epiOrcamentoItemProcesso = new EpiOrcamentoItemProcesso();
+			OrcamentoItemProcesso epiOrcamentoItemProcesso = new OrcamentoItemProcesso();
 			epiOrcamentoItemProcesso.setItem(1);
 			epiOrcamentoItemProcesso.setDescricao("teste3");
 			epiOrcamentoItemProcesso.setTempoExecucao(new BigDecimal("2"));
 			epiOrcamentoItemProcesso.setCustoMinuto(new BigDecimal("1.50"));
 			epiOrcamentoItemProcesso.setGrupoMaquina(grupoMaquina);
 
-			epiOrcamentoItem.addEpiOrcamentoItemInsumo(epiOrcamentoItemInsumo);
-			epiOrcamentoItem.addEpiOrcamentoItemMp(orcamentoItemMp);
-			epiOrcamentoItem.addEpiOrcamentoItemProcesso(epiOrcamentoItemProcesso);
+			epiOrcamentoItem.addOrcamentoItemInsumo(epiOrcamentoItemInsumo);
+			epiOrcamentoItem.addOrcamentoItemMp(orcamentoItemMp);
+			epiOrcamentoItem.addOrcamentoItemProcesso(epiOrcamentoItemProcesso);
 
-			epiOrcamento.addEpiOrcamentoItem(epiOrcamentoItem);
+			epiOrcamento.addOrcamentoItem(epiOrcamentoItem);
 
 			em.getTransaction().begin();
 			em.persist(epiOrcamento);

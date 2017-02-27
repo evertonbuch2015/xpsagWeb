@@ -1,5 +1,7 @@
 package br.com.rudar.core.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -68,7 +70,17 @@ public class UsuarioService implements GenericService<Usuario> {
 
 	
 	public List<Usuario> buscarTodos(){
-		return usuarioDao.findAll();
+		List<Usuario> lista = usuarioDao.findAll();
+		
+		Collections.sort(lista, new Comparator<Usuario>() {
+
+			@Override
+			public int compare(Usuario o1, Usuario o2) {				
+				return o1.getCodigoEstrutural().compareTo(o2.getCodigoEstrutural());
+			}
+		});
+		
+		return lista;
 	}
 	
 	
@@ -125,5 +137,11 @@ public class UsuarioService implements GenericService<Usuario> {
 			UtilMensagens.mensagemAtencao("Usuário não encontrado!");
 			return null;
 		}
+	}
+
+
+	public List<String> buscarSetores(){
+		String jpql = "Select distinct u.setor From Usuario u";		
+		return usuarioDao.findSectors(jpql);
 	}
 }
