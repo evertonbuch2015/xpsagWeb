@@ -1,14 +1,20 @@
 package br.com.rudar.view.managedBean;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.primefaces.event.SelectEvent;
+
+import br.com.rudar.core.entity.Colaborador;
 import br.com.rudar.core.entity.CondicaoPagamento;
 import br.com.rudar.core.entity.Orcamento;
 import br.com.rudar.core.entity.Vendedor;
 import br.com.rudar.core.enumerated.TipoFrete;
+import br.com.rudar.core.service.ColaboradorService;
 import br.com.rudar.core.service.CondicaoPagamentoService;
 import br.com.rudar.core.service.OrcamentoService;
 import br.com.rudar.core.service.VendedorService;
@@ -39,19 +45,25 @@ public class OrcamentoBean extends GenericBean<Orcamento> {
 	
 	private TipoFiltro filtro;	
 	private Integer entidadeId;
-	private OrcamentoService orcamentoService;
+	private Boolean futuroCliente;
 	
+	private OrcamentoService orcamentoService;
+	private ColaboradorService colaboradorService;
+
 	private List<CondicaoPagamento> condicaoPagamentos;
 
-	private Boolean futuroCliente;
+	
+	
+	
 	
 	public OrcamentoBean() {
 		orcamentoService = new OrcamentoService();
+		colaboradorService = new ColaboradorService();
 	}
 	
 	
 	// =======================METODOS DO USUARIO=====================================
-	
+		
 	@Override
 	public void filtrar() {
 		this.entidades = orcamentoService.filtrarTabela(filtro, valorFiltro);
@@ -80,15 +92,38 @@ public class OrcamentoBean extends GenericBean<Orcamento> {
 	
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		if(this.entidades != null){
+			this.entidades.clear();
+		}
 		
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, -1);
+			
+		Date dt = c.getTime();
+			
+		this.entidades = orcamentoService.buscar("Select o From Orcamento o left JOIN FETCH o.colaborador "
+				+ "	where o.dataEmissao >= ?1 order by o.codigo asc", dt);
 	}
 
 	
 	@Override
 	public void carregaEntidade() {
-		// TODO Auto-generated method stub
+		this.entidade = orcamentoService.carregarEntidade(this.entidade.getId());		
+	}
+
+	
+	public List<Colaborador> completaColaborador(String query) { 
+        List<Colaborador> colaboradores = colaboradorService.buscar("From Colaborador c where c.fantasia like ?1", "%"+ query +"%");         
+        return colaboradores;
+    }
+	
+	
+	public void onColaboradorSelect(SelectEvent event) {
+		Colaborador colaborador = colaboradorService.carregarEntidade(((Colaborador) event.getObject()).getId());
 		
+		this.entidade.setEmail(colaborador.getPessoa().getEmail());
+		this.entidade.setDocumentoRef(colaborador.getPessoa().getDocumento());
+		this.entidade.setContato(colaborador.getPessoa().getContato());
 	}
 
 	

@@ -7,7 +7,21 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+	
+	<!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+<dependency>
+    <groupId>commons-beanutils</groupId>
+    <artifactId>commons-beanutils</artifactId>
+    <version>1.8.3</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.myfaces.commons/myfaces-converters20 -->
+<dependency>
+    <groupId>org.apache.myfaces.commons</groupId>
+    <artifactId>myfaces-converters20</artifactId>
+    <version>1.0.2.1</version>
+</dependency>
 
+	
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>

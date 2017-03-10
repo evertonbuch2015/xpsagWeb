@@ -1,7 +1,7 @@
 package xpsagWeb;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Calendar;
 
 import javax.persistence.EntityManager;
 
@@ -17,20 +17,31 @@ import br.com.rudar.core.entity.Produto;
 import br.com.rudar.core.entity.TipoServico;
 import br.com.rudar.core.entity.TipoServicoItem;
 import br.com.rudar.core.service.ProdutoService;
-import br.com.rudar.core.service.UsuarioService;
 
 public class Teste {
 
 	public static void main(String[] args) {
 		// testeOrcamento();
 		// testeProduto();
-
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, -1);
+			
+		//Date dt = c.getTime();
+			
+		
+		//OrcamentoService orcamentoService = new OrcamentoService();
+		//OrcamentoDao dao = new OrcamentoDao();
+		//List<Orcamento> lista = dao.find("Select o From Orcamento o");
+		
+		//ColaboradorService colaboradorService = new ColaboradorService();
+		//Colaborador c = colaboradorService.buscarPeloCodigo(1);
+		
 		//String nomeUsuario 	= "XPSAG";
 		//String senha 		= Criptografia.criptografarSha256("ADMIN");
-		UsuarioService usuarioService = new UsuarioService();
+		//UsuarioService usuarioService = new UsuarioService();
 		
-		List<String> lista = usuarioService.buscarSetores();
-		System.out.println(lista);
+		//List<String> lista = usuarioService.buscarSetores();
+		//System.out.println(lista);
 		///Query query = em.createQuery("From Usuario u where u.nomeUsuario = ?1 and u.senha = ?2");
 		///query.setParameter(1, nomeUsuario);
 		//query.setParameter(2, senha);
@@ -125,10 +136,10 @@ public class Teste {
 			EntityManager em = JPAUtil.GetInstance().getEntityManager();
 
 			Orcamento epiOrcamento = new Orcamento();
-			epiOrcamento.setCodigo(130);
+			//epiOrcamento.setCodigo(130);
 			epiOrcamento.setNomeColaborador("teste3");
-			epiOrcamento.setCemp("01");
-			epiOrcamento.setFilial("01");
+			//epiOrcamento.setCemp("01");
+			///epiOrcamento.setFilial("01");
 
 			OrcamentoItem epiOrcamentoItem = new OrcamentoItem();
 			epiOrcamentoItem.setItem(1);

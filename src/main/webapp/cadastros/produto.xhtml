@@ -297,17 +297,17 @@
 				   	
 				   	<p:tab title="#{label.outros_dados}" id="tabOutrosDados">
 				   		<div class="ui-g">    					
-    					<div class="ui-g-12 ui-md-6 ui-lg-5">
-    					<h:panelGrid columns="1" style="width: 100%">
-    						<p:outputLabel value="#{label.desc_tecnica}" for="obs" />
-							<p:inputTextarea value="#{produtoBean.entidade.descricaTecnica}" id="obs"
-								style="width: 90%" rows="5" cols="30" counter="display"
-								maxlength="255" counterTemplate="{0} Caracteres Restantes"
-								autoResize="false" readonly="!#{produtoBean.visualizando}" />
-							<h:outputText id="display" />
-						</h:panelGrid>
-						</div>
-					</div>	
+	    					<div class="ui-g-12 ui-md-6 ui-lg-5">
+		    					<h:panelGrid columns="1" style="width: 100%">
+		    						<p:outputLabel value="#{label.desc_tecnica}" for="obs" />
+									<p:inputTextarea value="#{produtoBean.entidade.descricaTecnica}" id="obs"
+										style="width: 90%" rows="5" cols="30" counter="display"
+										maxlength="255" counterTemplate="{0} Caracteres Restantes"
+										autoResize="false" readonly="!#{produtoBean.visualizando}" />
+									<h:outputText id="display" />
+								</h:panelGrid>
+							</div>
+						</div>	
 				   	</p:tab>
 				   	
 				   	<p:tab title="#{label.industria_geral}" id="tabIndGeral">

@@ -4,12 +4,14 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui" 
 	template="/template.xhtml"
-	xmlns:app="http://java.sun.com/jsf/composite/componentes" >
+	xmlns:app="http://java.sun.com/jsf/composite/componentes"
+	xmlns:mcc="http://myfaces.apache.org/commons/converters">
 
 	<ui:define name="tituloPagina">#{label.nome_programa_orcameto}</ui:define>
 	<ui:define name="nomePrograma">#{label.nome_programa_orcameto}</ui:define>
 
 	<ui:define name="head">
+		<h:outputScript library="js" name="Monetario.js"/>
 		<style type="text/css">
 			.label {width: 20%;	padding: 2px;}
 			
@@ -147,79 +149,226 @@
 								</p:selectOneMenu>
 							</h:panelGrid>
 					    </div>
-					</div>
+					</div>					
 					
-					<div class="ui-g" >
-						<div class="ui-g-12 ui-md-6 ui-lg-12">							
-							<p:selectBooleanCheckbox id="futuroCliente"
-								value="#{orcamentoBean.futuroCliente}"
-								disabled="#{orcamentoBean.visualizando}">
-								<p:ajax event="change" update="nome_cliente,doc_cliente,cidade,estado" />
-							</p:selectBooleanCheckbox>
-							<p:outputLabel value="Futuro Cliente" for="futuroCliente" />
-						</div>
-					</div>
+					<p:separator style="margin:12px auto;width: 95%;"/>
+
+					<div class="ui-g"> 
 					
-					<div class="ui-g">    					    					    
-					    <div class="ui-g-12 ui-md-6 ui-lg-3">					    	
+						<div class="ui-g-12 ui-md-2 ui-lg-1">
 	    					<h:panelGrid columns="1"  style="width: 100%">
-								<p:outputLabel value="#{label.nome_cliente}" for="nome_cliente" />
-								<p:inputText value="#{orcamentoBean.entidade.codigo}" id="nome_cliente"
-									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
+								<p:outputLabel value="#{label.codigo}" for="cod_cliente"/>
+								<p:inputText value="#{orcamentoBean.entidade.colaborador.codigo}" id="cod_cliente" style="width: 80%"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}"/>
+							</h:panelGrid>							
+					    </div>
+						   					    					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-4">					    	
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="#{label.nome_cliente}" for="colaborador"/>
+					
+								<p:autoComplete id="colaborador" value="#{orcamentoBean.entidade.colaborador}" size="45"
+					    			var="colaborador" itemLabel="#{colaborador.fantasia}" itemValue="#{colaborador}" minQueryLength="4"
+									forceSelection="true" completeMethod="#{orcamentoBean.completaColaborador}" >
+									<p:watermark value="#{label.pesquise_pelo_nome}" for="colaborador"/>
+									<p:ajax event="itemSelect" listener="#{orcamentoBean.onColaboradorSelect}" 
+										update="doc_cliente, estado, cidade, email, contato, telefone, cod_cliente"/>
+								</p:autoComplete>
+							</h:panelGrid>							
+					    </div>
+					    
+					    <div class="ui-g-12 ui-md-6 ui-lg-3">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="E-mail" for="email"/>
+								<p:inputText value="#{orcamentoBean.entidade.email}" id="email" style="width: 88%"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}"/>
+							</h:panelGrid>							
+					    </div>
+					    
+					</div>
+					
+					
+					<div class="ui-g">
+					
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="#{label.documento}" for="doc_cliente"/>
+								<p:inputText value="#{orcamentoBean.entidade.documentoRef}" id="doc_cliente" style="width: 80%"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}"/>
+							</h:panelGrid>							
+					    </div>
+						
+					    <div class="ui-g-12 ui-md-6 ui-lg-2">
+	    					<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="Contato" for="contato"/>
+								<p:inputText value="#{orcamentoBean.entidade.contato}" id="contato" style="width: 80%"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" />
 							</h:panelGrid>							
 					    </div>
 					    
 					    <div class="ui-g-12 ui-md-6 ui-lg-2">
-	    					<h:panelGrid columns="1"  style="width: 100%">
-								<p:outputLabel value="#{label.documento}" for="doc_cliente"/>
-								<p:inputText value="#{orcamentoBean.entidade.codigo}" id="doc_cliente"
-									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
-							</h:panelGrid>							
+					    	<h:panelGrid columns="1"  style="width: 100%">
+								<p:outputLabel value="Telefone" for="telefone"/>
+								<p:inputText value="#{orcamentoBean.entidade.nfon}" id="telefone" style="width: 80%"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}"/>
+							</h:panelGrid>
 					    </div>
 					    
+					    					    
 					    <div class="ui-g-12 ui-md-6 ui-lg-2">
 	    					<h:panelGrid columns="1"  style="width: 100%">
 								<p:outputLabel value="Estado" for="estado"/>
-								<p:inputText value="#{orcamentoBean.entidade.estado}" id="estado"
-									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
+								<p:inputText value="#{orcamentoBean.entidade.estado}" id="estado" style="width: 80%"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}"/>
 							</h:panelGrid>							
 					    </div>
 					    
 					    <div class="ui-g-12 ui-md-6 ui-lg-2">
 	    					<h:panelGrid columns="1"  style="width: 100%">
 								<p:outputLabel value="Cidade" for="cidade"/>
-								<p:inputText value="#{orcamentoBean.entidade.cidade}" id="cidade"
-									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}" style="width: 80%"/>
+								<p:inputText value="#{orcamentoBean.entidade.cidade}" id="cidade" style="width: 80%"
+									readonly="#{(not orcamentoBean.futuroCliente) or (orcamentoBean.visualizando)}"/>
 							</h:panelGrid>							
 					    </div>
 					    
-					</div>
-					
-					<div class="ui-g">
-						<div class="ui-g-12 ui-md-6 ui-lg-12">
-						</div>
-					</div>
-					
-					<div class="ui-g">
-					    <div class="ui-g-12 ui-md-6 ui-lg-4">
-	    					<h:panelGrid columns="1"  style="width: 100%">
-								<p:outputLabel value="E-mail" for="email"/>
-								<p:inputText value="#{orcamentoBean.entidade.email}" id="email"
-									readonly="#{orcamentoBean.visualizando}" style="width: 80%"/>
-							</h:panelGrid>							
-					    </div>
-					    
-					    <div class="ui-g-12 ui-md-6 ui-lg-4">
-					    6
-					    </div>
 					</div>	
 					
+										
+					<p:separator style="margin:12px auto;width: 95%;"/>
+					
+					
+					<div class="ui-g">
+						
+					    <div class="ui-g-12 ui-md-6 ui-lg-2">
+						    <h:panelGrid columns="1" style="width: 100%">
+	    						<p:outputLabel value="Mão de Obra" for="maoObra" />
+						    	<p:inputText value="#{orcamentoBean.entidade.valorMaoObra}" id="maoObra"
+						    		readonly="true" onblur="mascara(this,moeda)" size="18">
+									<mcc:convertNumber type="currency" currencySymbol="R$" minFractionDigits="6" pattern="#,##0.00" />	
+						    	</p:inputText>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+					    	<h:panelGrid columns="1" style="width: 100%">
+    							<p:outputLabel value="Frete" for="vlFrete" />
+					    		<p:inputText value="#{orcamentoBean.entidade.valorFrete}" id="vlFrete" 
+					    			readonly="true" onblur="mascara(this,moeda)" size="18">
+									
+						    	</p:inputText>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+					    	<h:panelGrid columns="1" style="width: 100%">
+    							<p:outputLabel value="Matéria Prima" for="materiaPrima" />
+					    		<p:inputNumber value="#{orcamentoBean.entidade.valorMateriaPrima}" id="materiaPrima" 
+					    			readonly="true" onblur="mascara(this,moeda)" size="18">
+									
+						    	</p:inputNumber>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+					    	<h:panelGrid columns="1" style="width: 100%">
+    							<p:outputLabel value="Insumos" for="insumos" />
+					    		<p:inputNumber value="#{orcamentoBean.entidade.valorInsumos}" id="insumos" 
+					    			readonly="true" onblur="mascara(this,moeda)" size="18">
+									
+						    	</p:inputNumber>
+							</h:panelGrid>
+						</div>
+												
+					</div>	
+					
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+					    	<h:panelGrid columns="1" style="width: 100%">
+    							<p:outputLabel value="Comissão" for="comissao" />
+					    		<p:inputNumber value="#{orcamentoBean.entidade.valorComissao}" id="comissao" 
+					    			readonly="true" onblur="mascara(this,moeda)" size="18">
+									
+						    	</p:inputNumber>
+							</h:panelGrid>
+						</div>
+						
+
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+					    	<h:panelGrid columns="1" style="width: 100%">
+    							<p:outputLabel value="Valor Calculado" for="vlCalculado" />
+					    		<p:inputText value="#{orcamentoBean.entidade.valorTotalCalculado}" id="vlCalculado" 
+					    			 onblur="mascara(this,moeda)" size="18">
+									<mcc:convertNumber type="currency" currencySymbol="R$" pattern="#,##0.00" />
+						    	</p:inputText>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6 ui-lg-2">
+					    	<h:panelGrid columns="1" style="width: 100%">
+    							<p:outputLabel value="Total de Venda" for="totalVenda" />
+					    		<p:inputNumber value="#{orcamentoBean.entidade.valorTotalVenda}" id="totalVenda" 
+					    			readonly="true" onblur="mascara(this,moeda)" size="18">
+									
+						    	</p:inputNumber>
+							</h:panelGrid>
+						</div>
+												
+					</div>
+					
+					<div class="ui-g">    					
+    					<div class="ui-g-12 ui-md-6 ui-lg-12">
+    					<h:panelGrid columns="1" style="widt	h: 100%">
+    						<p:outputLabel value="Observações" for="obs" />
+							<p:inputTextarea value="#{orcamentoBean.entidade.observacao}" id="obs"
+								style="width: 90%" rows="5" cols="30" maxlength="255"
+								autoResize="false" readonly="!#{produtoBean.visualizando}" />
+						</h:panelGrid>
+						</div>
+					</div>
 					</p:tab>
 								
 					
 			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 					<p:tab title="#{label.tbl_itens_orcamento}" id="tabDadosOrcamento">
 						
+						<p:accordionPanel multiple="true">
+					        <p:tab title="Processos">
+					            <h:panelGrid columns="2" cellpadding="10">
+					                
+					                <h:outputText
+					                    value="The story begins as Don Vito Corleone..." />
+					            </h:panelGrid>
+					        </p:tab>
+					        <p:tab title="Matéria Prima">
+					            <h:panelGrid columns="2" cellpadding="10">
+					                
+					                <h:outputText value="Francis Ford Coppola's legendary..." />
+					            </h:panelGrid>
+					        </p:tab>
+					        <p:tab title="Insumos">
+					            <h:panelGrid columns="2" cellpadding="10">
+					                
+					                <h:outputText value="After a break of more than 15 years...." />
+					            </h:panelGrid>
+					        </p:tab>
+					        <p:tab title="Serviços">
+					            <h:panelGrid columns="2" cellpadding="10">
+					                
+					                <h:outputText value="After a break of more than 15 years...." />
+					            </h:panelGrid>
+					        </p:tab>
+					    </p:accordionPanel>
 			           
 					</p:tab>
 					
@@ -236,7 +385,7 @@
 				 
 				<p:dataTable value="#{orcamentoBean.entidades}" var="orcamento" id="tbl" 
 					selection="#{orcamentoBean.entidade}" selectionMode="single"
-					rowKey="#{orcamento.idUsusario}" paginator="true" reflow="true"
+					rowKey="#{orcamento.id}" paginator="true" reflow="true"
 					emptyMessage="#{label.msg_tabela_vazia}"
 					rowsPerPageTemplate="10,25,50" paginatorPosition="bottom"
 					paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown} {Exporters}"

@@ -51,8 +51,7 @@ public class OrcamentoService implements GenericService<Orcamento> {
 	
 	@Override
 	public List<Orcamento> buscarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		return orcamentoDao.findAll();
 	}
 	
 	

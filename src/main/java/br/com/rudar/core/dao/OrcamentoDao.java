@@ -11,7 +11,8 @@ public class OrcamentoDao extends GenericDao<Orcamento> {
 
 	@Override
 	public Orcamento findAllAttributesEntity(Integer id) {
-		String jpql = "Select o From Orcamento o where o.id = ?1";
+		String jpql = " Select o, c, v From Orcamento o left join fetch o.condicaoPagamento c "
+					+ " left join fetch o.vendedor v where o.id = ?1";
 		try {
 			return findOne(jpql, id);
 		} catch (Exception e) {
